@@ -12,3 +12,4 @@ This folder contains third-party service and platform logos used throughout the 
 - Jobber
 - WiseAgent
 - Zoho
+- Yardi
