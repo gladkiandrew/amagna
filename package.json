@@ -1,0 +1,20 @@
+{
+  "name": "amagna",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Operational backbone of Amagna AI — marketing site, funnels, client portal, and AI agent fleet.",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "agents/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/marketing",
+    "build": "npm run build --workspace=apps/marketing",
+    "lint": "npm run lint --workspaces --if-present",
+    "start": "npm run start --workspace=apps/marketing"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
