@@ -2,22 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/*
+ * Design tokens.
+ * - shadcn/ui semantic tokens (--background, --primary, ...) use HSL triplets
+ *   so Tailwind can wrap them as hsl(var(--token)) and still support /opacity.
+ * - --brand-* values mirror docs/brand/brand-colors.md and exist so raw CSS
+ *   (the hero-flow SVG classes below) can reference the palette without hardcoding.
+ */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* shadcn/ui — zinc base, light */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 270 51% 36%; /* royal purple #5D2E8C — brand primary drives buttons/links */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 41 47% 59%; /* antique gold #C9A961 — brand secondary accent */
+    --accent-foreground: 240 10% 3.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 270 51% 36%;
+    --radius: 0.5rem;
+
+    /* Amagna brand palette — raw hex for SVG / canvas use */
+    --brand-purple: #5d2e8c;
+    --brand-gold: #c9a961;
+    --brand-gold-dark: #d4b873;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 270 45% 65%;
+    --primary-foreground: 240 10% 3.9%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 41 50% 65%;
+    --accent-foreground: 240 10% 3.9%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 270 45% 65%;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
 }
 
 @layer utilities {
@@ -26,6 +77,7 @@ body {
   }
 }
 
+/* --- Hero flow diagram animation (used by components/hero-flow.tsx) --- */
 @keyframes flowDown {
   0%   { stroke-dashoffset: 100; opacity: 0; }
   15%  { opacity: 1; }
@@ -52,7 +104,7 @@ body {
 }
 
 .flow-line {
-  stroke: #5D2E8C;
+  stroke: var(--brand-purple);
   stroke-width: 1;
   opacity: 0.15;
   fill: none;
@@ -65,8 +117,8 @@ body {
   stroke-linecap: round;
 }
 
-.pulse-gold   { stroke: #C9A961; }
-.pulse-purple { stroke: #5D2E8C; }
+.pulse-gold   { stroke: var(--brand-gold); }
+.pulse-purple { stroke: var(--brand-purple); }
 
 .pulse-down   { animation: flowDown 3s linear infinite; }
 .pulse-up     { animation: flowUp   3s linear infinite; }
@@ -74,6 +126,6 @@ body {
 .amagna-glow  { animation: amagnaGlow 2.6s ease-in-out infinite; }
 
 .ripple-dot {
-  fill: #5D2E8C;
+  fill: var(--brand-purple);
   animation: rippleUp 2s linear infinite;
 }
