@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { SiteHeader } from '@/components/site-header';
+import { SiteFooter } from '@/components/site-footer';
+import { SITE } from '@/lib/site';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -14,8 +17,12 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Amagna AI',
-  description: 'AI-powered growth systems for home services and real estate.',
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: 'Amagna AI — AI growth systems for home services & real estate',
+    template: '%s · Amagna AI',
+  },
+  description: SITE.tagline,
 };
 
 export default function RootLayout({
@@ -26,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-cream antialiased`}
       >
-        {children}
+        <SiteHeader />
+        <main className="flex-1">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
