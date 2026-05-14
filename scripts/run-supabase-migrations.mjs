@@ -54,15 +54,42 @@ if (!password) {
   process.exit(1);
 }
 
-// Session-mode pooler (port 5432) — supports the multi-statement DDL in our migrations.
-const connectionString =
-  `postgresql://postgres.${PROJECT_REF}:${encodeURIComponent(password)}` +
-  `@aws-0-${REGION}.pooler.supabase.com:5432/postgres`;
+// Session-mode pooler (port 5432) — supports the multi-statement DDL in our
+// migrations. Supabase provisions projects across pooler shards (aws-0 / aws-1),
+// so try both; SUPABASE_DB_HOST overrides if the host is ever known exactly.
+const POOLER_HOSTS = process.env.SUPABASE_DB_HOST
+  ? [process.env.SUPABASE_DB_HOST]
+  : [`aws-1-${REGION}.pooler.supabase.com`, `aws-0-${REGION}.pooler.supabase.com`];
+
+function connectionStringFor(host) {
+  return (
+    `postgresql://postgres.${PROJECT_REF}:${encodeURIComponent(password)}` +
+    `@${host}:5432/postgres`
+  );
+}
+
+/** Connect via whichever pooler shard hosts this project. */
+async function connect() {
+  let lastError;
+  for (const host of POOLER_HOSTS) {
+    const client = new pg.Client({
+      connectionString: connectionStringFor(host),
+      ssl: { rejectUnauthorized: false },
+    });
+    try {
+      await client.connect();
+      console.log(`Connected to Supabase project ${PROJECT_REF} via ${host}.\n`);
+      return client;
+    } catch (error) {
+      lastError = error;
+      await client.end().catch(() => {});
+    }
+  }
+  throw lastError;
+}
 
 async function run() {
-  const client = new pg.Client({ connectionString, ssl: { rejectUnauthorized: false } });
-  await client.connect();
-  console.log(`Connected to Supabase project ${PROJECT_REF} (${REGION}).\n`);
+  const client = await connect();
 
   // --- Migrations, in filename order, each wrapped in its own transaction ---
   const files = readdirSync(MIGRATIONS_DIR)
