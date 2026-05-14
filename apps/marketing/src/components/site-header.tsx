@@ -13,7 +13,7 @@ export function SiteHeader(): JSX.Element {
     <header className="sticky top-0 z-50 border-b border-black/5 bg-cream/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-6 py-4">
         <Link href="/" aria-label="Amagna AI — home" className="shrink-0">
-          <Wordmark className="text-xl" />
+          <Wordmark />
         </Link>
 
         {/* Desktop nav */}

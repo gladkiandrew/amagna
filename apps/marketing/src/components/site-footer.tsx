@@ -16,7 +16,7 @@ export function SiteFooter(): JSX.Element {
           {/* Brand + tagline */}
           <div className="md:col-span-2">
             <Link href="/" aria-label="Amagna AI — home">
-              <Wordmark variant="onDark" className="text-xl" />
+              <Wordmark variant="onDark" className="h-8" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/70">
               {SITE.tagline}

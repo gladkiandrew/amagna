@@ -1,31 +1,36 @@
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 type WordmarkProps = {
   /** 'default' for light backgrounds, 'onDark' for dark backgrounds. */
   variant?: 'default' | 'onDark';
+  /** Sizing/spacing overrides. Defaults to h-7 with width kept proportional. */
   className?: string;
 };
 
+/** Brand logo SVGs in public/brand/amagna/. viewBox is 280x60 (14:3). */
+const LOGO_SRC = {
+  default: '/brand/amagna/logo.svg',
+  onDark: '/brand/amagna/logo-dark.svg',
+} as const;
+
 /**
- * The Amagna AI typographic wordmark.
+ * The Amagna AI wordmark.
  *
- * NOTE: the SVG logo files in public/brand/amagna/ are currently 21-byte
- * placeholder stubs ("This is an image file"), not real artwork. Until real
- * SVGs land, this component IS the logo — built to the lockup spec in
- * docs/brand/brand-colors.md (weight 600, tight tracking, purple + gold).
- * When real SVGs arrive, swap the internals for next/image and keep the API.
+ * default  -> logo.svg      (royal purple "Amagna" + antique gold "AI")
+ * onDark   -> logo-dark.svg (white "Amagna" + dark-mode gold "AI")
+ *
+ * Pass a Tailwind height (e.g. h-8) via className to resize — width stays
+ * proportional via w-auto.
  */
 export function Wordmark({ variant = 'default', className }: WordmarkProps): JSX.Element {
-  const amagnaColor = variant === 'onDark' ? 'text-white' : 'text-royal-purple';
-  const aiColor = variant === 'onDark' ? 'text-dark-mode-gold' : 'text-antique-gold';
-
   return (
-    <span
-      className={cn('inline-flex items-baseline gap-[0.18em] font-semibold leading-none', className)}
-      aria-label="Amagna AI"
-    >
-      <span className={cn('tracking-[-0.03em]', amagnaColor)}>Amagna</span>
-      <span className={cn('tracking-[-0.01em]', aiColor)}>AI</span>
-    </span>
+    <Image
+      src={LOGO_SRC[variant]}
+      alt="Amagna AI"
+      width={280}
+      height={60}
+      className={cn('h-7 w-auto', className)}
+    />
   );
 }
