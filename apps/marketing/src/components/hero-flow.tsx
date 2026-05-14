@@ -7,14 +7,14 @@ type AppLogo = {
 };
 
 const APPS: AppLogo[] = [
-  { src: '/brand/integrations/jobber icon.png', alt: 'Jobber', hasReturn: false },
-  { src: '/brand/integrations/hubspot logo.png', alt: 'HubSpot', hasReturn: true },
-  { src: '/brand/integrations/yardi logo.svg', alt: 'Yardi', hasReturn: false },
-  { src: '/brand/integrations/Zillow Logo.svg', alt: 'Zillow', hasReturn: true },
-  { src: '/brand/integrations/zoho logo.svg', alt: 'Zoho', hasReturn: true },
-  { src: '/brand/integrations/gmail icon.svg', alt: 'Gmail', hasReturn: true },
-  { src: '/brand/integrations/Google Drive icon.svg', alt: 'Google Drive', hasReturn: false },
-  { src: '/brand/integrations/google calendar icon.svg', alt: 'Google Calendar', hasReturn: true },
+  { src: '/brand/integrations/jobber.png', alt: 'Jobber', hasReturn: false },
+  { src: '/brand/integrations/hubspot.png', alt: 'HubSpot', hasReturn: true },
+  { src: '/brand/integrations/yardi.svg', alt: 'Yardi', hasReturn: false },
+  { src: '/brand/integrations/zillow.svg', alt: 'Zillow', hasReturn: true },
+  { src: '/brand/integrations/zoho.svg', alt: 'Zoho', hasReturn: true },
+  { src: '/brand/integrations/gmail.svg', alt: 'Gmail', hasReturn: true },
+  { src: '/brand/integrations/google-drive.svg', alt: 'Google Drive', hasReturn: false },
+  { src: '/brand/integrations/google-calendar.svg', alt: 'Google Calendar', hasReturn: true },
 ];
 
 const APP_CX: readonly number[] = [60, 140, 220, 300, 380, 460, 540, 620];
@@ -189,7 +189,7 @@ export function HeroFlow(): JSX.Element {
         >
           <div className="relative h-full w-full">
             <Image
-              src="/brand/integrations/Claude Logo.svg"
+              src="/brand/integrations/claude.svg"
               alt="Claude"
               fill
               priority
@@ -210,7 +210,7 @@ export function HeroFlow(): JSX.Element {
         >
           <div className="relative h-full w-full">
             <Image
-              src="/brand/integrations/ChatGPT Logo.png"
+              src="/brand/integrations/chatgpt.png"
               alt="ChatGPT"
               fill
               priority

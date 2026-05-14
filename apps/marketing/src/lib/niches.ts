@@ -73,11 +73,11 @@ export const HOME_SERVICES: NicheContent = {
     },
   ],
   integrations: [
-    { src: '/brand/integrations/jobber icon.png', alt: 'Jobber' },
-    { src: '/brand/integrations/hubspot logo.png', alt: 'HubSpot' },
-    { src: '/brand/integrations/zoho logo.svg', alt: 'Zoho' },
-    { src: '/brand/integrations/gmail icon.svg', alt: 'Gmail' },
-    { src: '/brand/integrations/google calendar icon.svg', alt: 'Google Calendar' },
+    { src: '/brand/integrations/jobber.png', alt: 'Jobber' },
+    { src: '/brand/integrations/hubspot.png', alt: 'HubSpot' },
+    { src: '/brand/integrations/zoho.svg', alt: 'Zoho' },
+    { src: '/brand/integrations/gmail.svg', alt: 'Gmail' },
+    { src: '/brand/integrations/google-calendar.svg', alt: 'Google Calendar' },
   ],
   integrationsNote:
     'Leads route straight into the tools you already run your business on — no new software to learn.',
@@ -135,11 +135,11 @@ export const REAL_ESTATE: NicheContent = {
     },
   ],
   integrations: [
-    { src: '/brand/integrations/yardi logo.svg', alt: 'Yardi' },
-    { src: '/brand/integrations/Zillow Logo.svg', alt: 'Zillow' },
-    { src: '/brand/integrations/hubspot logo.png', alt: 'HubSpot' },
-    { src: '/brand/integrations/gmail icon.svg', alt: 'Gmail' },
-    { src: '/brand/integrations/google calendar icon.svg', alt: 'Google Calendar' },
+    { src: '/brand/integrations/yardi.svg', alt: 'Yardi' },
+    { src: '/brand/integrations/zillow.svg', alt: 'Zillow' },
+    { src: '/brand/integrations/hubspot.png', alt: 'HubSpot' },
+    { src: '/brand/integrations/gmail.svg', alt: 'Gmail' },
+    { src: '/brand/integrations/google-calendar.svg', alt: 'Google Calendar' },
   ],
   integrationsNote:
     'Plugs into the CRM and tools you already use — your contacts and calendar stay where they are.',
