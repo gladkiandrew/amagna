@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes flowDown {
+  0%   { stroke-dashoffset: 100; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes flowUp {
+  0%   { stroke-dashoffset: 0; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { stroke-dashoffset: 100; opacity: 0; }
+}
+
+@keyframes amagnaGlow {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.85; }
+}
+
+@keyframes rippleUp {
+  0%   { cy: 380; r: 4; opacity: 0; }
+  15%  { opacity: 1; }
+  100% { cy: 295; r: 7; opacity: 0; }
+}
+
+.flow-line {
+  stroke: #5D2E8C;
+  stroke-width: 1;
+  opacity: 0.15;
+  fill: none;
+}
+
+.pulse {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-dasharray: 12 88;
+  stroke-linecap: round;
+}
+
+.pulse-gold   { stroke: #C9A961; }
+.pulse-purple { stroke: #5D2E8C; }
+
+.pulse-down   { animation: flowDown 3s linear infinite; }
+.pulse-up     { animation: flowUp   3s linear infinite; }
+
+.amagna-glow  { animation: amagnaGlow 2.6s ease-in-out infinite; }
+
+.ripple-dot {
+  fill: #5D2E8C;
+  animation: rippleUp 2s linear infinite;
+}
