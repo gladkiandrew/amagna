@@ -30,9 +30,9 @@ export type NicheContent = {
 export const HOME_SERVICES: NicheContent = {
   slug: 'home-services',
   eyebrow: 'For home services operators',
-  heroHeadline: 'Predictable, owned leads — not leads resold to your competitor.',
+  heroHeadline: 'More calls. Predictable leads. We end the feast-or-famine cycle.',
   heroSub:
-    'HVAC, plumbing, roofing, electrical, landscaping. We build the marketing system that keeps your phone ringing in the slow months, then the agents run it for you.',
+    'HVAC, plumbing, roofing, electrical, landscaping. We build the marketing system that keeps your phone ringing in the slow months — then we run it for you, in your voice.',
   pains: [
     {
       title: 'The phone is feast or famine',
@@ -92,9 +92,9 @@ export const HOME_SERVICES: NicheContent = {
 export const REAL_ESTATE: NicheContent = {
   slug: 'real-estate',
   eyebrow: 'For real estate agents & teams',
-  heroHeadline: 'Stay top of mind 24/7 without ever opening Canva.',
+  heroHeadline: 'More listings. AI that handles the work between them.',
   heroSub:
-    'Solo agents, teams, and small brokerages. We build the marketing system that keeps your sphere warm and the listings coming — then the agents run it for you, in your voice.',
+    'Solo agents, teams, and small brokerages. We keep your sphere warm and your listings coming — daily content, sphere nurture, and listing-focused funnels, all run for you in your voice.',
   pains: [
     {
       title: 'Content matters — and you cannot stick with it',

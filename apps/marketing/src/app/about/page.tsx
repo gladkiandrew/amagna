@@ -63,28 +63,29 @@ export default function AboutPage() {
       <section className="border-t border-black/5">
         <div className="mx-auto w-full max-w-[760px] px-6 py-20">
           <h2 className="text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-            The founder
+            Built by an operator, for operators
           </h2>
           <div className="mt-6 space-y-4 leading-relaxed text-ink-muted">
             <p>
-              I&apos;m Andrew Gladki. I build businesses out of Saginaw, Michigan.
+              I&apos;m Andrew Gladki. I run Amagna out of Saginaw, Michigan, and I built it
+              the way I wish someone had built it for me.
             </p>
             <p>
-              Before Amagna I started <strong>Breaking the Fast</strong>, a consumer brand
-              running profitable Meta ad campaigns — the proof of concept for everything
-              Amagna does. I learned the marketing playbook by spending my own money on it.
+              Before Amagna I launched <strong>Breaking the Fast</strong>, a consumer brand
+              that pays its own bills with Meta ads. Every play in the Amagna system — the
+              funnels, the content rhythm, the offers, the reporting — comes from spending my
+              own money on growth and watching what actually moves the number.
             </p>
             <p>
-              I&apos;m also a rookie developer, leveling up fast. Amagna is being built in the
-              open, with AI as the engineering partner — and I think that&apos;s an advantage,
-              not a disclaimer. When you work with an agency in its first chapter, you get the
-              founder&apos;s full attention and a system built without the baggage of “how
-              agencies have always done it.”
+              So when we run your marketing, it is not a junior account manager reading from
+              a template. It is the same playbook I run on my own businesses, applied to
+              yours — with the AI doing the repetitive work so we can charge a fraction of
+              what an old-school agency would.
             </p>
             <p>
-              I document the build publicly — the wins, the numbers, the mistakes. If you
-              hire us, you are not buying a black box. You are buying into an operator who
-              shows his work.
+              The deal is simple: we show our work, we report in plain English, and we earn
+              your next month every month. If we are not getting you more calls or more
+              listings, you should not be paying us.
             </p>
           </div>
         </div>

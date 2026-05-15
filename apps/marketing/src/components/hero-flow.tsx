@@ -41,11 +41,11 @@ export function HeroFlow(): JSX.Element {
       </p>
 
       <h1 className="mt-4 text-balance text-[32px] font-medium leading-[1.15] tracking-tight text-ink sm:text-[48px]">
-        Sync your apps with any LLM into one agentic dashboard
+        More calls. More listings. AI that handles the work between them.
       </h1>
 
-      <p className="mx-auto mt-5 max-w-[560px] text-[18px] leading-[1.5] text-ink-muted">
-        50+ AI agents custom fit to your business.
+      <p className="mx-auto mt-5 max-w-[640px] text-balance text-[18px] leading-[1.5] text-ink-muted">
+        We don&apos;t sell innovative tech. We fix your problem — for home services owners and real estate agents who want predictable growth.
       </p>
 
       <div
@@ -222,16 +222,16 @@ export function HeroFlow(): JSX.Element {
 
       <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
         <a
-          href="#book"
-          className="rounded-full bg-royal-purple px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-royal-purple/90"
+          href="/audit"
+          className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
         >
-          Book a call
+          Get your free audit
         </a>
         <a
-          href="#how"
+          href="/book"
           className="rounded-full border border-royal-purple bg-transparent px-6 py-3 text-sm font-medium text-royal-purple transition-colors hover:bg-royal-purple/5"
         >
-          See how it works
+          Book a 20-minute call
         </a>
       </div>
     </section>

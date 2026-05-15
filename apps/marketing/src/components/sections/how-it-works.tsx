@@ -7,12 +7,12 @@ const STEPS = [
   {
     n: '02',
     title: 'We build your growth system',
-    body: 'A niche-tuned funnel, ad campaigns, a content engine, and a reputation loop — set up on the Sapt platform with the Amagna agent layer wrapped around it.',
+    body: 'A niche-tuned funnel, ad campaigns, a content engine, and a review loop — built around your business and your voice. Live in two weeks.',
   },
   {
     n: '03',
-    title: 'The agents run it, every day',
-    body: 'Outreach, content, follow-up, and reporting happen on autopilot. You approve what matters and get a weekly report in plain English — not a dashboard you have to decode.',
+    title: 'It runs, every day',
+    body: 'Outreach, content, follow-up, and reporting happen for you. You approve what matters and get a weekly report in plain English — not a dashboard you have to decode.',
   },
 ] as const;
 

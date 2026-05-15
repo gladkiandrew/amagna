@@ -8,7 +8,8 @@ export const SITE = {
   domain: 'amagna.co',
   url: 'https://amagna.co',
   email: 'andrew@amagna.co',
-  tagline: 'AI-powered growth systems for home services and real estate operators.',
+  tagline:
+    "We don't sell innovative tech. We fix your problem — for home services owners and real estate agents who want predictable growth.",
 } as const;
 
 /** Primary navigation — used by the header and the footer. */
@@ -20,5 +21,8 @@ export const NAV_LINKS = [
   { href: '/about', label: 'About' },
 ] as const;
 
-/** Where every "Book a call" call-to-action points. */
+/** Where every "Book a call" CTA points (Cal.com booking page). */
 export const BOOK_A_CALL_HREF = '/book';
+
+/** Where the primary "Get your free audit" CTA points. */
+export const AUDIT_HREF = '/audit';

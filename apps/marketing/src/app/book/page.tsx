@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Clock, MessageSquare, ClipboardList } from 'lucide-react';
-import { CalendlyEmbed } from '@/components/calendly-embed';
+import { CalcomEmbed } from '@/components/calcom-embed';
 
 export const metadata: Metadata = {
   title: 'Book a call',
@@ -27,7 +27,7 @@ const WHAT_TO_EXPECT = [
 ] as const;
 
 export default function BookPage() {
-  const calendlyUrl = process.env.NEXT_PUBLIC_CALENDLY_URL;
+  const calcomUrl = process.env.NEXT_PUBLIC_CALCOM_URL;
 
   return (
     <section className="mx-auto w-full max-w-[900px] px-6 py-20">
@@ -53,7 +53,7 @@ export default function BookPage() {
       </div>
 
       <div className="mt-10">
-        <CalendlyEmbed url={calendlyUrl} />
+        <CalcomEmbed url={calcomUrl} />
       </div>
     </section>
   );

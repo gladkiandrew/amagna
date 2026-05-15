@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 import { CtaBand } from '@/components/sections/cta-band';
-import { BOOK_A_CALL_HREF } from '@/lib/site';
+import { BOOK_A_CALL_HREF, AUDIT_HREF } from '@/lib/site';
 import type { NicheContent } from '@/lib/niches';
 
 type NicheFunnelProps = {
@@ -28,17 +27,16 @@ export function NicheFunnel({ content }: NicheFunnelProps): JSX.Element {
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">{content.heroSub}</p>
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <Link
-            href={BOOK_A_CALL_HREF}
+            href={AUDIT_HREF}
             className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
           >
-            Book a call
+            Get your free audit
           </Link>
           <Link
-            href="/pricing"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-royal-purple transition-colors hover:text-royal-purple/80"
+            href={BOOK_A_CALL_HREF}
+            className="rounded-full border border-royal-purple bg-transparent px-6 py-3 text-sm font-medium text-royal-purple transition-colors hover:bg-royal-purple/5"
           >
-            See pricing
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            Book a 20-minute call
           </Link>
         </div>
       </section>

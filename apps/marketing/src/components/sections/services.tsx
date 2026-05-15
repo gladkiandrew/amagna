@@ -29,7 +29,7 @@ const SERVICES = [
   {
     icon: BarChart3,
     title: 'Reporting',
-    body: 'A weekly report written by an agent in plain English, plus a live dashboard. You see what worked and what is next.',
+    body: 'A weekly report in plain English, plus a live dashboard. You see what worked, what is next, and where the money went.',
   },
 ] as const;
 
@@ -42,11 +42,11 @@ export function Services(): JSX.Element {
           What you get
         </p>
         <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-          Everything a growing operator needs, run by agents
+          Everything a growing operator needs — handled
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted">
-          One retainer. Built once, deployed for your business — then improved every week by
-          the agent fleet working behind it.
+          One retainer. Built once for your business, then improved every week. You stay in the
+          field; we keep the phone ringing and the calendar full.
         </p>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
