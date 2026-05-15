@@ -3,6 +3,9 @@ import { getStripe } from '@/lib/stripe';
 import { PLANS, isPlanSlug, type PlanSlug } from '@/lib/plans';
 import { SITE } from '@/lib/site';
 
+// next-on-pages requires non-static routes to opt into the edge runtime.
+export const runtime = 'edge';
+
 /**
  * POST /api/stripe/checkout
  *

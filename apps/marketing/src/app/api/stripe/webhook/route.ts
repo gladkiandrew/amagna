@@ -3,6 +3,9 @@ import type Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
 import { getSupabaseAdmin, getAmagnaOrgId } from '@/lib/supabase-server';
 
+// next-on-pages requires non-static routes to opt into the edge runtime.
+export const runtime = 'edge';
+
 /**
  * POST /api/stripe/webhook
  *
