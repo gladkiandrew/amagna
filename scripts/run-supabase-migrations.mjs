@@ -91,16 +91,32 @@ async function connect() {
 async function run() {
   const client = await connect();
 
+  // --- Track which migrations have already run so re-runs apply only new files ---
+  await client.query(`
+    create table if not exists public._migrations (
+      filename text primary key,
+      applied_at timestamptz not null default now()
+    );
+  `);
+  const applied = new Set(
+    (await client.query('select filename from public._migrations')).rows.map((r) => r.filename),
+  );
+
   // --- Migrations, in filename order, each wrapped in its own transaction ---
   const files = readdirSync(MIGRATIONS_DIR)
     .filter((f) => f.endsWith('.sql'))
     .sort();
 
   for (const file of files) {
+    if (applied.has(file)) {
+      console.log(`  · ${file} (already applied — skipping)`);
+      continue;
+    }
     const sql = readFileSync(join(MIGRATIONS_DIR, file), 'utf8');
     try {
       await client.query('BEGIN');
       await client.query(sql);
+      await client.query('insert into public._migrations (filename) values ($1)', [file]);
       await client.query('COMMIT');
       console.log(`  ✓ ${file}`);
     } catch (error) {
