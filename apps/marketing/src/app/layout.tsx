@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { AppShell } from '@/components/app-shell';
 import { MetaPixel } from '@/components/meta-pixel';
 import { SITE } from '@/lib/site';
 
@@ -15,6 +17,14 @@ const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+});
+// Serif headlines for the nautical rebrand (/v2). Exposed site-wide so the
+// font is preloaded once; only /v2 actually uses font-serif.
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
 });
 
 const TITLE = 'Amagna AI — AI growth systems for home services & real estate';
@@ -78,16 +88,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-cream antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} flex min-h-screen flex-col bg-cream antialiased`}
       >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <MetaPixel pixelId={metaPixelId} />
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <AppShell header={<SiteHeader />} footer={<SiteFooter />}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );

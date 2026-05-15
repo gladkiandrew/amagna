@@ -14,6 +14,7 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+        serif: ['var(--font-cormorant)', ...defaultTheme.fontFamily.serif],
       },
       colors: {
         // --- Amagna brand palette (source of truth: docs/brand/brand-colors.md) ---
@@ -24,6 +25,17 @@ const config: Config = {
         ink: {
           DEFAULT: '#1A1A1A',
           muted: '#5A5A60',
+        },
+        // --- Nautical rebrand (rebrand/phase-2) ---
+        navy: {
+          DEFAULT: '#0A1628',
+          deep: '#050D1A',
+          tide: '#142646',
+        },
+        gold: {
+          DEFAULT: '#C9A961',
+          bright: '#E5C783',
+          deep: '#8A7235',
         },
 
         // --- shadcn/ui semantic tokens (driven by CSS variables in globals.css) ---
