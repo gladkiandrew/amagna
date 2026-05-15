@@ -16,6 +16,7 @@ import {
   type Audit,
   type AuditState,
 } from '@/lib/audit-shared';
+import { trackLead } from '@/lib/meta-pixel-events';
 import { BOOK_A_CALL_HREF } from '@/lib/site';
 
 /** Sequence shown during audit generation — each line ~4s. */
@@ -174,6 +175,14 @@ export function AuditWidget(): JSX.Element {
     INITIAL_AUDIT_STATE,
   );
   const [situationDraft, setSituationDraft] = useState('');
+
+  // Fire Meta pixel Lead when the audit lands. submissionId memoizes the fire
+  // so React-strict-mode double-mount doesn't double-fire.
+  useEffect(() => {
+    if (state.status === 'success' && state.submissionId) {
+      trackLead({});
+    }
+  }, [state.status, state.submissionId]);
 
   if (state.status === 'success' && state.audit) {
     return <AuditResult audit={state.audit} />;

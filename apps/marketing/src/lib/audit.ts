@@ -1,6 +1,7 @@
 import 'server-only';
 import Anthropic from '@anthropic-ai/sdk';
 import type { Audit, AuditInput } from './audit-shared';
+import { env } from './env';
 
 // Re-export shared types so existing call sites that imported from `@/lib/audit`
 // keep working — server modules can import everything from here, clients should
@@ -88,7 +89,7 @@ function fallbackAudit(input: AuditInput): Audit {
  * Sapt SERP integration wires in through this same surface once credentials land.
  */
 export async function generateAudit(input: AuditInput): Promise<Audit> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = env('ANTHROPIC_API_KEY');
   if (!apiKey) return fallbackAudit(input);
 
   const anthropic = new Anthropic({ apiKey });

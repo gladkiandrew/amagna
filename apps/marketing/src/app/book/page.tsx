@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import { Clock, MessageSquare, ClipboardList } from 'lucide-react';
 import { CalcomEmbed } from '@/components/calcom-embed';
+import { env } from '@/lib/env';
+
+// The Cal.com URL is a Cloudflare runtime env var — reading it forces this
+// route to render dynamically so the iframe URL reflects the current value.
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Book a call',
@@ -27,7 +33,7 @@ const WHAT_TO_EXPECT = [
 ] as const;
 
 export default function BookPage() {
-  const calcomUrl = process.env.NEXT_PUBLIC_CALCOM_URL;
+  const calcomUrl = env('NEXT_PUBLIC_CALCOM_URL');
 
   return (
     <section className="mx-auto w-full max-w-[900px] px-6 py-20">

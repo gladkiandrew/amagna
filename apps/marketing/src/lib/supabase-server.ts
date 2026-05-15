@@ -1,4 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
+import { env } from './env';
 
 /**
  * Server-side Supabase client using the service role key (bypasses RLS).
@@ -6,12 +7,12 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
  * SERVER-ONLY. Never import this from a client component — it would leak the
  * service role key into the browser bundle.
  *
- * Returns null when the env vars are missing so callers can degrade gracefully
- * during local builds without secrets.
+ * Reads via the runtime env helper so Cloudflare-set secrets resolve on Pages.
+ * Returns null when the env vars are missing so callers can degrade gracefully.
  */
 export function getSupabaseAdmin(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = env('NEXT_PUBLIC_SUPABASE_URL');
+  const serviceRoleKey = env('SUPABASE_SERVICE_ROLE_KEY');
   if (!url || !serviceRoleKey) return null;
   return createClient(url, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },

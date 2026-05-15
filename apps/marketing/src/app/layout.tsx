@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
+import { MetaPixel } from '@/components/meta-pixel';
 import { SITE } from '@/lib/site';
 
 const geistSans = localFont({
@@ -69,6 +70,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Pixel ID is read at build time via process.env (NEXT_PUBLIC_ inlines into
+  // the bundle). Keeping layout static avoids forcing the whole tree dynamic
+  // and dodges Anthropic SDK's node:fs paths in the edge build.
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
   return (
     <html lang="en">
       <body
@@ -78,6 +84,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <MetaPixel pixelId={metaPixelId} />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

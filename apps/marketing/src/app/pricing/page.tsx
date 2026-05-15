@@ -14,7 +14,7 @@ import { BOOK_A_CALL_HREF, AUDIT_HREF } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Pricing',
   description:
-    'One productized retainer at $1,497/month — Amagna Growth. Pilot starter and custom solutions available. Clear pricing, no long-term contracts.',
+    'One productized retainer at $1,497/month — Amagna Growth. Update tier ($500 one-time website + GBP rebuild) and custom solutions available. Clear pricing, no long-term contracts.',
 };
 
 const GROWTH_FEATURES = [
@@ -52,7 +52,7 @@ const FAQ = [
   },
   {
     q: 'What if I want to start smaller?',
-    a: 'The Pilot tier at $997/mo is a starter — one funnel, base outreach, monthly report. It is a way to test the fit before stepping up to Growth.',
+    a: 'The Update tier ($500, one time) is a flat-rate refresh of your website and Google Business Profile — modern, on-brand, conversion-ready. It is the natural on-ramp to Growth.',
   },
 ];
 
@@ -123,21 +123,21 @@ export default function PricingPage() {
           <div className="rounded-2xl border border-black/5 bg-white p-6">
             <div className="flex items-baseline justify-between gap-3">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
-                Pilot
+                Update
               </h2>
               <p className="text-lg font-semibold text-ink">
-                $997<span className="text-xs font-normal text-ink-muted"> / mo</span>
+                $500<span className="text-xs font-normal text-ink-muted"> one-time</span>
               </p>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              A starter for solo operators. One funnel, base outreach, monthly report. A way
-              to test the fit before stepping up.
+              A flat-rate website + Google Business Profile rebuild. Modern, on-brand,
+              conversion-ready. The natural on-ramp to Growth.
             </p>
             <Link
-              href={BOOK_A_CALL_HREF}
+              href="/checkout"
               className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-royal-purple"
             >
-              Talk to us about Pilot
+              Start an Update
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           </div>

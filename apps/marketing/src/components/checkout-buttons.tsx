@@ -6,6 +6,8 @@ import type { PlanSlug } from '@/lib/plans';
 type CheckoutButtonsProps = {
   plan: PlanSlug;
   highlighted?: boolean;
+  /** Override the default "Subscribe" label (e.g. "Buy the Update" for one-time). */
+  label?: string;
 };
 
 /**
@@ -13,7 +15,11 @@ type CheckoutButtonsProps = {
  * Stripe-hosted Checkout page. Until the Stripe env is wired, the API
  * returns 503 and we surface a friendly "coming online soon" note.
  */
-export function CheckoutButtons({ plan, highlighted = false }: CheckoutButtonsProps): JSX.Element {
+export function CheckoutButtons({
+  plan,
+  highlighted = false,
+  label = 'Subscribe',
+}: CheckoutButtonsProps): JSX.Element {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -54,7 +60,7 @@ export function CheckoutButtons({ plan, highlighted = false }: CheckoutButtonsPr
             : 'w-full rounded-full border border-royal-purple px-5 py-3 text-sm font-semibold text-royal-purple transition-colors hover:bg-royal-purple/5 disabled:opacity-60'
         }
       >
-        {pending ? 'Opening checkout…' : 'Subscribe'}
+        {pending ? 'Opening checkout…' : label}
       </button>
       {error && <p className="mt-3 text-xs text-ink-muted">{error}</p>}
     </div>

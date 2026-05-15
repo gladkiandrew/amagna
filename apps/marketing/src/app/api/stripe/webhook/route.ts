@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type Stripe from 'stripe';
 import { getStripe } from '@/lib/stripe';
 import { getSupabaseAdmin, getAmagnaOrgId } from '@/lib/supabase-server';
+import { env } from '@/lib/env';
 
 // next-on-pages requires non-static routes to opt into the edge runtime.
 export const runtime = 'edge';
@@ -21,7 +22,7 @@ export const runtime = 'edge';
  */
 export async function POST(request: Request): Promise<Response> {
   const stripe = getStripe();
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const webhookSecret = env('STRIPE_WEBHOOK_SECRET');
 
   if (!stripe || !webhookSecret) {
     // Don't 500 — Stripe retries, and we'd rather log + 200 once configured.
@@ -61,12 +62,22 @@ export async function POST(request: Request): Promise<Response> {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
-        if (typeof session.subscription === 'string' && typeof session.customer === 'string') {
-          // Pull the subscription detail so we have prices + period info.
+        if (typeof session.subscription === 'string') {
+          // Subscription mode (Growth) — pull the subscription for prices + period info.
           const subscription = await stripe.subscriptions.retrieve(session.subscription);
           await upsertSubscription(supabase, orgId, subscription, {
             email: session.customer_details?.email ?? session.customer_email ?? null,
             businessName: session.metadata?.business_name ?? null,
+          });
+        } else if (session.mode === 'payment') {
+          // One-time payment (Update). One-time purchases are visible in the
+          // Stripe dashboard; mirroring them lands in Phase 2 once the
+          // purchases table is added.
+          console.info('[stripe/webhook] one-time payment completed', {
+            session: session.id,
+            plan: session.metadata?.plan,
+            amount: session.amount_total,
+            email: session.customer_details?.email,
           });
         }
         break;

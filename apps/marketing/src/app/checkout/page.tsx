@@ -1,41 +1,38 @@
 import type { Metadata } from 'next';
 import { CheckoutButtons } from '@/components/checkout-buttons';
-import { PLANS } from '@/lib/plans';
+import { PLANS, type Plan } from '@/lib/plans';
 
 export const metadata: Metadata = {
   title: 'Start your subscription',
-  description: 'Subscribe to Amagna AI. Month-to-month, no long-term contracts.',
+  description:
+    'Amagna Growth — $1,497/mo, month-to-month — or the $500 Update website + GBP rebuild as a one-time on-ramp.',
 };
 
 export default function CheckoutPage() {
   return (
     <section className="mx-auto w-full max-w-[760px] px-6 py-20">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
-        Start your subscription
+        Start with Amagna
       </p>
       <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
-        Pick your plan
+        Pick your starting point
       </h1>
       <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-        Month-to-month, no long-term contracts. We earn the next month by delivering this
-        one.
+        Month-to-month for Growth, no long-term contracts. Or start with the one-time Update
+        and step up to Growth when you are ready.
       </p>
 
       <div className="mt-10 grid gap-4 sm:grid-cols-2">
         <PlanCard plan={PLANS.growth} highlighted />
-        <PlanCard plan={PLANS.pilot} />
+        <PlanCard plan={PLANS.update} />
       </div>
     </section>
   );
 }
 
-function PlanCard({
-  plan,
-  highlighted = false,
-}: {
-  plan: (typeof PLANS)[keyof typeof PLANS];
-  highlighted?: boolean;
-}): JSX.Element {
+function PlanCard({ plan, highlighted = false }: { plan: Plan; highlighted?: boolean }): JSX.Element {
+  const isOneTime = plan.mode === 'payment';
+  const amount = `$${(plan.priceCents / 100).toLocaleString()}`;
   return (
     <div
       className={
@@ -47,14 +44,16 @@ function PlanCard({
       <h2 className="text-lg font-semibold text-ink">{plan.name}</h2>
       <p className="mt-1 text-sm text-ink-muted">{plan.tagline}</p>
       <p className="mt-4 flex items-baseline gap-1">
-        <span className="text-4xl font-semibold tracking-tight text-ink">
-          ${(plan.priceCents / 100).toLocaleString()}
-        </span>
-        <span className="text-sm text-ink-muted">/ month</span>
+        <span className="text-4xl font-semibold tracking-tight text-ink">{amount}</span>
+        <span className="text-sm text-ink-muted">{isOneTime ? 'one-time' : '/ month'}</span>
       </p>
       <p className="mt-3 text-sm leading-relaxed text-ink-muted">{plan.description}</p>
       <div className="mt-5">
-        <CheckoutButtons plan={plan.slug} highlighted={highlighted} />
+        <CheckoutButtons
+          plan={plan.slug}
+          highlighted={highlighted}
+          label={isOneTime ? 'Buy the Update' : 'Subscribe'}
+        />
       </div>
     </div>
   );
