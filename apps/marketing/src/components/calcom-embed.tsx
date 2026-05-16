@@ -34,7 +34,11 @@ export function CalcomEmbed({ url }: CalcomEmbedProps): JSX.Element {
     );
   }
 
-  const src = `${url}${url.includes('?') ? '&' : '?'}embed=true&hide-event-type-details=1`;
+  // Defensive: if the env var is set without a protocol (cal.com/foo instead
+  // of https://cal.com/foo), the browser treats the iframe src as a relative
+  // path under amagna.co and 404s. Always normalize to https.
+  const normalized = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+  const src = `${normalized}${normalized.includes('?') ? '&' : '?'}embed=true&hide-event-type-details=1`;
 
   return (
     <iframe
