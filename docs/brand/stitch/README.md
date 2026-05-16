@@ -20,6 +20,12 @@ CDN cache rolls. The same images are embedded in the Track B PR.
 
 ## Iteration log
 
-- **v1 (2026-05-16)** — first homepage pass from `generate_screen_from_text`
-  with the full ship-narrative prompt. Awaiting Andrew's feedback before
-  moving on to /home-services + /real-estate.
+- **v1 (2026-05-16)** — first homepage pass. **Rejected by Andrew.** Too
+  ornate, too vintage-maritime, no purple, helmsmen portraits + heraldic
+  shields too literal. Filed for reference.
+- **v2 (2026-05-16)** — hard reset. New design system "Amagna Modern"
+  (`assets/249360698559202413`) swaps the secondary color from navy-tide
+  to royal purple `#5D2E8C`. Prompt stripped of all heraldic / woodcut
+  language; reframed around Linear / Vercel / Lusion restraint. Crew
+  section is type-only stat blocks; voyage uses flat app pills, not
+  shields; ship is a minimal gold silhouette (`ship-minimal.png`).
