@@ -42,3 +42,9 @@ Thumbs.db
 .turbo/
 .cache/
 coverage/
+
+# Ruflo runtime state (regenerable — config/agents/hooks under .claude/ ARE tracked)
+.claude-flow/
+.swarm/
+.hive-mind/
+memory/

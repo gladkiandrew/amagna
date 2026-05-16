@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
+import { SiteHeader } from '@/components/site-header';
+import { SiteFooter } from '@/components/site-footer';
+import { AppShell } from '@/components/app-shell';
+import { MetaPixel } from '@/components/meta-pixel';
+import { SITE } from '@/lib/site';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -12,10 +18,61 @@ const geistMono = localFont({
   variable: '--font-geist-mono',
   weight: '100 900',
 });
+// Serif headlines for the nautical rebrand (/v2). Exposed site-wide so the
+// font is preloaded once; only /v2 actually uses font-serif.
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-cormorant',
+  display: 'swap',
+});
+
+const TITLE = 'Amagna AI — AI growth systems for home services & real estate';
 
 export const metadata: Metadata = {
-  title: 'Amagna AI',
-  description: 'AI-powered growth systems for home services and real estate.',
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: TITLE,
+    template: '%s · Amagna AI',
+  },
+  description: SITE.tagline,
+  // opengraph-image.tsx is auto-wired into openGraph.images / twitter.images.
+  openGraph: {
+    type: 'website',
+    siteName: 'Amagna AI',
+    url: SITE.url,
+    title: TITLE,
+    description: SITE.tagline,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: SITE.tagline,
+  },
+};
+
+/** Organization + WebSite structured data, emitted once site-wide. */
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE.url}/#organization`,
+      name: 'Amagna AI',
+      url: SITE.url,
+      email: SITE.email,
+      description: SITE.tagline,
+      areaServed: 'US',
+      knowsAbout: ['Home services marketing', 'Real estate marketing', 'AI marketing agency'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: 'Amagna AI',
+      publisher: { '@id': `${SITE.url}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -23,12 +80,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Pixel ID is read at build time via process.env (NEXT_PUBLIC_ inlines into
+  // the bundle). Keeping layout static avoids forcing the whole tree dynamic
+  // and dodges Anthropic SDK's node:fs paths in the edge build.
+  const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} flex min-h-screen flex-col bg-cream antialiased`}
       >
-        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+        <MetaPixel pixelId={metaPixelId} />
+        <AppShell header={<SiteHeader />} footer={<SiteFooter />}>
+          {children}
+        </AppShell>
       </body>
     </html>
   );

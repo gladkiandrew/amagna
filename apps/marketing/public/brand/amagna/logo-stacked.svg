@@ -1,1 +1,5 @@
-This is an image file
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 130" role="img" aria-label="Amagna AI">
+  <title>Amagna AI</title>
+  <text x="100" y="60" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="600" letter-spacing="-1.2" fill="#5D2E8C">Amagna</text>
+  <text x="100" y="105" text-anchor="middle" font-family="-apple-system, 'Helvetica Neue', Arial, sans-serif" font-size="36" font-weight="600" letter-spacing="-0.4" fill="#C9A961">AI</text>
+</svg>
