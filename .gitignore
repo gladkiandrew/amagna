@@ -15,6 +15,9 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.cloudflare
+.env.cloudflare.local
+.env.*.local
 
 # Logs
 *.log
@@ -37,6 +40,12 @@ Thumbs.db
 
 # Cloudflare
 .wrangler/
+
+# OpenNext build output (Workers target)
+.open-next/
+
+# Next-on-pages build output (Pages target, being deprecated)
+.vercel/
 
 # Misc
 .turbo/

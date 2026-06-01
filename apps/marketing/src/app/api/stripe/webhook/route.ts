@@ -4,8 +4,9 @@ import { getStripe } from '@/lib/stripe';
 import { getSupabaseAdmin, getAmagnaOrgId } from '@/lib/supabase-server';
 import { env } from '@/lib/env';
 
-// next-on-pages requires non-static routes to opt into the edge runtime.
-export const runtime = 'edge';
+// Default Node runtime under @opennextjs/cloudflare (Workers). The webhook
+// handler uses `stripe.webhooks.constructEventAsync`, which calls Web Crypto
+// — natively available on Node 20 and Workers under nodejs_compat.
 
 /**
  * POST /api/stripe/webhook

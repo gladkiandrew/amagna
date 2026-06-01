@@ -5,7 +5,8 @@ import { env } from '@/lib/env';
 
 // The Cal.com URL is a Cloudflare runtime env var — reading it forces this
 // route to render dynamically so the iframe URL reflects the current value.
-export const runtime = 'edge';
+// Under @opennextjs/cloudflare we use the default Node runtime
+// (compatibility_date >= 2025-04-01 + nodejs_compat make process.env work).
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {

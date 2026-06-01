@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   description: 'Subscription started — welcome to Amagna AI.',
 };
 
-// Dynamic because it reads searchParams (?plan=…). Required by next-on-pages.
-export const runtime = 'edge';
-
 type CheckoutSuccessPageProps = {
   searchParams: { plan?: string };
 };

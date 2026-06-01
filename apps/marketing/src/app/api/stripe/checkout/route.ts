@@ -4,8 +4,8 @@ import { PLANS, isPlanSlug, type PlanSlug } from '@/lib/plans';
 import { SITE } from '@/lib/site';
 import { env } from '@/lib/env';
 
-// next-on-pages requires non-static routes to opt into the edge runtime.
-export const runtime = 'edge';
+// Default Node runtime under @opennextjs/cloudflare (Workers); Stripe SDK
+// and the Web Crypto API used by Checkout both work on Node 20+.
 
 /**
  * POST /api/stripe/checkout
