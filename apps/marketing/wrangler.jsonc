@@ -1,0 +1,34 @@
+/**
+ * Cloudflare Workers config — OpenNext build target.
+ *
+ * This is the PREVIEW worker for the marketing app migration off
+ * @cloudflare/next-on-pages (Pages) to @opennextjs/cloudflare (Workers).
+ * It deploys to a *.workers.dev URL only; the live amagna.co domain stays
+ * on the existing Pages deployment until Andrew approves the cutover.
+ *
+ * See docs/architecture/decisions/ADR-004-pages-to-workers.md for context.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "amagna-marketing-preview",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-04-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  // Public NEXT_PUBLIC_* vars. Inlined into client bundles at build time AND
+  // available on globalThis at runtime. Secrets (STRIPE_SECRET_KEY etc.) live
+  // in wrangler secrets — see ADR for the put commands.
+  "vars": {
+    "NEXT_PUBLIC_CALCOM_URL": "https://cal.com/andrew-gladki-6glrmg/amagna-ai-discovery-call",
+    "NEXT_PUBLIC_SUPABASE_URL": "",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "",
+    "NEXT_PUBLIC_META_PIXEL_ID": ""
+  }
+}

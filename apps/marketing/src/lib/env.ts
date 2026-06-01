@@ -1,22 +1,18 @@
 import 'server-only';
-import { getRequestContext } from '@cloudflare/next-on-pages';
 
 /**
  * Read an environment variable at request time.
  *
- * On Cloudflare Pages with `@cloudflare/next-on-pages`, runtime secrets set
- * in the Pages dashboard are *not* on `process.env` — they live on the request
- * context's `env` map. Falls back to `process.env` for local dev (`next dev`)
- * and for any code path that runs outside a Cloudflare request scope.
+ * Under @opennextjs/cloudflare with `nodejs_compat` and
+ * `compatibility_date >= 2025-04-01`, `process.env` is populated from
+ * the worker's `vars` + secrets. That works the same way on Node locally
+ * (next dev / next build), so this helper is now a thin wrapper that just
+ * normalizes empty strings to undefined.
+ *
+ * The previous next-on-pages-specific `getRequestContext().env` path was
+ * removed when the app migrated to Workers (ADR-004).
  */
 export function env(name: string): string | undefined {
-  try {
-    const ctx = getRequestContext();
-    const value = (ctx?.env as Record<string, unknown> | undefined)?.[name];
-    if (typeof value === 'string' && value.length > 0) return value;
-  } catch {
-    // not inside a Cloudflare request — fall through to process.env
-  }
   const v = process.env[name];
   return typeof v === 'string' && v.length > 0 ? v : undefined;
 }
