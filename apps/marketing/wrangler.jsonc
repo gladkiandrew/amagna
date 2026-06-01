@@ -1,16 +1,16 @@
 /**
  * Cloudflare Workers config — OpenNext build target.
  *
- * This is the PREVIEW worker for the marketing app migration off
- * @cloudflare/next-on-pages (Pages) to @opennextjs/cloudflare (Workers).
- * It deploys to a *.workers.dev URL only; the live amagna.co domain stays
- * on the existing Pages deployment until Andrew approves the cutover.
+ * Production worker that serves amagna.co + www.amagna.co. The legacy Pages
+ * project `amagna-marketing` is preserved as the rollback target (still
+ * serves the feaf751 deploy when domains are reattached to it).
  *
- * See docs/architecture/decisions/ADR-004-pages-to-workers.md for context.
+ * See docs/architecture/decisions/0004-pages-to-workers.md (migration) and
+ * docs/architecture/decisions/0005-live-cutover-pages-to-workers.md (cutover).
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "amagna-marketing-preview",
+  "name": "amagna-marketing-app",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat"],
@@ -26,9 +26,9 @@
   // in wrangler secrets — see ADR for the put commands.
   "vars": {
     "NEXT_PUBLIC_CALCOM_URL": "https://cal.com/andrew-gladki-6glrmg/amagna-ai-discovery-call",
-    "NEXT_PUBLIC_SUPABASE_URL": "",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "",
-    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "",
+    "NEXT_PUBLIC_SUPABASE_URL": "https://gxruzbfstwecnjqbnspa.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4cnV6YmZzdHdlY25qcWJuc3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3Nzc5OTEsImV4cCI6MjA5NDM1Mzk5MX0.2orWy57c7aVMqCtRsWn97JGTHHqveBqtBOze8WNscg4",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51TXPvc7U8MVsq7xIzlEAZWRtRQR9jKg8IFtdu7DLVddXFMkxbIweFgYIUTLBc7YWsJoafLrQgVkCuBl8SwW1qe8t00mYp2XQlN",
     "NEXT_PUBLIC_META_PIXEL_ID": ""
   }
 }
