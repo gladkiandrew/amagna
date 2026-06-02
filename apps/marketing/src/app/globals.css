@@ -144,3 +144,109 @@
   fill: var(--brand-purple);
   animation: rippleUp 2s linear infinite;
 }
+
+/* ===================================================================
+   Voyage homepage — design tokens, reveals, grain, reduced-motion.
+   (See docs/marketing/PLAN.md §C/§F/§G.)
+   =================================================================== */
+:root {
+  /* Signature easings — never use bare `ease`/`linear` for voyage motion. */
+  --ease-voyage: cubic-bezier(0.16, 1, 0.3, 1); /* refined ease-out for reveals */
+  --ease-inertial: cubic-bezier(0.33, 0, 0.1, 1); /* weighted, ship-like */
+
+  /* Vertical rhythm: 8px base; intentional section spacers (not uniform). */
+  --rhythm: 8px;
+  --space-section: clamp(5rem, 9vw, 10rem); /* 80 → 160px between beats */
+  --space-section-tight: clamp(3.5rem, 6vw, 6rem);
+
+  /* Editorial measure caps. */
+  --measure: 65ch;
+  --measure-tight: 48ch;
+}
+
+/* Scroll-reveal: IntersectionObserver toggles `.is-visible`.
+   Compositor-only (transform/opacity). Honors reduced-motion below. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-voyage),
+    transform 0.9s var(--ease-voyage);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+/* Stagger children: set --i on each child (0,1,2…). */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s var(--ease-voyage),
+    transform 0.8s var(--ease-voyage);
+  transition-delay: calc(var(--i, 0) * 90ms);
+  will-change: opacity, transform;
+}
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* Film grain — kills plastic-flat fills. ~4% opacity, decorative, no events. */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Antique-gold hairline used at horizon seams (decorative). */
+.gold-seam {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--brand-gold) 18%,
+    var(--brand-warmgold) 50%,
+    var(--brand-gold) 82%,
+    transparent
+  );
+  box-shadow: 0 0 14px 1px rgb(201 169 97 / 0.35);
+}
+
+/* Landfall: when one island is engaged, the other recedes (the choice is
+   either/or). Progressive enhancement via :has() — no-op where unsupported. */
+.landfall:has(.island--left:hover, .island--left:focus-visible) .island--right,
+.landfall:has(.island--right:hover, .island--right:focus-visible) .island--left {
+  opacity: 0.62;
+  filter: saturate(0.82);
+  transform: translateY(6px) scale(0.992);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Existing hero-flow pulses. */
+  .pulse-down,
+  .pulse-up,
+  .amagna-glow,
+  .ripple-dot {
+    animation: none;
+  }
+  /* Landfall recede: keep the dim, drop the motion. */
+  .landfall:has(.island--left:hover, .island--left:focus-visible) .island--right,
+  .landfall:has(.island--right:hover, .island--right:focus-visible) .island--left {
+    transform: none;
+  }
+  /* Voyage reveals: show final state immediately, no transition. */
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}

@@ -14,6 +14,10 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+        // Fraunces display serif — headlines on the voyage homepage.
+        // font-display and font-serif both resolve to Fraunces.
+        display: ['var(--font-fraunces)', 'Fraunces', ...defaultTheme.fontFamily.serif],
+        serif: ['var(--font-fraunces)', 'Fraunces', ...defaultTheme.fontFamily.serif],
       },
       colors: {
         // --- Amagna brand palette — going-forward `brand-*` family ---
@@ -79,6 +83,11 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      transitionTimingFunction: {
+        // Signature voyage easings (see PLAN.md §G). Use `ease-voyage`.
+        voyage: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        inertial: 'cubic-bezier(0.33, 0, 0.1, 1)',
       },
       keyframes: {
         'accordion-down': {

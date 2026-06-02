@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+import { Fraunces } from 'next/font/google';
 import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
@@ -15,6 +16,16 @@ const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+});
+
+// Fraunces — display serif for headlines/wordmark on the voyage homepage.
+// Variable font (weight axis), self-hosted by next/font, display:swap to avoid
+// FOIT. Pairing chosen in docs/marketing/brand-guidelines.md (Andrew confirms).
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  display: 'swap',
+  style: ['normal', 'italic'],
 });
 
 const TITLE = 'Amagna AI — AI growth systems for home services & real estate';
@@ -78,7 +89,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col bg-cream antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} flex min-h-screen flex-col bg-cream antialiased`}
       >
         <script
           type="application/ld+json"
