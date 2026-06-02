@@ -16,7 +16,21 @@ const config: Config = {
         mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
       },
       colors: {
-        // --- Amagna brand palette (source of truth: docs/brand/brand-colors.md) ---
+        // --- Amagna brand palette — going-forward `brand-*` family ---
+        //     Source of truth: docs/marketing/brand-guidelines.md
+        //     Classes: text-brand-purple, bg-brand-cream, border-brand-gold, etc.
+        brand: {
+          purple: '#5D2E8C', // Royal Purple — accent on "land": words, buttons, links
+          gold: '#C9A961', // Antique Gold — light on water, trim, premium accents
+          cream: '#FAF8F3', // Cream — the content canvas
+          deep: '#1A0E36', // Deep Purple — night/horizon, rich dark panels, footer
+          warmgold: '#D4B873', // Warm Gold — gold for dark backgrounds
+          charcoal: '#1A1A1A', // Charcoal — the hull; body text on light
+          slate: '#4A4A52', // Slate Gray — muted/secondary text, captions
+          lightgray: '#E5E5EA', // Light Gray — hairlines, dividers, disabled
+        },
+
+        // --- Legacy aliases (retained: used across checkout/pricing/about/book) ---
         'royal-purple': '#5D2E8C',
         'antique-gold': '#C9A961',
         'dark-mode-gold': '#D4B873',

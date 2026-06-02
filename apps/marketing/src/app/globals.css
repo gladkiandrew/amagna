@@ -33,10 +33,25 @@
     --ring: 270 51% 36%;
     --radius: 0.5rem;
 
-    /* Amagna brand palette — raw hex for SVG / canvas use */
-    --brand-purple: #5d2e8c;
-    --brand-gold: #c9a961;
-    --brand-gold-dark: #d4b873;
+    /* Amagna brand palette — raw hex for SVG / canvas use.
+       Going-forward `brand-*` family; mirrors docs/marketing/brand-guidelines.md
+       and the Tailwind `brand.*` tokens. */
+    --brand-purple: #5d2e8c; /* Royal Purple — land accent */
+    --brand-gold: #c9a961; /* Antique Gold — light on water, trim */
+    --brand-cream: #faf8f3; /* Cream — content canvas */
+    --brand-deep: #1a0e36; /* Deep Purple — night/horizon, dark panels */
+    --brand-warmgold: #d4b873; /* Warm Gold — gold on dark */
+    --brand-charcoal: #1a1a1a; /* Charcoal — hull, body text on light */
+    --brand-slate: #4a4a52; /* Slate Gray — muted/secondary text */
+    --brand-lightgray: #e5e5ea; /* Light Gray — hairlines, dividers */
+    --brand-gold-dark: #d4b873; /* legacy alias of --brand-warmgold (used by hero-flow) */
+
+    /* Realistic ocean ramp (color-job rule #1: black + gold, NO purple tint).
+       Cool blue-blacks; brand-deep only at the deepest horizon. */
+    --ocean-surface: #101a2b; /* lit water near horizon */
+    --ocean-mid: #0b1220; /* mid water */
+    --ocean-deep: #060a12; /* deepest water (foreground troughs) */
+    --ocean-horizon: #1a0e36; /* brand-deep, reserved for the far horizon band only */
   }
 
   .dark {
