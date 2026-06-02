@@ -1,7 +1,8 @@
-# Cloudflare Pages Setup — amagna.co
+# Cloudflare Pages Setup — amagna.co (HISTORICAL — see cloudflare-infrastructure.md)
 
-> **Status:** Live. `https://amagna.co` serves the marketing site (HTTP 200).
-> **Last updated:** 2026-05-14
+> **Status (2026-06-02):** **Architecture changed.** amagna.co + www.amagna.co are now served by Cloudflare **Workers** (`amagna-marketing-app`), not Pages. See `docs/infrastructure/cloudflare-infrastructure.md` for the current live setup. This file is preserved as the historical record of the Pages-era architecture and as the rollback runbook reference.
+> **The Pages project `amagna-marketing` is still alive** at `https://amagna-marketing.pages.dev` serving the `feaf751` deploy; it is intentionally kept as the rollback target (see ADR-0005). Do not delete it without an explicit decision.
+> **Last updated:** 2026-06-02 (status banner only; body below is the pre-cutover snapshot)
 
 ## What's deployed
 

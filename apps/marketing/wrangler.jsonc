@@ -30,5 +30,9 @@
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4cnV6YmZzdHdlY25qcWJuc3BhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3Nzc5OTEsImV4cCI6MjA5NDM1Mzk5MX0.2orWy57c7aVMqCtRsWn97JGTHHqveBqtBOze8WNscg4",
     "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51TXPvc7U8MVsq7xIzlEAZWRtRQR9jKg8IFtdu7DLVddXFMkxbIweFgYIUTLBc7YWsJoafLrQgVkCuBl8SwW1qe8t00mYp2XQlN",
     "NEXT_PUBLIC_META_PIXEL_ID": ""
-  }
+  },
+  "routes": [
+    { "pattern": "amagna.co",     "custom_domain": true, "zone_id": "945e4c1755f729e954b82f565ffc5e58" },
+    { "pattern": "www.amagna.co", "custom_domain": true, "zone_id": "945e4c1755f729e954b82f565ffc5e58" }
+  ]
 }
