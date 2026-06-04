@@ -29,3 +29,17 @@ export const CALCOM_DIRECT_URL = 'https://cal.com/andrew-gladki-6glrmg/amagna-ai
 
 /** Where the primary "Get your free audit" CTA points. */
 export const AUDIT_HREF = '/audit';
+
+/**
+ * Standard Open Graph image — the generated `opengraph-image` route. Reused in
+ * per-page `openGraph` overrides: defining a page-level `openGraph` drops the
+ * image that the file convention auto-wires into the root layout, so each page
+ * that sets its own OG title/description must re-attach this. Relative URL is
+ * resolved to absolute via the layout's `metadataBase`.
+ */
+export const OG_IMAGE = {
+  url: '/opengraph-image',
+  width: 1200,
+  height: 630,
+  alt: 'Amagna AI — AI growth systems for home services & real estate',
+} as const;

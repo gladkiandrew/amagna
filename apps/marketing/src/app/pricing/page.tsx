@@ -9,12 +9,21 @@ import {
 } from '@/components/ui/accordion';
 import { CustomSolutionsPanel } from '@/components/sections/custom-solutions-panel';
 import { CtaBand } from '@/components/sections/cta-band';
-import { BOOK_A_CALL_HREF, AUDIT_HREF } from '@/lib/site';
+import { BOOK_A_CALL_HREF, AUDIT_HREF, OG_IMAGE } from '@/lib/site';
+
+const PRICING_DESCRIPTION =
+  'One productized retainer at $1,497/month — Amagna Growth. Update tier ($500 one-time website + GBP rebuild) and custom solutions available. Clear pricing, no long-term contracts.';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description:
-    'One productized retainer at $1,497/month — Amagna Growth. Update tier ($500 one-time website + GBP rebuild) and custom solutions available. Clear pricing, no long-term contracts.',
+  description: PRICING_DESCRIPTION,
+  openGraph: {
+    title: 'Pricing — Amagna AI',
+    description: PRICING_DESCRIPTION,
+    type: 'website',
+    url: '/pricing',
+    images: [OG_IMAGE],
+  },
 };
 
 const GROWTH_FEATURES = [

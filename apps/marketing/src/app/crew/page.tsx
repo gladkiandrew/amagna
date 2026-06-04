@@ -1,10 +1,20 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/site';
 import { CtaBand } from '@/components/sections/cta-band';
+
+const CREW_DESCRIPTION =
+  'The Amagna crew: five specialized AI agents — Outreach, Content, Reporting, Operations, and Sales — and the founder who captains them. Every agent has one job and a human in the loop.';
 
 export const metadata: Metadata = {
   title: 'Meet the Crew',
-  description:
-    'The Amagna crew: five specialized AI agents — Outreach, Content, Reporting, Operations, and Sales — and the founder who captains them. Every agent has one job and a human in the loop.',
+  description: CREW_DESCRIPTION,
+  openGraph: {
+    title: 'Meet the Crew — Amagna AI',
+    description: CREW_DESCRIPTION,
+    type: 'website',
+    url: '/crew',
+    images: [OG_IMAGE],
+  },
 };
 
 /**

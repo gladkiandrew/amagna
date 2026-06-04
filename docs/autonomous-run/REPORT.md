@@ -126,6 +126,21 @@ into Our Story. The voyage metaphor makes "the crew" a natural standalone place
 gives the agents room to each get a real introduction. Cross-linked from About so
 it's reachable.
 
+### Priority 5 — Quality sweep ✅ (metadata/OpenGraph + conventions)
+- **Per-page metadata + OpenGraph** for `/`, `/audit`, `/about`, `/home-services`,
+  `/real-estate`, `/pricing` (and `/crew`). The homepage had **no** metadata
+  export — added one. Each page now emits a page-specific `og:title`/`description`.
+- **Fixed an OG regression I introduced:** a page-level `openGraph` override drops
+  the social image that the `opengraph-image` file convention auto-wires into the
+  root layout. Added a shared `OG_IMAGE` (`lib/site.ts`) and re-attached it on
+  every page — verified in the prerendered HTML that `og:title` (page-specific)
+  **and** `og:image` now coexist on all pages.
+- **Conventions:** no `any` in any file I touched; named exports for components
+  (page default-exports are required by Next); all files kebab-case.
+- **Accessibility:** new pages use semantic landmarks (`main`/`section`), one
+  `<h1>` + ordered `<h2>`s, an `sr-only` section heading on `/crew`, decorative
+  canvas is `aria-hidden`. `tsc --noEmit` clean; `npm run build` green.
+
 ---
 
 ## Commits made this run
@@ -137,7 +152,8 @@ it's reachable.
 | 0aac111 | Document hero-v2 contract audit (Priority 1B) |
 | 4672846 | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
 | 21b72ce | Rebuild /about as Our Story (voyage narrative + visual language) |
-| _pending_ | Add /crew (Meet the Crew) page — five agents + the founder |
+| 4c960e4 | Add /crew (Meet the Crew) page — five agents + the founder |
+| _pending_ | Add per-page OpenGraph metadata across key routes |
 
 ---
 

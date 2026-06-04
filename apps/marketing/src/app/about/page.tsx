@@ -1,11 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { OG_IMAGE } from '@/lib/site';
 import { CtaBand } from '@/components/sections/cta-band';
+
+const ABOUT_DESCRIPTION =
+  'Why Amagna AI exists: an AI-native agency that sells outcomes, not hours, to home-services and real-estate operators. The thesis, the voyage, the name, and the founder.';
 
 export const metadata: Metadata = {
   title: 'Our Story',
-  description:
-    'Why Amagna AI exists: an AI-native agency that sells outcomes, not hours, to home-services and real-estate operators. The thesis, the voyage, the name, and the founder.',
+  description: ABOUT_DESCRIPTION,
+  openGraph: {
+    title: 'Our Story — Amagna AI',
+    description: ABOUT_DESCRIPTION,
+    type: 'website',
+    url: '/about',
+    images: [OG_IMAGE],
+  },
 };
 
 /** The Latin lineage behind the name — every entry sourced from README.md. */

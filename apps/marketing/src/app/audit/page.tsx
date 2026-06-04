@@ -1,10 +1,20 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/site';
 import { AuditWidget } from '@/components/audit-widget';
+
+const AUDIT_DESCRIPTION =
+  'Tell us about your business and your #1 growth goal. In 60 seconds you get a custom audit, a 30-day plan, and the next step — no card required.';
 
 export const metadata: Metadata = {
   title: 'Get your free audit',
-  description:
-    'Tell us about your business and your #1 growth goal. In 60 seconds you get a custom audit, a 30-day plan, and the next step — no card required.',
+  description: AUDIT_DESCRIPTION,
+  openGraph: {
+    title: 'Get your free audit — Amagna AI',
+    description: AUDIT_DESCRIPTION,
+    type: 'website',
+    url: '/audit',
+    images: [OG_IMAGE],
+  },
 };
 
 /** Compact "how it works" steps — sets expectations before the form. */

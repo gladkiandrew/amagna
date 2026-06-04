@@ -5,7 +5,23 @@ import { TheStorm } from '@/components/home/the-storm';
 import { TheMethod } from '@/components/home/the-method';
 import { LandfallFork } from '@/components/home/landfall-fork';
 import { LegacyHeroSection } from '@/components/home/legacy-hero-section';
+import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/site';
 import { DockCta } from '@/components/home/dock-cta';
+
+const HOME_DESCRIPTION =
+  'Amagna AI is an AI-native marketing agency for home-services and real-estate operators. We sell outcomes — more calls, more listings — not hours. Get a free 60-second audit.';
+
+export const metadata: Metadata = {
+  description: HOME_DESCRIPTION,
+  openGraph: {
+    title: 'Amagna AI — More calls. More listings. Owned, not rented.',
+    description: HOME_DESCRIPTION,
+    type: 'website',
+    url: '/',
+    images: [OG_IMAGE],
+  },
+};
 
 /**
  * The Amagna homepage — a single-scroll "voyage". The dragon-ship sails a live
