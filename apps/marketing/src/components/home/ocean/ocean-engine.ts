@@ -67,12 +67,11 @@ export class OceanEngine {
   // Targets vs eased (premium inertia — see §D).
   private progress = 0; // raw scroll progress 0..1
   private progEased = 0;
-  private pointerX = 0.5; // 0..1, light direction
-  private pointerY = 0.5;
-  private pointerXEased = 0.5;
-  private pointerActive = false;
+  // Light direction is FIXED at center — cursor-aware effects are excluded
+  // by brand rule (master spec §D.6). Moving water is the only "response".
+  private readonly lightX = 0.5;
 
-  ship: HTMLImageElement | null = null;
+  ship: HTMLImageElement | HTMLCanvasElement | null = null;
   private shipReady = false;
 
   // Time-based intro (sail-in). Starts when the sprite is ready and runs on
@@ -91,7 +90,7 @@ export class OceanEngine {
     return this.cfg.dprCap;
   }
 
-  setShip(img: HTMLImageElement): void {
+  setShip(img: HTMLImageElement | HTMLCanvasElement): void {
     this.ship = img;
     this.shipReady = true;
     this.introT = 0; // begin the sail-in the moment the sprite exists
@@ -136,16 +135,6 @@ export class OceanEngine {
     this.progress = clamp(p, 0, 1);
   }
 
-  setPointer(xFrac: number, yFrac: number): void {
-    this.pointerX = clamp(xFrac, 0, 1);
-    this.pointerY = clamp(yFrac, 0, 1);
-    this.pointerActive = true;
-  }
-
-  clearPointer(): void {
-    this.pointerActive = false;
-  }
-
   /** Surface y at world x for a given layer, plus analytic slope (for pitch). */
   private surface(layer: WaveLayer, x: number): { y: number; slope: number } {
     const k1 = (Math.PI * 2) / layer.len;
@@ -165,10 +154,6 @@ export class OceanEngine {
     const ease = (cur: number, target: number, tau: number) =>
       cur + (target - cur) * (1 - Math.exp(-dt / tau));
     this.progEased = ease(this.progEased, this.progress, 0.12);
-    const px = this.pointerActive ? this.pointerX : 0.5;
-    const py = this.pointerActive ? this.pointerY : 0.5;
-    this.pointerXEased = ease(this.pointerXEased, px, 0.18);
-    this.pointerY = py;
   }
 
   /** One full render pass (back → front). */
@@ -185,8 +170,8 @@ export class OceanEngine {
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
 
-    // Soft gold horizon glow (light source), nudged by pointer.
-    const lightX = W * lerp(0.5, this.pointerXEased, 0.6);
+    // Soft gold horizon glow — fixed central light source (no cursor coupling).
+    const lightX = W * this.lightX;
     const glow = ctx.createRadialGradient(lightX, H * 0.2, 0, lightX, H * 0.2, W * 0.6);
     glow.addColorStop(0, `rgba(${PALETTE.warmGold}, 0.16)`);
     glow.addColorStop(1, 'rgba(0,0,0,0)');
@@ -220,7 +205,7 @@ export class OceanEngine {
           void slope;
         }
         const grad = ctx.createLinearGradient(0, 0, W, 0);
-        const lit = this.pointerXEased;
+        const lit = this.lightX;
         grad.addColorStop(0, 'rgba(0,0,0,0)');
         grad.addColorStop(clamp(lit, 0.05, 0.95), `rgba(${PALETTE.gold}, ${0.13 * layer.crest})`);
         grad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -261,7 +246,7 @@ export class OceanEngine {
       const { y } = this.surface(layer, x);
       // Twinkle + concentrate near the light.
       const twinkle = 0.5 + 0.5 * Math.sin(this.t * 2.2 + i * 1.7);
-      const nearLight = 1 - Math.abs(x / W - this.pointerXEased);
+      const nearLight = 1 - Math.abs(x / W - this.lightX);
       const a = 0.06 + 0.22 * twinkle * clamp(nearLight, 0.15, 1);
       const radius = 0.8 + 1.8 * twinkle;
       const rg = ctx.createRadialGradient(x, y, 0, x, y, radius * 3);
@@ -280,34 +265,41 @@ export class OceanEngine {
     const { ctx, cssW: W, cssH: H } = this;
     const front = this.layers[this.layers.length - 1] as WaveLayer;
 
-    // --- Time-based motion (the key fix): a self-contained gentle sail-in on
-    // load, then an ongoing slow bob/pitch on the engine clock. No scroll
-    // coupling — the ship is alive at scroll = 0.
+    // --- Time-based motion: a self-contained gentle sail-in on load, then an
+    // ongoing slow bob/pitch on the engine clock. No scroll coupling — the
+    // ship is alive at scroll = 0. Prow faces LEFT, so it enters from the
+    // RIGHT and settles onto its seat (master spec §D.2).
     const intro = smoothstep(0, 1, this.introT / OceanEngine.INTRO_DUR); // 0→1 eased
     const landX = W < 768 ? 0.5 : 0.62; // seat: lower third, clear of the copy column
-    const driftX = lerp(landX - 0.2, landX, intro);
+    const driftX = lerp(landX + 0.24, landX, intro);
     const ambient = 0.012 * Math.sin(this.t * 0.18); // perpetual slow drift
     const shipX = W * (driftX + ambient * intro);
 
     const { y, slope } = this.surface(front, shipX);
 
-    // Scale ship to viewport — the deliberate focal element (was ≤26% width).
-    const targetW = clamp(W * 0.36, 240, 620);
-    const ar = this.ship.height / this.ship.width || 0.83;
+    // Scale — the deliberate focal element. The crew ship is a painterly
+    // panorama (AR ~0.77), so it carries more width than the old sprite.
+    const targetW = W < 768 ? clamp(W * 0.8, 280, 460) : clamp(W * 0.4, 380, 700);
+    const ar = this.ship.height / this.ship.width || 0.77;
     const shipW = targetW;
     const shipH = targetW * ar;
 
     // Seat the hull slightly INTO the water so crests lap the keel; add an
     // independent slow bob on top of the wave seat so it never reads static.
     const bob = 3 * Math.sin(this.t * 0.5) * intro;
-    const shipY = y - shipH * 0.36 + lerp(shipH * 0.1, 0, intro) + bob;
+    const shipY = y - shipH * 0.4 + lerp(shipH * 0.08, 0, intro) + bob;
     const pitch = Math.atan(slope) * 0.42; // follows the wave field
-    const roll = 0.022 * Math.sin(this.t * 0.55); // ongoing slow pitch/roll
+    const roll = 0.02 * Math.sin(this.t * 0.55); // ongoing slow pitch/roll
+
+    // Sail "breathing" — a hair of horizontal flex so the canvas never reads
+    // frozen (true cloth flutter arrives with the Higgsfield ambient loop).
+    const breathe = 1 + 0.005 * Math.sin(this.t * 0.7);
 
     ctx.save();
     ctx.globalAlpha = lerp(0, 1, smoothstep(0, 0.35, intro)); // fade with the sail-in
     ctx.translate(shipX, shipY);
     ctx.rotate(pitch + roll);
+    ctx.scale(breathe, 1);
 
     // Gold reflection smear under the hull on the water.
     ctx.globalCompositeOperation = 'lighter';
@@ -319,6 +311,23 @@ export class OceanEngine {
     ctx.globalCompositeOperation = 'source-over';
 
     ctx.drawImage(this.ship, -shipW / 2, -shipH / 2, shipW, shipH);
+
+    // Dragon-prow shimmer: a slow additive gold pulse on the figurehead
+    // (upper-left of the sprite). Time-based, subtle, never strobing.
+    const prowX = -shipW * 0.38;
+    const prowY = -shipH * 0.22;
+    const pulse = 0.5 + 0.5 * Math.sin(this.t * 0.9);
+    const shimmerA = (0.04 + 0.09 * pulse) * intro;
+    ctx.globalCompositeOperation = 'lighter';
+    const shim = ctx.createRadialGradient(prowX, prowY, 0, prowX, prowY, shipW * 0.16);
+    shim.addColorStop(0, `rgba(${PALETTE.warmGold}, ${shimmerA})`);
+    shim.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = shim;
+    ctx.beginPath();
+    ctx.arc(prowX, prowY, shipW * 0.16, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
+
     ctx.restore();
     void H;
   }
@@ -328,7 +337,6 @@ export class OceanEngine {
     this.t = 6.2; // a flattering frozen phase
     this.introT = OceanEngine.INTRO_DUR; // ship fully arrived, no sail-in
     this.progEased = 0.12;
-    this.pointerXEased = 0.5;
     this.render();
   }
 }

@@ -44,13 +44,11 @@ export function OceanCanvas(): JSX.Element {
       if (!running) engine.render(); // keep a fresh frame when paused/reduced
     };
 
-    // --- write-only inputs ---
+    // --- write-only inputs (scroll only — cursor effects are excluded by
+    // brand rule; the light source is fixed in the engine) ---
     const raw = { scrollY: typeof window !== 'undefined' ? window.scrollY : 0 };
     const onScroll = (): void => {
       raw.scrollY = window.scrollY;
-    };
-    const onPointer = (e: PointerEvent): void => {
-      engine.setPointer(e.clientX / window.innerWidth, e.clientY / window.innerHeight);
     };
     const pageProgress = (): number => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -103,25 +101,28 @@ export function OceanCanvas(): JSX.Element {
       rafId = null;
     };
 
-    // --- load the ship sprite (sized for cross-browser canvas rasterization) ---
+    // --- load the crew-ship sprite (painterly WebP with real alpha). Mobile
+    // gets a lighter file. Pre-rasterize once into an offscreen canvas near
+    // display size so the per-frame drawImage stays cheap on low-end GPUs. ---
     void (async () => {
       try {
-        const res = await fetch('/brand/ship-display-hull-gold.svg');
-        let svg = await res.text();
-        const head = svg.slice(0, svg.indexOf('>'));
-        if (!/\bwidth=/.test(head)) {
-          svg = svg.replace('<svg ', '<svg width="720" height="600" ');
-        }
-        const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+        const small = window.innerWidth < 768;
         const img = new Image();
+        img.decoding = 'async';
         await new Promise<void>((resolve, reject) => {
           img.onload = () => resolve();
           img.onerror = () => reject(new Error('ship sprite failed'));
-          img.src = url;
+          img.src = small ? '/brand/ship-crew-mobile.webp' : '/brand/ship-crew.webp';
         });
-        URL.revokeObjectURL(url);
         if (disposed) return;
-        engine.setShip(img);
+        // Pre-raster at ~2x the largest on-screen ship width (cap at source).
+        const dpr2 = Math.min(window.devicePixelRatio || 1, 2);
+        const targetW = Math.min(img.width, Math.round((small ? 460 : 700) * dpr2));
+        const off = document.createElement('canvas');
+        off.width = targetW;
+        off.height = Math.round((img.height / img.width) * targetW);
+        off.getContext('2d')?.drawImage(img, 0, 0, off.width, off.height);
+        engine.setShip(off);
         // Reduced motion: repaint the static frame with the ship fully
         // arrived (no sail-in). Otherwise the live loop plays the intro the
         // moment it runs — if currently paused, the sail-in simply plays on
@@ -176,9 +177,6 @@ export function OceanCanvas(): JSX.Element {
     const onVisibility = (): void => syncRunning();
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    if (window.matchMedia('(pointer: fine)').matches) {
-      window.addEventListener('pointermove', onPointer, { passive: true });
-    }
     document.addEventListener('visibilitychange', onVisibility);
 
     const ro = new ResizeObserver(() => measure());
@@ -191,7 +189,6 @@ export function OceanCanvas(): JSX.Element {
       disposed = true;
       stop();
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('pointermove', onPointer as EventListener);
       document.removeEventListener('visibilitychange', onVisibility);
       io?.disconnect();
       ro.disconnect();
