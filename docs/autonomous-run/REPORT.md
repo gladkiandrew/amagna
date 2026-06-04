@@ -93,6 +93,17 @@ Made `/audit` a first-class, on-brand conversion tool.
   the Supabase insert (`audit/actions.ts`). UI/UX/copy only.
 Verified: `npm run build` green; real screenshots at 1280px + 390px.
 
+### Priority 3 — Our Story page ✅
+Rebuilt `/about` as **Our Story** (kept the `/about` URL — no second route, no
+redirect needed; just retitled). Narrative arc: *why we exist* (sell outcomes,
+not hours) → *the thesis* (AI-native, Sapt + agent fleet) → *the voyage* (the
+ship/open-sea brand metaphor + the audit as the "gold map") → *the name* (magna
+lineage + A·M·G) → *the founder* (Andrew, Saginaw MI, Breaking the Fast). Every
+fact sourced from `README.md` / `CLAUDE.md` — no invented credentials. Voyage
+visual language: cream/white alternating sections, gold eyebrows + rules,
+Fraunces display headings, restrained brand-purple, reused `CtaBand`.
+Verified: `npm run build` green; desktop screenshot.
+
 ---
 
 ## Commits made this run
@@ -102,7 +113,8 @@ Verified: `npm run build` green; real screenshots at 1280px + 390px.
 | 437e1ee | Checkpoint WIP hero-v2 voyage work before autonomous run |
 | 1c1a5a6 | Replace hero-v2 ocean with photoreal WebGL2 renderer |
 | 0aac111 | Document hero-v2 contract audit (Priority 1B) |
-| _pending_ | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
+| 4672846 | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
+| _pending_ | Rebuild /about as Our Story (voyage narrative + visual language) |
 
 ---
 
