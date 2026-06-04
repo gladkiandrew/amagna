@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { CtaBand } from '@/components/sections/cta-band';
 
 export const metadata: Metadata = {
@@ -72,6 +73,12 @@ export default function AboutPage(): JSX.Element {
               makes the next one sharper.
             </p>
           </div>
+          <Link
+            href="/crew"
+            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.14em] text-brand-purple underline decoration-brand-purple/40 decoration-1 underline-offset-[6px] transition-colors hover:decoration-brand-purple"
+          >
+            Meet the crew →
+          </Link>
         </div>
       </section>
 

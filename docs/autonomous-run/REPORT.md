@@ -104,6 +104,28 @@ visual language: cream/white alternating sections, gold eyebrows + rules,
 Fraunces display headings, restrained brand-purple, reused `CtaBand`.
 Verified: `npm run build` green; desktop screenshot.
 
+### Priority 4 — Meet the Agents + Founder ✅
+Built a new **`/crew`** page (decision below). The five agents are presented as
+**the ship's crew** with nautical titles, the founder as **the captain** — the
+structure that best fits the voyage metaphor.
+- **The crew** (from CLAUDE.md/README): The Scout (Outreach), The Storyteller
+  (Content), The Navigator (Reporting), The Quartermaster (Operations), The First
+  Mate (Sales). Each: one-line single responsibility, what it does for a client,
+  and a gold-dotted **"Human in the loop"** trust note. Laid out as an editorial
+  "manifest" list, NOT a generic three-emoji card grid.
+- **The captain — Andrew Michael Gladki:** first-person, build-in-public operator
+  voice; Saginaw MI + Breaking the Fast, sourced from README. No invented
+  credentials, no fabricated metrics.
+- Discoverability without touching the (off-limits) header nav: added a "Meet the
+  crew →" link from the Our Story thesis section, and added `/crew` to `sitemap.ts`.
+Verified: `npm run build` green; desktop + mobile screenshots.
+
+**Decision — structure:** chose a dedicated `/crew` page over folding the crew
+into Our Story. The voyage metaphor makes "the crew" a natural standalone place
+(captain + crew = the ship), it keeps Our Story focused on the narrative, and it
+gives the agents room to each get a real introduction. Cross-linked from About so
+it's reachable.
+
 ---
 
 ## Commits made this run
@@ -114,7 +136,8 @@ Verified: `npm run build` green; desktop screenshot.
 | 1c1a5a6 | Replace hero-v2 ocean with photoreal WebGL2 renderer |
 | 0aac111 | Document hero-v2 contract audit (Priority 1B) |
 | 4672846 | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
-| _pending_ | Rebuild /about as Our Story (voyage narrative + visual language) |
+| 21b72ce | Rebuild /about as Our Story (voyage narrative + visual language) |
+| _pending_ | Add /crew (Meet the Crew) page — five agents + the founder |
 
 ---
 

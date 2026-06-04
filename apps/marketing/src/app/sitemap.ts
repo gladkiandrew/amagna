@@ -11,6 +11,7 @@ const ROUTES = [
   '/custom-quote',
   '/book',
   '/about',
+  '/crew',
 ] as const;
 
 /** Generated at /sitemap.xml. */
