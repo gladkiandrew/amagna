@@ -75,6 +75,11 @@ export class OceanEngine {
   ship: HTMLImageElement | null = null;
   private shipReady = false;
 
+  // Time-based intro (sail-in). Starts when the sprite is ready and runs on
+  // the engine clock — NOT scroll — so the ship is alive at scroll = 0.
+  private introT = 0;
+  private static readonly INTRO_DUR = 3.2; // seconds
+
   constructor(ctx: CanvasRenderingContext2D, tier: Tier) {
     this.ctx = ctx;
     this.tier = tier;
@@ -89,6 +94,7 @@ export class OceanEngine {
   setShip(img: HTMLImageElement): void {
     this.ship = img;
     this.shipReady = true;
+    this.introT = 0; // begin the sail-in the moment the sprite exists
   }
 
   private buildLayers(): void {
@@ -155,6 +161,7 @@ export class OceanEngine {
   /** Advance time + ease targets. dt in seconds. */
   update(dt: number): void {
     this.t += dt;
+    if (this.shipReady) this.introT = Math.min(this.introT + dt, OceanEngine.INTRO_DUR);
     const ease = (cur: number, target: number, tau: number) =>
       cur + (target - cur) * (1 - Math.exp(-dt / tau));
     this.progEased = ease(this.progEased, this.progress, 0.12);
@@ -230,10 +237,11 @@ export class OceanEngine {
     // 4) The ship, seated on the frontmost wave.
     this.renderShip();
 
-    // 5) Foreground vignette for depth + text legibility at edges.
-    const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.35, W / 2, H * 0.5, H * 0.95);
+    // 5) Foreground vignette — pulled back (was 0.55) so the gold crest glints
+    // and horizon glow carry; just enough edge darkening for text contrast.
+    const vig = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.5, W / 2, H * 0.5, H * 1.05);
     vig.addColorStop(0, 'rgba(0,0,0,0)');
-    vig.addColorStop(1, 'rgba(3,6,12,0.55)');
+    vig.addColorStop(1, 'rgba(3,6,12,0.3)');
     ctx.fillStyle = vig;
     ctx.fillRect(0, 0, W, H);
   }
@@ -272,26 +280,32 @@ export class OceanEngine {
     const { ctx, cssW: W, cssH: H } = this;
     const front = this.layers[this.layers.length - 1] as WaveLayer;
 
-    // Forward travel: ship drifts left→center as the voyage progresses so it
-    // lands at the fork. Also a slow ambient drift so it's never static.
-    const driftX = lerp(0.28, 0.52, smoothstep(0, 1, this.progEased));
-    const ambient = 0.012 * Math.sin(this.t * 0.18);
-    const shipX = W * (driftX + ambient);
+    // --- Time-based motion (the key fix): a self-contained gentle sail-in on
+    // load, then an ongoing slow bob/pitch on the engine clock. No scroll
+    // coupling — the ship is alive at scroll = 0.
+    const intro = smoothstep(0, 1, this.introT / OceanEngine.INTRO_DUR); // 0→1 eased
+    const landX = W < 768 ? 0.5 : 0.62; // seat: lower third, clear of the copy column
+    const driftX = lerp(landX - 0.2, landX, intro);
+    const ambient = 0.012 * Math.sin(this.t * 0.18); // perpetual slow drift
+    const shipX = W * (driftX + ambient * intro);
 
     const { y, slope } = this.surface(front, shipX);
 
-    // Scale ship to viewport (cap so it reads on large/small screens).
-    const targetW = clamp(W * 0.26, 190, 460);
+    // Scale ship to viewport — the deliberate focal element (was ≤26% width).
+    const targetW = clamp(W * 0.36, 240, 620);
     const ar = this.ship.height / this.ship.width || 0.83;
     const shipW = targetW;
     const shipH = targetW * ar;
 
-    // Seat the hull slightly INTO the water so crests lap the keel.
-    const shipY = y - shipH * 0.36;
-    const pitch = Math.atan(slope) * 0.42; // subtle, stylized
-    const roll = 0.018 * Math.sin(this.t * 0.6);
+    // Seat the hull slightly INTO the water so crests lap the keel; add an
+    // independent slow bob on top of the wave seat so it never reads static.
+    const bob = 3 * Math.sin(this.t * 0.5) * intro;
+    const shipY = y - shipH * 0.36 + lerp(shipH * 0.1, 0, intro) + bob;
+    const pitch = Math.atan(slope) * 0.42; // follows the wave field
+    const roll = 0.022 * Math.sin(this.t * 0.55); // ongoing slow pitch/roll
 
     ctx.save();
+    ctx.globalAlpha = lerp(0, 1, smoothstep(0, 0.35, intro)); // fade with the sail-in
     ctx.translate(shipX, shipY);
     ctx.rotate(pitch + roll);
 
@@ -312,6 +326,7 @@ export class OceanEngine {
   /** Single static frame for prefers-reduced-motion (no loop). */
   renderStatic(): void {
     this.t = 6.2; // a flattering frozen phase
+    this.introT = OceanEngine.INTRO_DUR; // ship fully arrived, no sail-in
     this.progEased = 0.12;
     this.pointerXEased = 0.5;
     this.render();

@@ -122,7 +122,11 @@ export function OceanCanvas(): JSX.Element {
         URL.revokeObjectURL(url);
         if (disposed) return;
         engine.setShip(img);
-        if (!running) engine.render(); // repaint static frame with the ship
+        // Reduced motion: repaint the static frame with the ship fully
+        // arrived (no sail-in). Otherwise the live loop plays the intro the
+        // moment it runs — if currently paused, the sail-in simply plays on
+        // resume, which is the intended behavior.
+        if (reduced) engine.renderStatic();
       } catch {
         /* ship is decorative; the sea renders fine without it */
       }
