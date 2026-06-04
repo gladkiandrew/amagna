@@ -205,6 +205,47 @@
   mix-blend-mode: overlay;
 }
 
+/* Softer grain variant — hero only. Pulled back so gold crest glints and the
+   horizon glow read through; texture stays, murk goes. */
+.grain-soft::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* Hero entrance — time-based stagger on load (eyebrow → H1 → rule → subtitle
+   → CTAs). Pure CSS so the hero is alive at scroll = 0 with no JS observer.
+   Set --i (0,1,2…) per element. Compositor-only. */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise {
+  opacity: 0;
+  animation: heroRise 0.95s var(--ease-voyage) forwards;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.16s);
+  will-change: opacity, transform;
+}
+
+/* Thin gold hairline rule beneath the hero headline (editorial, left-anchored). */
+.gold-rule {
+  height: 1px;
+  width: clamp(72px, 12vw, 132px);
+  background: linear-gradient(90deg, var(--brand-warmgold), var(--brand-gold) 60%, transparent);
+  box-shadow: 0 0 10px 0 rgb(212 184 115 / 0.3);
+}
+
 /* Antique-gold hairline used at horizon seams (decorative). */
 .gold-seam {
   height: 1px;
@@ -247,6 +288,12 @@
     opacity: 1;
     transform: none;
     transition: none;
+    will-change: auto;
+  }
+  /* Hero entrance: skip the stagger, land on the final frame. */
+  .hero-rise {
+    opacity: 1;
+    animation: none;
     will-change: auto;
   }
 }

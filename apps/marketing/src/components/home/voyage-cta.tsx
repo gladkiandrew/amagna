@@ -5,8 +5,9 @@ import { cn } from '@/lib/utils';
 
 /**
  * The two primary voyage CTAs (free audit + book a call), reused by the hero
- * and the dock. Purple = action (on-brand even on dark water). `onDark` swaps
- * the secondary button + focus ring to warm-gold for contrast (see PLAN.md §F).
+ * and the dock. Quiet, premium treatment: a gold-filled editorial button (not
+ * a loud pill) plus an understated hairline-underlined text link. `onDark`
+ * swaps the palette for the dark-water hero (see PLAN.md §F).
  */
 export function VoyageCtas({
   onDark = false,
@@ -21,33 +22,36 @@ export function VoyageCtas({
   return (
     <div
       className={cn(
-        'flex flex-col gap-3 sm:flex-row sm:gap-4',
+        'flex flex-col gap-4 sm:flex-row sm:gap-7',
         align === 'center'
           ? 'items-stretch sm:items-center sm:justify-center'
-          : 'items-start sm:items-center',
+          : 'items-stretch sm:items-center',
         className,
       )}
     >
       <Link
         href={AUDIT_HREF}
         className={cn(
-          'group inline-flex items-center justify-center gap-2 rounded-full bg-brand-purple px-7 py-3.5 text-sm font-semibold tracking-wide text-white shadow-[0_14px_34px_-16px_rgba(93,46,140,0.9)] transition duration-300 ease-voyage hover:-translate-y-0.5 hover:bg-[#6c39a4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          'group inline-flex items-center justify-center gap-2 rounded-[3px] px-7 py-3.5 text-[13px] font-semibold uppercase tracking-[0.14em] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          onDark
+            ? 'border border-brand-warmgold/80 bg-brand-warmgold/[0.12] text-brand-warmgold hover:border-brand-warmgold hover:bg-brand-warmgold hover:text-brand-deep'
+            : 'border border-brand-purple/70 bg-brand-purple/[0.06] text-brand-purple hover:bg-brand-purple hover:text-white',
           ring,
         )}
       >
         Get your free audit
         <ArrowRight
-          className="h-4 w-4 transition-transform duration-300 ease-voyage group-hover:translate-x-0.5"
+          className="h-3.5 w-3.5 transition-transform duration-300 ease-voyage group-hover:translate-x-0.5"
           aria-hidden
         />
       </Link>
       <Link
         href={BOOK_A_CALL_HREF}
         className={cn(
-          'inline-flex items-center justify-center rounded-full border px-7 py-3.5 text-sm font-medium transition duration-300 ease-voyage hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          'inline-flex items-center justify-center gap-1.5 py-2 text-[13px] font-medium uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
           onDark
-            ? 'border-brand-warmgold/55 text-brand-cream hover:border-brand-warmgold hover:bg-white/[0.06]'
-            : 'border-brand-purple/40 text-brand-purple hover:border-brand-purple hover:bg-brand-purple/[0.05]',
+            ? 'text-brand-cream/85 decoration-brand-warmgold/50 hover:text-brand-cream hover:decoration-brand-warmgold'
+            : 'text-brand-charcoal/85 decoration-brand-purple/40 hover:text-brand-charcoal hover:decoration-brand-purple',
           ring,
         )}
       >

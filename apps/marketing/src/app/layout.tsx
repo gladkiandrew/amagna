@@ -26,6 +26,9 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
   display: 'swap',
   style: ['normal', 'italic'],
+  // Optical-size axis: at hero display sizes Fraunces tightens + sharpens
+  // (proper opsz rendering instead of the text-optical default).
+  axes: ['opsz'],
 });
 
 const TITLE = 'Amagna AI — AI growth systems for home services & real estate';
