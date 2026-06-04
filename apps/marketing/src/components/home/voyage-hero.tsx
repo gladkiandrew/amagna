@@ -51,7 +51,7 @@ export function VoyageHero(): JSX.Element {
             className="hero-rise mt-6 max-w-[42ch] text-[clamp(1.02rem,1.3vw,1.25rem)] leading-[1.55] text-brand-cream/80"
             style={{ '--i': 3 } as React.CSSProperties}
           >
-            We build your marketing machine — and the videos that fuel it.
+            We build your marketing machine — and the content that fuels&nbsp;it.
           </p>
 
           <div className="hero-rise" style={{ '--i': 4 } as React.CSSProperties}>

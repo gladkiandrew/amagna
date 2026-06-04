@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { AUDIT_HREF, BOOK_A_CALL_HREF } from '@/lib/site';
+import { AUDIT_HREF, CALCOM_DIRECT_URL } from '@/lib/site';
 import { cn } from '@/lib/utils';
 
 /**
@@ -39,14 +39,14 @@ export function VoyageCtas({
           ring,
         )}
       >
-        Get your free audit
+        Get Your Gold Map
         <ArrowRight
           className="h-3.5 w-3.5 transition-transform duration-300 ease-voyage group-hover:translate-x-0.5"
           aria-hidden
         />
       </Link>
-      <Link
-        href={BOOK_A_CALL_HREF}
+      <a
+        href={CALCOM_DIRECT_URL}
         className={cn(
           'inline-flex items-center justify-center gap-1.5 py-2 text-[13px] font-medium uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
           onDark
@@ -55,8 +55,8 @@ export function VoyageCtas({
           ring,
         )}
       >
-        Book a 20-minute call
-      </Link>
+        Book a call
+      </a>
     </div>
   );
 }

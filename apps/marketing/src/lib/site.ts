@@ -24,5 +24,8 @@ export const NAV_LINKS = [
 /** Where every "Book a call" CTA points (Cal.com booking page). */
 export const BOOK_A_CALL_HREF = '/book';
 
+/** Direct Cal.com booking link — hero secondary CTA wires here (no detour). */
+export const CALCOM_DIRECT_URL = 'https://cal.com/andrew-gladki-6glrmg/amagna-ai-discovery-call';
+
 /** Where the primary "Get your free audit" CTA points. */
 export const AUDIT_HREF = '/audit';
