@@ -75,6 +75,24 @@ hero-v2. Per the contract's own gate ("promote only when it *fully* passes"),
 hero-v2 does **not** pass, so I did **not** promote it to `/` — that would replace
 the working voyage with a bare hero. Recommended next steps are in the audit doc.
 
+### Priority 2 — Audit widget ✅
+Made `/audit` a first-class, on-brand conversion tool.
+- **Restyle to the voyage brand:** cream canvas, gold eyebrow + rule, Fraunces
+  display headline, a gold-numbered 3-step "how it works" strip (Tell us → We
+  read the water → 30-day plan), white form card with a gold hairline + soft
+  purple shadow. Migrated all legacy color tokens (`royal-purple`, `antique-gold`,
+  `ink`, `cream`) to the going-forward `brand-*` family (identical values).
+- **Stronger post-audit CTA path:** the result's "next step" now offers BOTH
+  *Book a 20-minute call* (`/book`) and *See pricing* (`/pricing`) — linked only,
+  their code untouched.
+- **Removed a fabricated claim** (guardrail #10 / CLAUDE.md "don't misrepresent
+  real people"): the post-result soft-prompt said *"A note from Andrew: I'm in
+  Madeira this week…"* — false (Andrew is in Saginaw, MI) and fake urgency.
+  Replaced with an honest nudge.
+- **Server logic untouched:** no changes to the Anthropic call (`lib/audit`) or
+  the Supabase insert (`audit/actions.ts`). UI/UX/copy only.
+Verified: `npm run build` green; real screenshots at 1280px + 390px.
+
 ---
 
 ## Commits made this run
@@ -83,7 +101,8 @@ the working voyage with a bare hero. Recommended next steps are in the audit doc
 |---|---|
 | 437e1ee | Checkpoint WIP hero-v2 voyage work before autonomous run |
 | 1c1a5a6 | Replace hero-v2 ocean with photoreal WebGL2 renderer |
-| _pending_ | Document hero-v2 contract audit (Priority 1B) |
+| 0aac111 | Document hero-v2 contract audit (Priority 1B) |
+| _pending_ | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
 
 ---
 
