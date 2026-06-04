@@ -153,7 +153,8 @@ it's reachable.
 | 4672846 | Restyle /audit to voyage brand; add pricing CTA; remove fabricated line |
 | 21b72ce | Rebuild /about as Our Story (voyage narrative + visual language) |
 | 4c960e4 | Add /crew (Meet the Crew) page — five agents + the founder |
-| _pending_ | Add per-page OpenGraph metadata across key routes |
+| 0c75dee | Add per-page OpenGraph metadata across key routes |
+| _final_ | Update autonomous run report |
 
 ---
 
@@ -173,6 +174,14 @@ it's reachable.
    adaptive degradation down to 0.4 scale. Water hides the sub-native resolution;
    this is the master perf knob. Tune in `hero-ocean-gl.tsx` if Andrew wants it
    sharper on high-end machines.
+5. **`/crew` over folding into Our Story** — see the Priority 4 note above.
+6. **Did NOT relabel the header nav.** `/about` is now titled "Our Story" but the
+   header/footer nav (`NAV_LINKS` in `lib/site.ts`) still says "About" and has no
+   "Crew" entry. The nav is shared chrome I treated as off-limits this run.
+   Trivial to change when you want — flagging rather than guessing.
+7. **Screenshot verification used your local Chrome** (headless, ANGLE Metal) via
+   the DevTools protocol — no new dependency installed. Found a real
+   StrictMode/`loseContext` bug doing this (see Priority 1A).
 
 ---
 
@@ -183,9 +192,46 @@ it's reachable.
    you want it calmer or stormier.
 2. The copy now sits lower-centre. If you prefer it higher, we lower the horizon
    in the shader instead (more sky) — say the word.
+3. **Hero promotion:** `/hero-v2` is still a preview route — the realism upgrade
+   is NOT on the live `/` homepage yet (see `CONTRACT-AUDIT.md` for why and the
+   two recommended paths to get it there).
+4. Want the header nav relabeled "About → Our Story" and a "Crew" link added?
 
 ---
 
 ## Circuit-breaker / blocker log
 
-_(none — 0 consecutive failures)_
+_(none — 0 consecutive failures; circuit breaker never tripped)_
+
+---
+
+## Session summary
+
+All five priorities in the ladder were completed and committed; the build is
+green at every commit and at the end. Nothing was pushed; nothing on `main` or
+`staging` was touched; the money path (Stripe/checkout/book) was not modified; no
+new dependencies were added; no `.env*` was read or written.
+
+**Headline result:** the `/hero-v2` ocean is now a photoreal GPU-simulated WebGL2
+sea in the Amagna palette — the realism Andrew asked for — with a working
+Canvas-2D fallback and verified legibility at desktop + mobile.
+
+**Biggest judgement call:** not promoting `/hero-v2` to `/`. It's Frame 1 only;
+the full 7-beat voyage already lives on `/`. Promoting now would downgrade the
+live homepage. The realism is built, verified, and committed and is ready to be
+brought to `/` in a session with Andrew available (`CONTRACT-AUDIT.md`).
+
+### Review commands
+
+```bash
+git log --oneline feat/hero-crew..HEAD          # the 7 commits of this run
+cd apps/marketing && npm run build              # confirm green
+npm run dev                                      # then eyeball:
+#   /hero-v2   the photoreal ocean (desktop + 390px); scroll = empty Frame-2 scaffold (by design)
+#   /audit     restyled conversion tool; submit to see the result + dual CTA
+#   /about     Our Story narrative
+#   /crew      Meet the Crew + the captain
+#   /          unchanged live voyage homepage (realism not promoted here yet)
+```
+
+Run ended cleanly. — Claude
