@@ -65,12 +65,25 @@ but it would have made Andrew's `npm run dev` preview always show the 2D fallbac
 
 ---
 
+### Priority 1B — Contract audit ✅ (audited; promotion intentionally deferred)
+Full audit in `docs/autonomous-run/CONTRACT-AUDIT.md`. Key finding: `/hero-v2` is
+**Frame 1 only** (photoreal hero + empty Frame-2 scaffold); the full 7-beat
+voyage with ship physics and the two-island fork **already ships at `/`** (v1).
+Frame-1-scope items all pass (reduced-motion, visibility pause, DPR/adaptive,
+color law). The whole-page items (7-beat, ship, islands) live on `/`, not
+hero-v2. Per the contract's own gate ("promote only when it *fully* passes"),
+hero-v2 does **not** pass, so I did **not** promote it to `/` — that would replace
+the working voyage with a bare hero. Recommended next steps are in the audit doc.
+
+---
+
 ## Commits made this run
 
 | Commit | Concern |
 |---|---|
 | 437e1ee | Checkpoint WIP hero-v2 voyage work before autonomous run |
-| _pending_ | Replace hero-v2 ocean with photoreal WebGL2 renderer + legibility tuning |
+| 1c1a5a6 | Replace hero-v2 ocean with photoreal WebGL2 renderer |
+| _pending_ | Document hero-v2 contract audit (Priority 1B) |
 
 ---
 
