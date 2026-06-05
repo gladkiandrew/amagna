@@ -1,7 +1,7 @@
 import 'server-only';
 import Anthropic from '@anthropic-ai/sdk';
 import type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
-import { intakeSummary } from './gold-map-shared';
+import { intakeSummary, linksHaveAndMissing } from './gold-map-shared';
 import { env } from './env';
 
 export type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
@@ -22,8 +22,13 @@ VOICE — tight and high-signal:
 - NO throat-clearing, NO setup sentences, NO buzzwords, NO recap of their own business back at them. Get straight to the move.
 - Specificity is the whole point — name the channel, the area, the offer, the rough budget, the real tactic. Spend your words on specifics, never on prose.
 
+PRESENCE — build on what they've got:
+- They may list links (website, Google Business Profile, Facebook, Instagram, TikTok, LinkedIn, YouTube). Build on the channels they HAVE and name the obvious gaps — a channel they're not on, or one that's clearly underused for their type.
+- Reference it plainly: "you're already on X, so…" / "you're not on Y yet — that's where your buyers are." Tie each gap to a concrete first action.
+- You can SEE which channels they linked, not what's on them. Never claim you reviewed the content, traffic, or rankings behind a link.
+
 HONESTY:
-- NO invented numbers, rankings, or guarantees. We do NOT run live ranking checks yet — never claim "we analyzed your rankings/SEO" or imply you measured their site. You may reference their channels and obvious gaps, and note that the crew reviews live rankings on the call.
+- NO invented numbers, rankings, or guarantees. We do NOT run live ranking checks yet — never claim "we analyzed your rankings/SEO" or imply you measured their site. Note that the crew reviews live rankings together on the call.
 - Speak in typical-operator terms ("most operators in your spot…") rather than fake precision.
 - NO exclusivity claims (never "one client per area" / "we won't work with competitors").
 
@@ -134,10 +139,18 @@ export async function generateGoldMapPlan(
   if (!apiKey) return fallbackPlan(intake);
 
   const anthropic = new Anthropic({ apiKey });
+  const { have, missing } = linksHaveAndMissing(intake.links);
+  const presenceLine =
+    have.length || missing.length
+      ? `\nOnline presence — has a link for: ${have.length ? have.join(', ') : 'none'}. No link yet for: ${
+          missing.length ? missing.join(', ') : 'none'
+        }. Build on what they have; name the gaps as opportunities. (You can see which channels they linked, not the content behind them.)`
+      : '';
   const userPrompt = `Write a custom Plan to Gold for this operator.
 
 Their intake:
 ${intakeSummary(intake)}
+${presenceLine}
 ${key ? `\nThe operator also handed us this "master prompt" key from their own AI — use it for extra context:\n"""\n${key.slice(0, 6000)}\n"""` : '\n(No master-prompt key provided — chart the plan from the intake alone.)'}
 
 Produce the plan using the submit_plan tool.`;

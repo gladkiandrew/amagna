@@ -14,7 +14,9 @@ import {
   REVENUE_RANGES,
   EMPLOYEE_RANGES,
   SOCIAL_CHANNELS,
+  LINK_FIELDS,
   type GoldMapIntake,
+  type GoldMapLinks,
   type GoldMapPlan,
 } from '@/lib/gold-map-shared';
 import { captureGoldMapIntake, generateGoldMapPlanAction, markGoldMapKeyed } from '@/app/audit/actions';
@@ -212,6 +214,8 @@ function IntakeForm({
     set('socialChannels', intake.socialChannels.includes(c)
       ? intake.socialChannels.filter((x) => x !== c)
       : [...intake.socialChannels, c]);
+  const setLink = (k: keyof GoldMapLinks, v: string) => set('links', { ...intake.links, [k]: v });
+  const linkCount = LINK_FIELDS.filter(({ key }) => intake.links[key].trim()).length;
 
   return (
     <form
@@ -280,6 +284,38 @@ function IntakeForm({
           })}
         </div>
       </fieldset>
+
+      {/* Optional — collapsed so the form doesn't feel longer. */}
+      <details className="group mt-6 rounded-xl border border-brand-warmgold/20 bg-white/[0.02]">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-medium text-brand-cream/85 [&::-webkit-details-marker]:hidden">
+          <span>
+            Where you live online{' '}
+            <span className="text-brand-cream/50">— optional, helps us build on what you&apos;ve got</span>
+            {linkCount > 0 && (
+              <span className="ml-2 rounded-full bg-brand-warmgold/20 px-2 py-0.5 text-xs text-brand-warmgold">
+                {linkCount} added
+              </span>
+            )}
+          </span>
+          <ArrowRight className="h-4 w-4 shrink-0 text-brand-warmgold transition-transform group-open:rotate-90" aria-hidden />
+        </summary>
+        <div className="grid gap-4 px-4 pb-5 pt-1 sm:grid-cols-2">
+          {LINK_FIELDS.map(({ key, label, placeholder }) => (
+            <Field key={key} label={`${label} (optional)`} htmlFor={`${id}-link-${key}`}>
+              <input
+                id={`${id}-link-${key}`}
+                type="url"
+                inputMode="url"
+                autoComplete="off"
+                className={fieldClass}
+                placeholder={placeholder}
+                value={intake.links[key]}
+                onChange={(e) => setLink(key, e.target.value)}
+              />
+            </Field>
+          ))}
+        </div>
+      </details>
 
       <div className="mt-6 grid gap-5">
         <Field label="What are you doing for marketing right now? (optional)" htmlFor={`${id}-cm`}>
