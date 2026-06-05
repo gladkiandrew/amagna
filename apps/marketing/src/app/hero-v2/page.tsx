@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { HeroV2 } from '@/components/hero-v2/hero-v2';
 import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
 import { VideoExamples } from '@/components/hero-v2/video-examples';
+import { ServicesSection } from '@/components/hero-v2/services-section';
 
 /**
  * /hero-v2 — preview route for the Layer 1 hero rebuild.
@@ -21,6 +22,7 @@ export default function HeroV2Page(): JSX.Element {
       <HeroV2 />
       <VoyageReveal />
       <VideoExamples />
+      <ServicesSection />
     </>
   );
 }
