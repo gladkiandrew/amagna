@@ -18,7 +18,7 @@ He uses Claude Max, Cursor, and Claude Code. This is the AI of record for the en
 
 The operational backbone of Amagna AI Agency. See `README.md` for the full strategic context.
 
-In short: a productized AI marketing agency targeting **home services** (lead niche) and **real estate**, with fulfillment partnered through Sapt (`sapt.ai`) and a fleet of custom AI agents wrapped around it.
+In short: a productized AI marketing agency whose core offering is **Autonomous Marketing Systems** — we build the client's marketing machine and the content that fuels it. Who we serve is **broad**: any operator who wants marketing that runs itself. **Home services** and **real estate** remain the two lead niches with dedicated funnels and ad landing pages, but positioning, the homepage, and the Who We Serve page should NOT read as "we only do home services and real estate." Fulfillment is partnered through Sapt (`sapt.ai`) with a fleet of custom AI agents wrapped around it.
 
 **Note:** Politics is on the long-term roadmap but is NOT part of the current go-to-market. Do not generate political-niche assets unless explicitly asked.
 
@@ -109,24 +109,26 @@ The repo currently has only the root `README.md` and this `CLAUDE.md`. The struc
 
 ## Service offerings — what we sell
 
-Productized agency, three tiers:
+Productized agency, three tiers. **Pricing is displayed as "Starting at..." on the site — never as a flat price** (actual cost scales with credits and ad spend):
 
-- **Foundation** ($997/mo) — Sapt Growth + 1 niche funnel + base outreach
-- **Growth** ($1,497/mo) — Multi-channel content + dedicated agents + weekly reports
-- **Authority** ($2,497/mo) — Custom builds + reputation + premium creative + strategy calls
+- **Foundation** (starting at $997/mo) — Sapt Growth + 1 niche funnel + base outreach
+- **Growth** (starting at $1,497/mo) — Multi-channel content + dedicated agents + weekly reports
+- **Authority** (starting at $2,497/mo) — Custom builds + reputation + premium creative + strategy calls
 
 Custom services priced separately ($2K-$15K project work).
 
+Service pillars to feature on the site: AI-generated content, ads management (Meta / TikTok / Google), central memory layer, full-stack automations, SEO, and AEO (answer-engine optimization).
+
 ---
 
-## The two niches
+## Who we serve
 
-When building niche-specific work, use the matching playbook in `docs/playbooks/` (to be created):
+**Broad positioning:** the core offering — Autonomous Marketing Systems — serves any operator who wants their marketing to run itself. Site-wide copy (homepage, Who We Serve, Our Story) reflects this breadth.
+
+**Two lead niches** get dedicated funnels, ad creative, voice, and agent tuning (use the matching playbook in `docs/playbooks/` once created; never mix niche assets):
 
 1. **Home services** — HVAC, plumbing, roofing, etc. Pitch: predictable owned leads.
 2. **Real estate** — Solo agents, teams, brokers. Pitch: stay top of mind 24/7.
-
-Each niche has its own funnel, ad creative, voice, and agent tuning. Never mix niche assets.
 
 ---
 
@@ -149,12 +151,14 @@ Agents run on Cloudflare Workers (or n8n — TBD) with Claude as the reasoning e
 - A logging table for observability
 - A "human in the loop" approval step for anything sent to real people
 
-Agents to build:
-- **Outreach** — finds and warms leads
-- **Content** — generates daily content variations
-- **Reporting** — weekly client reports
-- **Operations** — onboarding and internal task routing
-- **Sales** — qualifies inbound
+**The crew — canon roster (Andrew's characters; use these names everywhere, on the site and in code):**
+- **Zeno — Captain / The Brain** — orchestrator; runs the whole operation, every agent answers to him
+- **Exodus — Creative Specialist** — generates the videos, creates the content, blogs, etc.
+- **Solon — Outreach / Retention Specialist** — keeps clients and leads in the fold
+- **Hero — Automation Specialist** — builds the systems that run themselves
+- **Thales — Marketing Specialist** — Meta / TikTok / Google ads
+
+Crew portraits live at `apps/marketing/public/brand/crew/<slug>.webp`. Ship renders: `public/brand/ship-crew-full.webp` (crew aboard) and `public/brand/ship-empty-transparent.webp`. Andrew (the founder) is the human at the helm of the company — distinct from Zeno, who captains the AI fleet.
 
 ---
 
