@@ -87,8 +87,8 @@ export function VideoExamples(): JSX.Element {
               Scroll-stopping video, made by your crew.
             </h2>
             <p className="mx-auto mt-5 max-w-[46ch] text-lg leading-[1.6] text-brand-cream/75 lg:mx-0">
-              This is the short-form your Creative Specialist ships — built for TikTok, Reels,
-              and Shorts. Swipe through a few.
+              Here&apos;s what Exodus (Creative Specialist) ships — built for Ads, Reels, and
+              Shorts. Swipe through a few.
             </p>
 
             {/* Controls (non-drag fallback, keyboard accessible) */}
