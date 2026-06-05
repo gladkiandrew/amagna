@@ -23,8 +23,10 @@ export function VoyageCtas({
 }): JSX.Element {
   const ring = onDark ? 'focus-visible:ring-brand-warmgold' : 'focus-visible:ring-brand-purple';
   const lg = size === 'lg';
-  const buttonText = lg ? 'px-8 py-4 text-[15px]' : 'px-7 py-3.5 text-[13px]';
-  const linkText = lg ? 'text-[15px]' : 'text-[13px]';
+  // `lg` (hero): bigger letters, more padding, and a bolder text link so the
+  // CTAs hold against the afterglow shimmer instead of blending into it.
+  const buttonText = lg ? 'px-9 py-[1.15rem] text-[16px]' : 'px-7 py-3.5 text-[13px]';
+  const linkText = lg ? 'text-[16px] font-semibold' : 'text-[13px] font-medium';
   return (
     <div
       className={cn(
@@ -55,7 +57,7 @@ export function VoyageCtas({
       <a
         href={CALCOM_DIRECT_URL}
         className={cn(
-          'inline-flex items-center justify-center gap-1.5 py-2 font-medium uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
+          'inline-flex items-center justify-center gap-1.5 py-2 uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
           linkText,
           onDark
             ? 'text-brand-cream/85 decoration-brand-warmgold/50 hover:text-brand-cream hover:decoration-brand-warmgold'

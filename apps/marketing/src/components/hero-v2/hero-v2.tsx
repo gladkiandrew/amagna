@@ -41,8 +41,8 @@ export function HeroV2(): JSX.Element {
           className="hero-rise font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
           style={{ '--i': 0 } as CSSProperties}
         >
-          <span className="block text-[clamp(2rem,5.4vw,4.7rem)]">Autonomous</span>
-          <span className="block text-[clamp(2.5rem,7.1vw,6.1rem)]">Marketing&nbsp;Systems</span>
+          <span className="block text-[clamp(1.6rem,6.4vw,5.4rem)]">Autonomous</span>
+          <span className="block text-[clamp(1.9rem,8.8vw,7.4rem)]">Marketing&nbsp;Systems</span>
         </h1>
 
         {/* Thin gold hairline, centered. */}
@@ -53,7 +53,7 @@ export function HeroV2(): JSX.Element {
         />
 
         <p
-          className="hero-rise mx-auto mt-7 max-w-[40ch] text-[clamp(0.95rem,1.2vw,1.18rem)] leading-[1.6] text-brand-cream/90 [text-shadow:0_1px_16px_rgba(4,7,13,0.85)] sm:max-w-none sm:whitespace-nowrap"
+          className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-semibold leading-[1.5] text-brand-cream [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
           style={{ '--i': 2 } as CSSProperties}
         >
           We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
