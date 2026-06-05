@@ -53,21 +53,22 @@ export const MOBILE_KNOBS: Partial<HeroOceanKnobs> = {
   wavelength: 440,
 };
 
-/* --- Palette. Color law honored: NO purple in the water. ---
-   Sky = warm dusty gold brightening into a horizon bloom; water = deep navy
-   with deliberately LIFTED midtones so silhouettes never crush to black. */
-const SKY_TOP = '#6E5E3C'; // dusty warm gold, upper atmosphere
-const SKY_MID = '#9A7F49'; // warming toward the horizon
-const SKY_HORIZON = '#D8BE84'; // bright warm haze just above the waterline
-const BLOOM = '#F0DCA6'; // soft cream-gold horizon bloom (additive)
+/* --- Palette. Post-sunset AFTERGLOW (matches the WebGL hero). Purple is
+   approved in the SKY only; the water stays deep navy with warm orange/pink
+   glints near the horizon — NO purple in the water. */
+const SKY_TOP = '#241A42'; // dusk blue-purple, zenith
+const SKY_MID = '#7C3D9C'; // bright purple (sky only)
+const SKY_PINK = '#C85A82'; // pink band
+const SKY_HORIZON = '#E87432'; // warm orange just above the waterline
+const BLOOM = '#F0883A'; // warm orange afterglow bloom (additive)
 const WATER_HORIZON = '#1A2C46'; // navy just under the horizon (lifted)
 const WATER_MID = '#0C1626';
 const WATER_DEEP = '#05080F'; // deepest foreground — NOT pure black
 const WATER_FAR = '#22344E'; // far-wave fill (hazier/lighter for depth)
 const CREST_CREAM = '#FAF8F3'; // brightest crest rim (foreground)
-const CREST_GOLD = '#D4B873'; // warm-gold crest (distance / dark-bg gold)
-const GLINT_GOLD = '#C9A961'; // antique-gold specular
-const RAY_GOLD = '#E6C988'; // god-ray warm light
+const CREST_GOLD = '#E0894F'; // warm afterglow crest (distance)
+const GLINT_GOLD = '#E0935A'; // warm afterglow specular glint
+const RAY_GOLD = '#E6C988'; // (unused — sun has set, no rays)
 
 /** One stacked wave band, precomputed on layout. */
 interface Layer {
@@ -141,8 +142,9 @@ export class HeroOcean {
     this.dpr = dpr;
     this.width = width * dpr;
     this.height = height * dpr;
-    // Horizon sits high so the warm sky + god-rays have room to breathe.
-    this.horizonY = this.height * 0.4;
+    // Horizon rides high (matches the WebGL hero): more water, a thin afterglow
+    // sky band above.
+    this.horizonY = this.height * 0.24;
 
     const { layerCount, amplitude, wavelength, speed } = this.knobs;
     const rng = mulberry32(0x5ea0ce); // fixed seed → stable glints across resizes
@@ -207,7 +209,7 @@ export class HeroOcean {
     this.drawSky(ctx);
     this.drawWater(ctx);
     this.drawHorizonHaze(ctx);
-    this.drawGodRays(ctx, tSec);
+    // No god rays — the sun has set (afterglow).
     this.drawHorizonBloom(ctx);
 
     const step = Math.max(2 * this.dpr, w / 200);
@@ -227,7 +229,8 @@ export class HeroOcean {
     const pad = horizonY * 0.08;
     const sky = ctx.createLinearGradient(0, 0, 0, horizonY + pad);
     sky.addColorStop(0, SKY_TOP);
-    sky.addColorStop(0.58, SKY_MID);
+    sky.addColorStop(0.42, SKY_MID);
+    sky.addColorStop(0.72, SKY_PINK);
     sky.addColorStop(1, SKY_HORIZON);
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, horizonY + pad);
@@ -248,9 +251,9 @@ export class HeroOcean {
     const { width: w, height: h, horizonY } = this;
     const band = h * 0.16;
     const haze = ctx.createLinearGradient(0, horizonY - band * 0.5, 0, horizonY + band);
-    haze.addColorStop(0, 'rgba(216,190,132,0)');
-    haze.addColorStop(0.4, 'rgba(216,190,132,0.22)');
-    haze.addColorStop(1, 'rgba(216,190,132,0)');
+    haze.addColorStop(0, 'rgba(232,116,50,0)');
+    haze.addColorStop(0.4, 'rgba(232,116,50,0.24)');
+    haze.addColorStop(1, 'rgba(232,116,50,0)');
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
     ctx.fillStyle = haze;
