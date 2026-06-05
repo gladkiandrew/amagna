@@ -166,3 +166,20 @@ desktop + 390px; build green at each commit.
    CLAUDE.md). Drop-in is copy-paste: fill `quote`/`name`/`role` in the
    `TESTIMONIALS` array (wrapped in comment banners showing the exact format) and
    the slot renders as a real quote card. Verified desktop + 390px. Commit pending.
+
+---
+
+## Follow-up — four quick edits — 2026-06-05
+
+1. **Frame 2 heading** → "The Amagna Crew sailing your marketing." (1b54b25)
+2. **Frame 2 timing** — crew drop-off now starts at DEAL_START 1.9s (was 2.95s,
+   after a full stop + pad) so it begins while the ship is still easing into its
+   centre stop (CRUISE_IN 2.6s); DEAL_GAP 0.52→0.48. End-to-end ~7.4s (was ~8.6s,
+   ~1.2s faster). Card-deal motion + empty-ship departure unchanged. Verified by
+   watching it in the browser (probe: 2 dealt by ~2.7s, 5 by ~4.0s, ship gone by
+   ~7.3s) and that replay via scroll-out/scroll-in still works. (0b59cda)
+3. **Video examples subtitle** → "Here's what Exodus (Creative Specialist) ships —
+   built for Ads, Reels, and Shorts. Swipe through a few." (95fa711)
+4. **Testimonials line** → "Proof from the operators we sail for." (f886802)
+
+All four verified rendering at desktop + 390px; build green at each commit.
