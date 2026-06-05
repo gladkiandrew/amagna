@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Wordmark } from '@/components/wordmark';
 import { NAV_LINKS, BOOK_A_CALL_HREF } from '@/lib/site';
 
@@ -12,7 +13,16 @@ export function SiteHeader(): JSX.Element {
   return (
     <header className="sticky top-0 z-50 border-b border-black/5 bg-cream/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-6 py-4">
-        <Link href="/" aria-label="Amagna AI — home" className="shrink-0">
+        <Link href="/" aria-label="Amagna AI — home" className="flex shrink-0 items-center gap-2.5">
+          <Image
+            src="/brand/amagna-logo-mark.svg"
+            alt=""
+            aria-hidden
+            width={360}
+            height={300}
+            className="h-8 w-auto"
+            priority
+          />
           <Wordmark />
         </Link>
 
@@ -22,7 +32,7 @@ export function SiteHeader(): JSX.Element {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-ink-muted transition-colors hover:text-royal-purple"
+              className="rounded text-sm font-medium text-ink-muted transition-colors hover:text-royal-purple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-royal-purple focus-visible:ring-offset-4 focus-visible:ring-offset-cream"
             >
               {link.label}
             </Link>

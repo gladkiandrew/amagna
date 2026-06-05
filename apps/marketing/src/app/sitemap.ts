@@ -4,6 +4,7 @@ import { SITE } from '@/lib/site';
 /** Every public route on the marketing site. Keep in sync as pages are added. */
 const ROUTES = [
   '',
+  '/who-we-serve',
   '/home-services',
   '/real-estate',
   '/pricing',

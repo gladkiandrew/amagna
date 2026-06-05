@@ -14,11 +14,10 @@ export const SITE = {
 
 /** Primary navigation — used by the header and the footer. */
 export const NAV_LINKS = [
-  { href: '/home-services', label: 'Home services' },
-  { href: '/real-estate', label: 'Real estate' },
+  { href: '/who-we-serve', label: 'Who We Serve' },
+  { href: '/about', label: 'Our Story' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/custom', label: 'Custom' },
-  { href: '/about', label: 'About' },
+  { href: '/audit', label: 'Gold Map' },
 ] as const;
 
 /** Where every "Book a call" CTA points (Cal.com booking page). */
