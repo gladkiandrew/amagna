@@ -4,6 +4,7 @@ import { SITE } from '@/lib/site';
 /** Every public route on the marketing site. Keep in sync as pages are added. */
 const ROUTES = [
   '',
+  '/audit',
   '/who-we-serve',
   '/home-services',
   '/real-estate',
@@ -23,6 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${SITE.url}${route}`,
     lastModified,
     changeFrequency: 'monthly',
-    priority: route === '' ? 1 : 0.8,
+    priority: route === '' ? 1 : route === '/audit' ? 0.9 : 0.8,
   }));
 }
