@@ -9,7 +9,7 @@ export const SITE = {
   url: 'https://amagna.co',
   email: 'andrew@amagna.co',
   tagline:
-    "We don't sell innovative tech. We fix your problem — for home services owners and real estate agents who want predictable growth.",
+    'Autonomous marketing systems — we build the machine that runs your marketing, and the content that fuels it, for operators who want growth that runs itself.',
 } as const;
 
 /** Primary navigation — used by the header and the footer. */

@@ -4,7 +4,7 @@ import { OG_IMAGE } from '@/lib/site';
 import { CtaBand } from '@/components/sections/cta-band';
 
 const ABOUT_DESCRIPTION =
-  'Why Amagna AI exists: an AI-native agency that sells outcomes, not hours, to home-services and real-estate operators. The thesis, the voyage, the name, and the founder.';
+  'Why Amagna AI exists: an AI-native agency that sells outcomes, not hours — building autonomous marketing systems for operators who want growth that runs itself. The thesis, the voyage, the name, and the founder.';
 
 export const metadata: Metadata = {
   title: 'Our Story',
@@ -54,10 +54,11 @@ export default function AboutPage(): JSX.Element {
             owned and predictable.
           </p>
           <p>
-            We do that for two kinds of operators, and only two:{' '}
-            <strong className="font-semibold text-brand-charcoal">home-services owners</strong>{' '}
-            and <strong className="font-semibold text-brand-charcoal">real-estate agents and
-            teams</strong>. Deep beats wide.
+            We do that for operators who want their marketing to run itself — and we go
+            deepest in two lanes,{' '}
+            <strong className="font-semibold text-brand-charcoal">home services</strong> and{' '}
+            <strong className="font-semibold text-brand-charcoal">real estate</strong>, where the
+            playbook is sharpest.
           </p>
         </div>
       </section>
