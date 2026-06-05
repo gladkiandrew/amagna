@@ -43,6 +43,78 @@ type GoldMapPayload = {
   email_error?: string;
 };
 
+/**
+ * Send the plan to the lead (hard requirement) + notify Andrew with the full
+ * plan (best-effort). The lead email defines `emailed`; a failed notification
+ * still counts as emailed but records the error. NOT exported — this is a
+ * 'use server' module, so only the action functions may be exported.
+ */
+async function sendPlanEmails(
+  intake: GoldMapIntake,
+  plan: GoldMapPlan,
+): Promise<{ emailed: boolean; emailError?: string }> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn('[gold-map] RESEND_API_KEY not set — plan not emailed');
+    return { emailed: false };
+  }
+  if (!intake.email) return { emailed: false };
+
+  const resend = new Resend(apiKey);
+  try {
+    await resend.emails.send({
+      from: FROM,
+      to: intake.email,
+      replyTo: ANDREW,
+      subject: 'Your Plan to Gold — the map the crew charted',
+      text: planToEmailText(intake, plan),
+    });
+  } catch (error) {
+    console.error('[gold-map] lead email send failed', error);
+    return { emailed: false, emailError: error instanceof Error ? error.message : 'send failed' };
+  }
+  // Notify Andrew with the SAME full body the lead receives (best-effort).
+  try {
+    await resend.emails.send({
+      from: FROM,
+      to: ANDREW,
+      replyTo: intake.email,
+      subject: `Gold Map lead — ${intake.businessName}`,
+      text: `${intakeSummary(intake)}\n\n--- Plan to Gold ---\n\n${planBodyText(plan)}`,
+    });
+  } catch (error) {
+    console.error('[gold-map] lead notification send failed', error);
+    return { emailed: true, emailError: error instanceof Error ? error.message : 'notify failed' };
+  }
+  return { emailed: true };
+}
+
+/** Persist the generated/reused plan + status on the submission (best-effort). */
+async function persistPlan(
+  supabase: ReturnType<typeof getSupabaseAdmin>,
+  submissionId: string | null,
+  intake: GoldMapIntake,
+  key: string | undefined,
+  sig: string,
+  plan: GoldMapPlan,
+  emailError?: string,
+): Promise<void> {
+  if (!supabase || !submissionId) return;
+  const payload: GoldMapPayload = {
+    source: 'gold-map',
+    status: 'plan_generated',
+    intake,
+    key: key?.trim() || undefined,
+    plan,
+    sig,
+    ...(emailError ? { email_error: emailError } : {}),
+  };
+  await supabase
+    .from('widget_submissions')
+    .update({ audit_json: payload, viewed_at: new Date().toISOString() })
+    .eq('id', submissionId);
+}
+
 /** Step 1 — capture the intake to Supabase immediately. Lead is never lost. */
 export async function captureGoldMapIntake(intake: GoldMapIntake): Promise<IntakeResult> {
   const fieldErrors = validateIntake(intake);
@@ -152,7 +224,11 @@ export async function generateGoldMapPlanAction(args: {
         pl.sig === sig,
     );
     if (sameBusiness?.plan) {
-      return { ok: true, plan: sameBusiness.plan, emailed: true };
+      // Reuse the plan, but STILL email it — a cached return must never leave
+      // the lead empty-handed — and record it on this submission row.
+      const { emailed, emailError } = await sendPlanEmails(intake, sameBusiness.plan);
+      await persistPlan(supabase, submissionId, intake, key, sig, sameBusiness.plan, emailError);
+      return { ok: true, plan: sameBusiness.plan, emailed };
     }
 
     // (b) Different business, but the email is over its 24h generation cap →
@@ -174,54 +250,9 @@ export async function generateGoldMapPlanAction(args: {
 
   const plan = await generateGoldMapPlan(intake, key?.trim() || undefined);
 
-  // Email the lead (hard requirement) — never block the on-screen render on it.
-  let emailed = false;
-  let emailError: string | undefined;
-  const apiKey = process.env.RESEND_API_KEY;
-  if (apiKey && intake.email) {
-    try {
-      const resend = new Resend(apiKey);
-      await resend.emails.send({
-        from: FROM,
-        to: intake.email,
-        replyTo: ANDREW,
-        subject: 'Your Plan to Gold — the map the crew charted',
-        text: planToEmailText(intake, plan),
-      });
-      emailed = true;
-      // Notify Andrew of the lead with the FULL plan (best-effort) — same body
-      // the lead receives, so the notification is never a truncated stub.
-      await resend.emails.send({
-        from: FROM,
-        to: ANDREW,
-        replyTo: intake.email,
-        subject: `Gold Map lead — ${intake.businessName}`,
-        text: `${intakeSummary(intake)}\n\n--- Plan to Gold ---\n\n${planBodyText(plan)}`,
-      });
-    } catch (error) {
-      emailError = error instanceof Error ? error.message : 'send failed';
-      console.error('[gold-map] email send failed', error);
-    }
-  } else if (!apiKey) {
-    console.warn('[gold-map] RESEND_API_KEY not set — plan not emailed');
-  }
-
-  // Persist the plan + status (best-effort).
-  if (supabase && submissionId) {
-    const payload: GoldMapPayload = {
-      source: 'gold-map',
-      status: 'plan_generated',
-      intake,
-      key: key?.trim() || undefined,
-      plan,
-      sig,
-      ...(emailError ? { email_error: emailError } : {}),
-    };
-    await supabase
-      .from('widget_submissions')
-      .update({ audit_json: payload, viewed_at: new Date().toISOString() })
-      .eq('id', submissionId);
-  }
+  // Email the lead (+ notify Andrew), then persist — never block render on it.
+  const { emailed, emailError } = await sendPlanEmails(intake, plan);
+  await persistPlan(supabase, submissionId, intake, key, sig, plan, emailError);
 
   return { ok: true, plan, emailed };
 }
