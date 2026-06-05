@@ -116,3 +116,36 @@ glyphs are aria-hidden. Verified the new sections stack on 390px.
 - One stale-dev-server false alarm (animation appeared dead) + one `.next`
   build/dev cache 500 — both tooling, fixed by restarting dev. No code failures;
   circuit breaker never tripped.
+
+---
+
+## Review round (six fixes) — 2026-06-05
+
+1. **H1 centering — root cause fixed & proven.** Measured with getBoundingClientRect
+   + Range: "Marketing Systems" (858.7px) was wider than the copy column's 752px
+   content box, so `text-align:center` pinned it to the left padding edge and
+   overflowed right (true glyph centre **693.35** vs **639.99** for "Autonomous").
+   Fix: H1 now centres in the full-width box; `max-w-[50rem]` moved to an inner
+   wrapper for the hairline/subtitle/CTAs only. **Re-measured — both lines' text
+   centres: 639.99 / 639.99 at 1280 (vp 640); 194.99 / 195.00 at 390 (vp 195).**
+2. **Hero CTA** "Get Your Gold Map" → solid warm-gold fill + deep text (was a
+   ~12%-opacity ghost).
+3. **Frame 2 gap** tightened — ship top 17vh→8vh, content pad 50vh→40vh; the boat
+   cruises in just below the hero seam (still rides the water).
+4. **Video-deck arrows** enlarged (h-11→h-16, bigger glyphs, 2px ring). MP4
+   file-detection already swaps placeholder→`<video>` via onCanPlay/onError — no
+   code change needed for Andrew's drop.
+5. **Integrations hub** ported from v1 into the services frame above the list:
+   logo arc re-pointed to Instagram/Facebook/TikTok/Shopify/YouTube/LinkedIn/X/Gmail
+   (removed Jobber/HubSpot/Yardi/Zillow/Zoho), pill now "The Amagna Crew / and 50+
+   AI Tools", Claude + ChatGPT side nodes kept. **Created placeholder SVG marks**
+   (swap official later): instagram, facebook, tiktok, shopify, youtube, linkedin,
+   x. Kept originals gmail.svg / claude.svg / chatgpt.png. Services copy already
+   matched the spec verbatim.
+6. **Pricing** — removed the "Email + SMS nurture (10DLC…)" Growth line; the three
+   commitments (zip exclusivity / one-time setup fee / month-to-month) already
+   render verbatim as a checked trust strip under the tiers. Display only.
+
+Review-round commits: 89d7c2e (H1), bddbded (CTA), 59c0059 (Frame 2 gap),
+ae1c0af (deck arrows), 085143e (integrations hub), 02b7ce9 (pricing). Verified at
+desktop + 390px; build green at each commit.
