@@ -42,14 +42,16 @@ export function HeroOceanGLCanvas({
     const coarse = window.matchMedia('(pointer: coarse)').matches;
     const isMobile = coarse || window.innerWidth < 768;
 
-    // DPR cap: water needs no native DPR. Desktop renders at 1.0, mobile lower —
-    // renderScale is the master perf knob and adaptive degradation tunes it.
-    const dprCap = isMobile ? 0.75 : 1;
+    // DPR cap: water needs no native DPR. Desktop renders at 1.0 (1× CSS px).
+    // Mobile targets ~2× effective so the ocean is CRISP on retina phones — the
+    // old 0.75×0.85≈0.64 floor looked blurry/pixelated on a DPR-3 iPhone. We
+    // START sharp and let adaptive degradation (below) drop renderScale ONLY if
+    // measured frame time runs long, instead of pre-emptively rendering soft.
+    const dprCap = isMobile ? 2 : 1;
     const pixelRatio = Math.min(window.devicePixelRatio || 1, dprCap);
 
     const merged: HeroOceanGLKnobs = {
       ...DEFAULT_GL_KNOBS,
-      ...(isMobile ? { renderScale: 0.85 } : {}),
       ...knobs,
     };
 
