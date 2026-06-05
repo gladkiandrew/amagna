@@ -14,16 +14,20 @@ export type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
  */
 const SYSTEM_PROMPT = `You are an Amagna AI growth strategist writing a custom marketing plan for a small-business operator who just asked for one. Amagna builds "Autonomous Marketing Systems" — a crew of AI agents (Zeno orchestrates; Exodus makes content/video; Solon runs outreach & retention; Hero builds automations; Thales runs Meta/TikTok/Google ads) plus humans in the loop.
 
-Audience: an operator (e.g. a home-services owner or real-estate agent). They do NOT care about "AI", "LLMs", or "agents" — they care about more calls, more customers, more revenue. Write in plain English a busy owner understands. Be direct and operator-first.
+Audience: a busy operator (e.g. a home-services owner or real-estate agent). They do NOT care about "AI", "LLMs", or "agents" — they care about more calls, more customers, more revenue. They skim. Write so every line lands in one breath.
 
-Rules:
-- Be SPECIFIC to this business, its type, revenue range, team size, area, channels, and stated goals.
-- Concrete actions only (Google Business Profile, local SEO, Meta ads, short-form video, reviews, follow-up sequences, etc.) — name real tactics.
-- NO fluffy filler, NO buzzwords, NO invented numbers, rankings, or guarantees you can't verify. Speak in terms of typical operator patterns ("most operators in your spot…").
-- The plan must read as genuinely useful even if they never hire us — that's what earns the call.
+VOICE — tight and high-signal:
+- Short lines. Lead with the verb. Cut every word that isn't doing work.
+- Each step is ONE concrete action, ideally under ~16 words. No two-clause run-ons, no "in order to", no "this will help you".
+- NO throat-clearing, NO setup sentences, NO buzzwords, NO recap of their own business back at them. Get straight to the move.
+- Specificity is the whole point — name the channel, the area, the offer, the rough budget, the real tactic. Spend your words on specifics, never on prose.
+
+HONESTY:
+- NO invented numbers, rankings, or guarantees. We do NOT run live ranking checks yet — never claim "we analyzed your rankings/SEO" or imply you measured their site. You may reference their channels and obvious gaps, and note that the crew reviews live rankings on the call.
+- Speak in typical-operator terms ("most operators in your spot…") rather than fake precision.
 - NO exclusivity claims (never "one client per area" / "we won't work with competitors").
 
-You MUST respond by calling the submit_plan tool. Do not output prose.`;
+The plan must read as genuinely useful even if they never hire us — that's what earns the call. You MUST respond by calling the submit_plan tool. Do not output prose.`;
 
 const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
   name: 'submit_plan',
@@ -33,11 +37,11 @@ const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
     properties: {
       headline: {
         type: 'string',
-        description: 'A punchy one-line framing of the opportunity, specific to this business.',
+        description: 'One punchy line framing the opportunity, specific to this business. No preamble. Aim under 20 words.',
       },
       summary: {
         type: 'string',
-        description: 'One short paragraph: where they are now → where this plan takes them in ~90 days.',
+        description: 'Max 2 short sentences: where they are now → where this takes them in ~90 days. No throat-clearing, no recap of their business.',
       },
       phases: {
         type: 'array',
@@ -47,14 +51,17 @@ const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
         items: {
           type: 'object',
           properties: {
-            title: { type: 'string', description: 'Short phase name, e.g. "Get found".' },
+            title: { type: 'string', description: 'Short phase name (2-5 words), e.g. "Get found".' },
             timeframe: { type: 'string', description: 'e.g. "First 2 weeks".' },
             steps: {
               type: 'array',
-              items: { type: 'string' },
+              items: {
+                type: 'string',
+                description: 'ONE concrete action, verb-first, ideally under ~16 words. Name the channel/area/offer/budget. No second clause explaining why.',
+              },
               minItems: 2,
               maxItems: 4,
-              description: '2-4 concrete actions for this phase, tailored to their intake.',
+              description: '2-4 concrete, scannable actions for this phase, tailored to their intake.',
             },
           },
           required: ['title', 'timeframe', 'steps'],
@@ -62,14 +69,17 @@ const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
       },
       crewHandles: {
         type: 'array',
-        items: { type: 'string' },
+        items: {
+          type: 'string',
+          description: 'One short plain-English thing the crew runs for them. Under ~12 words. No explanation tail.',
+        },
         minItems: 3,
         maxItems: 5,
-        description: '3-5 plain-English things the Amagna crew/system runs for them day to day.',
+        description: '3-5 things the Amagna crew/system runs for them day to day.',
       },
       firstMove: {
         type: 'string',
-        description: 'The single most important first move to make this week.',
+        description: 'The single most important first move this week. One or two tight sentences, action-first.',
       },
     },
     required: ['headline', 'summary', 'phases', 'crewHandles', 'firstMove'],
