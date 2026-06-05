@@ -25,13 +25,14 @@ import { useReducedMotion } from '@/components/home/ocean/use-reduced-motion';
  */
 
 // --- Timeline (seconds) ---
-const CRUISE_IN = 2.6;
-const STOP_PAD = 0.35;
-const DEAL_GAP = 0.52;
+const CRUISE_IN = 2.6; // ship motion: easeOut, so it decelerates into the centre
+// Start dealing the crew WHILE the ship is still decelerating toward its stop
+// (~1s before it fully arrives at CRUISE_IN), so the sequence feels ~1s faster.
+const DEAL_START = 1.9;
+const DEAL_GAP = 0.48;
 const DEAL_DUR = 0.7;
 const AFTER_DEAL = 0.5;
 const CRUISE_OUT = 2.4;
-const DEAL_START = CRUISE_IN + STOP_PAD;
 const LAST_DEAL = DEAL_START + (CREW.length - 1) * DEAL_GAP;
 const SWAP_AT = LAST_DEAL + DEAL_DUR; // ship empties as the last card lands
 const CRUISE_OUT_START = LAST_DEAL + DEAL_DUR + AFTER_DEAL;
