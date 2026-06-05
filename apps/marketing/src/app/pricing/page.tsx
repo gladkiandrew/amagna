@@ -31,7 +31,6 @@ const GROWTH_FEATURES = [
   'Meta + Google ad campaigns, set up and managed weekly',
   'Five to seven posts a week across your channels, in your voice',
   'Google Business Profile + local SEO + AI search visibility',
-  'Email + SMS nurture sequences (10DLC compliance handled)',
   'Automated review generation after every job',
   'A weekly report in plain English — what worked, what is next',
 ] as const;
