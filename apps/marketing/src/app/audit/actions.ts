@@ -7,6 +7,7 @@ import {
   intakeSummary,
   nicheFromType,
   normalizeBusiness,
+  intakeSignature,
   type GoldMapIntake,
   type GoldMapPlan,
   type IntakeResult,
@@ -37,6 +38,8 @@ type GoldMapPayload = {
   intake: GoldMapIntake;
   key?: string;
   plan?: GoldMapPlan;
+  /** Content signature of intake+key when the plan was generated (cache key). */
+  sig?: string;
   email_error?: string;
 };
 
@@ -101,6 +104,9 @@ export async function generateGoldMapPlanAction(args: {
     return { ok: false, message: 'Bot check failed — complete the verification and try again.' };
   }
 
+  // Content signature of these exact inputs — the cache key for same-business reuse.
+  const sig = intakeSignature(intake, key);
+
   const supabase = getSupabaseAdmin();
 
   // Cost guard — reuse an already-generated plan for this submission.
@@ -135,10 +141,15 @@ export async function generateGoldMapPlanAction(args: {
       .map((r) => r.audit_json as GoldMapPayload | undefined)
       .filter((pl): pl is GoldMapPayload => pl?.source === 'gold-map');
 
-    // (a) Same business → reuse its plan, never regenerate.
+    // (a) Same business AND unchanged inputs → reuse its plan. The signature
+    // guard means a materially-changed intake (new goals, area, key, …)
+    // regenerates instead of returning a stale plan.
     const targetBiz = normalizeBusiness(intake.businessName);
     const sameBusiness = recent.find(
-      (pl) => pl.plan && normalizeBusiness(pl.intake?.businessName ?? '') === targetBiz,
+      (pl) =>
+        pl.plan &&
+        normalizeBusiness(pl.intake?.businessName ?? '') === targetBiz &&
+        pl.sig === sig,
     );
     if (sameBusiness?.plan) {
       return { ok: true, plan: sameBusiness.plan, emailed: true };
@@ -203,6 +214,7 @@ export async function generateGoldMapPlanAction(args: {
       intake,
       key: key?.trim() || undefined,
       plan,
+      sig,
       ...(emailError ? { email_error: emailError } : {}),
     };
     await supabase

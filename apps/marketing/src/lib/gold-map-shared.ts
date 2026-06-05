@@ -216,6 +216,34 @@ export function coercePlan(raw: unknown): GoldMapPlan | null {
 }
 
 /**
+ * A small, stable content signature of the intake + master key. Same inputs →
+ * same signature; any material change (e.g. new goals like "recurring
+ * contracts") → different signature. Used so a cached plan is reused only when
+ * the inputs are unchanged — a changed intake regenerates instead of returning
+ * a stale plan. djb2 hash keeps it tiny (no crypto dependency, no bulky blob in
+ * the stored payload).
+ */
+export function intakeSignature(intake: GoldMapIntake, key?: string): string {
+  const canonical = JSON.stringify({
+    businessName: normalizeBusiness(intake.businessName),
+    businessType: intake.businessType.trim().toLowerCase(),
+    monthlyRevenue: intake.monthlyRevenue.trim(),
+    employees: intake.employees.trim(),
+    serviceArea: intake.serviceArea.trim().toLowerCase(),
+    socialChannels: [...intake.socialChannels].sort(),
+    currentMarketing: intake.currentMarketing.trim(),
+    goals: intake.goals.trim(),
+    links: intake.links,
+    key: (key ?? '').trim(),
+  });
+  let h = 5381;
+  for (let i = 0; i < canonical.length; i++) {
+    h = ((h << 5) + h + canonical.charCodeAt(i)) | 0; // h * 33 + c, 32-bit
+  }
+  return (h >>> 0).toString(16);
+}
+
+/**
  * Normalize a business name for cache-key comparison: lowercase, strip
  * punctuation, collapse whitespace. So "HydroClean", "hydroclean", and
  * "Hydro Clean!" all compare equal, but a genuinely different business
