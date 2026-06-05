@@ -180,3 +180,63 @@ npm run dev                                # then eyeball:
 #   /            unchanged live voyage (afterglow hero not promoted here — see P4)
 ```
 Run ended cleanly. — Claude
+
+---
+
+## Round 2 — Final feedback (interactive, same night)
+
+Andrew reviewed the afterglow hero + Frame 2 and sent a final feedback round.
+All build-green, committed per concern.
+
+### Hero fixes ✅
+- **H1 centering:** the copy block centred in the scrollbar-excluded content box,
+  leaving it ~7.5px left of true centre on classic-scrollbar setups. Re-anchored
+  the copy to the TRUE viewport centre (`left: 50vw` + translate), clipped by the
+  section's `overflow-hidden`. Both H1 lines now measure exactly centred
+  (640.0/640.0 at 1280, 720.0 at 1440). Two-line structure + size ratio kept.
+- **Subtitle:** reverted to normal weight (from the bold change) while keeping the
+  larger size, title case, and one-line-at-desktop.
+- **Realistic afterglow:** rebalanced the sky to be dominated by warm **orange +
+  golden yellow** at/above the horizon, fading up through just a little dusky pink
+  to a deep dusk blue, with only a minimal purple cast. Warm-gold bloom; clouds
+  de-purpled. Water reflection follows (samples the warm low band), stays navy.
+  2D fallback repainted to match. Water geometry untouched.
+
+### Frame 2 rework ✅ (replaces the static version)
+Built the full choreographed sequence with the **real production ship renders**
+(`ship-crew-full.webp` / `ship-empty-transparent.webp`, facing left):
+- **Seamless water:** the hero's dark water continues into Frame 2 as a near-black
+  navy canvas keeping a LIVE wave animation (the only animated bg) + the ship's
+  white-foam **V wake**. No hard seam.
+- **Time-based sequence** (triggered once on scroll-in): crew ship cruises in from
+  the right heading left → stops centre → the five crew are **dealt out one by
+  one**, each dropping into its card below → ship **swaps to the empty version**
+  and **sails off left**, wake trailing, leaving the cards.
+- **reduced-motion** → final state (cards visible, static water, no ship).
+- Deleted the "The crew aboard" eyebrow; moved the "Five specialized agents…"
+  line **below** the cards. Removed the now-unused `voyage-ship.tsx`.
+- One IO/visibility-gated rAF loop drives water + wake + ship; cards are
+  CSS-transitioned, revealed at timeline milestones. Verified the full sequence
+  in a real browser at desktop + 390px + reduced-motion.
+
+### Round-2 commits
+| Commit | Concern |
+|---|---|
+| c14ffb3 | Hero: realistic afterglow (orange/yellow dominant) + 2D fallback |
+| 0fe46cf | Hero copy: centre H1 precisely + revert subtitle weight |
+| 26f0b53 | Rework Frame 2: ship cruise-in, crew deal, sail-off |
+| _final_ | Update autonomous run 2 report (round 2) |
+
+### Round-2 decisions / notes
+1. **Ship asset switched** from the SVG to the real webp renders per Andrew's
+   spec. `ship-display-hull-gold.svg` is now unused (left in the repo, harmless;
+   reusable).
+2. **Wake** is a particle V-foam trail aligned to the ship's measured waterline.
+   It reads as a wake; spread/brightness are easy to dial in `drawWake` if Andrew
+   wants it bigger.
+3. **Sequence timing** ≈ 8.5s total (cruise 2.6s · deal 5×0.52s · sail-off 2.4s).
+   Tunable via the timeline constants at the top of `voyage-reveal.tsx`.
+
+Eyeball tomorrow: `npm run dev` → `/hero-v2`, scroll into Frame 2 to watch the
+ship cruise in, deal the crew, and sail off (desktop + 390px). Round 2 ended
+cleanly. — Claude
