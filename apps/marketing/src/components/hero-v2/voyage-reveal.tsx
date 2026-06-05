@@ -293,7 +293,7 @@ export function VoyageReveal(): JSX.Element {
           id="crew-frame-title"
           className="text-center font-display text-[clamp(1.9rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream"
         >
-          A full team sails your marketing.
+          The Amagna Crew sailing your marketing.
         </h2>
 
         {/* Crew cards — dealt from the ship into place. */}
