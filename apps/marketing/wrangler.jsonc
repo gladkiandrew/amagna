@@ -37,6 +37,10 @@
     // is a Worker SECRET, never a var — see the secret-put command in the ADR.
     "NEXT_PUBLIC_TURNSTILE_SITE_KEY": ""
   },
+  // Live cutover 2026-06-05: amagna.co + www detached from the Pages project by
+  // Andrew, so this Worker now owns both custom domains. workers_dev stays true
+  // so the .workers.dev URL remains available for headless testing.
+  "workers_dev": true,
   "routes": [
     { "pattern": "amagna.co",     "custom_domain": true, "zone_id": "945e4c1755f729e954b82f565ffc5e58" },
     { "pattern": "www.amagna.co", "custom_domain": true, "zone_id": "945e4c1755f729e954b82f565ffc5e58" }
