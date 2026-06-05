@@ -152,26 +152,38 @@ Produce the plan using the submit_plan tool.`;
   }
 }
 
-/** Plain-text rendering of the plan for the follow-up email (voyage voice). */
+/**
+ * The complete plan rendered as readable plain text — headline, summary, every
+ * phase + step, what the crew handles, and the first move. This is the SAME
+ * content shown on screen, and it's shared by both the lead email and Andrew's
+ * lead notification so neither can drift to a truncated version.
+ */
+export function planBodyText(plan: GoldMapPlan): string {
+  const lines: string[] = [];
+  lines.push(plan.headline);
+  lines.push('');
+  lines.push(plan.summary);
+  lines.push('');
+  plan.phases.forEach((phase, i) => {
+    lines.push(`${i + 1}. ${phase.title} — ${phase.timeframe}`);
+    for (const step of phase.steps) lines.push(`   • ${step}`);
+    lines.push('');
+  });
+  lines.push('What the crew handles for you:');
+  for (const c of plan.crewHandles) lines.push(`  • ${c}`);
+  lines.push('');
+  lines.push(`First move: ${plan.firstMove}`);
+  return lines.join('\n');
+}
+
+/** Plain-text rendering of the plan for the lead's follow-up email (voyage voice). */
 export function planToEmailText(intake: GoldMapIntake, plan: GoldMapPlan): string {
   const lines: string[] = [];
   lines.push(`${intake.name ? intake.name + ',' : 'Hi,'}`);
   lines.push('');
   lines.push('Here is your Plan to Gold — the map the crew charted from your log.');
   lines.push('');
-  lines.push(plan.headline);
-  lines.push('');
-  lines.push(plan.summary);
-  lines.push('');
-  for (const phase of plan.phases) {
-    lines.push(`${phase.title} — ${phase.timeframe}`);
-    for (const step of phase.steps) lines.push(`  • ${step}`);
-    lines.push('');
-  }
-  lines.push('What the crew handles for you:');
-  for (const c of plan.crewHandles) lines.push(`  • ${c}`);
-  lines.push('');
-  lines.push(`First move: ${plan.firstMove}`);
+  lines.push(planBodyText(plan));
   lines.push('');
   lines.push('The map is yours. The crew sails when you say go — book a call: https://amagna.co/book');
   lines.push('');

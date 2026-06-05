@@ -1,7 +1,7 @@
 'use server';
 
 import { Resend } from 'resend';
-import { generateGoldMapPlan, planToEmailText } from '@/lib/gold-map';
+import { generateGoldMapPlan, planToEmailText, planBodyText } from '@/lib/gold-map';
 import {
   validateIntake,
   intakeSummary,
@@ -141,13 +141,14 @@ export async function generateGoldMapPlanAction(args: {
         text: planToEmailText(intake, plan),
       });
       emailed = true;
-      // Notify Andrew of the lead (best-effort).
+      // Notify Andrew of the lead with the FULL plan (best-effort) — same body
+      // the lead receives, so the notification is never a truncated stub.
       await resend.emails.send({
         from: FROM,
         to: ANDREW,
         replyTo: intake.email,
         subject: `Gold Map lead — ${intake.businessName}`,
-        text: `${intakeSummary(intake)}\n\n--- Plan generated ---\n${plan.headline}`,
+        text: `${intakeSummary(intake)}\n\n--- Plan to Gold ---\n\n${planBodyText(plan)}`,
       });
     } catch (error) {
       emailError = error instanceof Error ? error.message : 'send failed';
