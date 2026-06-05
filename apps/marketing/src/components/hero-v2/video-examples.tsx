@@ -67,6 +67,30 @@ export function VideoExamples(): JSX.Element {
     else setDx(0);
   };
 
+  // Prev/Next controls. Rendered twice with responsive display: under the copy
+  // on desktop, BELOW the card on mobile (single-column). Only one is ever in
+  // the a11y tree at a given breakpoint (the other is `display:none`).
+  const renderControls = (wrapClass: string) => (
+    <div className={`items-center gap-3 ${wrapClass}`}>
+      <button
+        type="button"
+        onClick={retreat}
+        aria-label="Previous example"
+        className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
+      >
+        <ArrowLeft className="h-7 w-7" aria-hidden />
+      </button>
+      <button
+        type="button"
+        onClick={advance}
+        aria-label="Next example"
+        className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
+      >
+        <ArrowRight className="h-7 w-7" aria-hidden />
+      </button>
+    </div>
+  );
+
   return (
     <section
       aria-labelledby="examples-title"
@@ -91,25 +115,9 @@ export function VideoExamples(): JSX.Element {
               Shorts. Swipe through a few.
             </p>
 
-            {/* Controls (non-drag fallback, keyboard accessible) */}
-            <div className="mt-8 flex items-center justify-center gap-3 lg:justify-start">
-              <button
-                type="button"
-                onClick={retreat}
-                aria-label="Previous example"
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
-              >
-                <ArrowLeft className="h-7 w-7" aria-hidden />
-              </button>
-              <button
-                type="button"
-                onClick={advance}
-                aria-label="Next example"
-                className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
-              >
-                <ArrowRight className="h-7 w-7" aria-hidden />
-              </button>
-            </div>
+            {/* Controls under the copy — desktop only (mobile shows them below
+                the card instead, see after the deck). */}
+            {renderControls('mt-8 hidden justify-center lg:flex lg:justify-start')}
           </div>
 
           {/* Deck */}
@@ -203,6 +211,10 @@ export function VideoExamples(): JSX.Element {
               );
             })}
           </div>
+
+          {/* Controls below the card — mobile only (desktop shows them under the
+              copy in the left column). */}
+          {renderControls('mt-8 flex justify-center lg:hidden')}
         </div>
       </div>
     </section>
