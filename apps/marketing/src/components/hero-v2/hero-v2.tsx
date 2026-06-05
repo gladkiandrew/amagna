@@ -35,7 +35,14 @@ export function HeroV2(): JSX.Element {
       {/* Copy column — raised so "Marketing Systems" lands at the vertical centre
           of the viewport, "Autonomous" above it, the hairline / subtitle / CTAs
           flowing below. Pure CSS translate; layout centering is unchanged. */}
-      <div className="relative z-[2] mx-auto w-full max-w-[50rem] -translate-y-[1vh] px-4 text-center sm:px-6">
+      {/* Copy anchored to the TRUE viewport centre (left: 50vw) rather than the
+          scrollbar-excluded content box, so the H1 is precisely centred even
+          when a classic scrollbar reserves space. The section's overflow-hidden
+          clips any breakout. */}
+      <div
+        className="absolute z-[2] w-full max-w-[50rem] px-4 text-center sm:px-6"
+        style={{ left: '50vw', top: '50%', transform: 'translate(-50%, calc(-50% - 1vh))' }}
+      >
         <h1
           id="hero-v2-title"
           className="hero-rise font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
@@ -53,7 +60,7 @@ export function HeroV2(): JSX.Element {
         />
 
         <p
-          className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-semibold leading-[1.5] text-brand-cream [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
+          className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-normal leading-[1.5] text-brand-cream/90 [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
           style={{ '--i': 2 } as CSSProperties}
         >
           We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
