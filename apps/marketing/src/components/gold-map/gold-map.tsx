@@ -20,6 +20,7 @@ import {
   type GoldMapPlan,
 } from '@/lib/gold-map-shared';
 import { captureGoldMapIntake, generateGoldMapPlanAction, markGoldMapKeyed } from '@/app/audit/actions';
+import { TurnstileWidget, TURNSTILE_ENABLED } from './turnstile-widget';
 
 type Phase = 'intake' | 'forge' | 'turn' | 'digging' | 'chest' | 'plan';
 type Errors = Partial<Record<keyof GoldMapIntake, string>>;
@@ -39,6 +40,8 @@ export function GoldMap(): JSX.Element {
   const [keyText, setKeyText] = useState('');
   const [plan, setPlan] = useState<GoldMapPlan | null>(null);
   const [busy, setBusy] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [digError, setDigError] = useState<string | null>(null);
 
   const set = <K extends keyof GoldMapIntake>(k: K, v: GoldMapIntake[K]) =>
     setIntake((s) => ({ ...s, [k]: v }));
@@ -63,8 +66,9 @@ export function GoldMap(): JSX.Element {
     }
   };
 
-  // The dig — generate (cost-gated), then reveal the chest.
+  // The dig — verify (bot check) + generate (cost-gated), then reveal the chest.
   const runDig = async (withKey: boolean) => {
+    setDigError(null);
     setPhase('digging');
     scrollToTop();
     if (withKey && submissionId) {
@@ -75,10 +79,23 @@ export function GoldMap(): JSX.Element {
         submissionId,
         intake,
         key: withKey ? keyText : undefined,
+        turnstileToken: turnstileToken ?? undefined,
       });
+      if (!res.ok) {
+        // Bot check failed or generation errored — send them back to re-verify.
+        setTurnstileToken(null);
+        setDigError(res.message ?? 'The crew couldn’t verify you. Complete the check and try again.');
+        setPhase('turn');
+        scrollToTop();
+        return;
+      }
       setPlan(res.plan ?? null);
-    } finally {
       setPhase('chest');
+    } catch {
+      setTurnstileToken(null);
+      setDigError('Something went wrong on the dig. Please try again.');
+      setPhase('turn');
+      scrollToTop();
     }
   };
 
@@ -106,6 +123,9 @@ export function GoldMap(): JSX.Element {
             setKeyText={setKeyText}
             onTurn={() => runDig(true)}
             onFallback={() => runDig(false)}
+            turnstileToken={turnstileToken}
+            onToken={setTurnstileToken}
+            error={digError}
           />
         )}
         {phase === 'digging' && <DigAnimation reduced={reduced} />}
@@ -433,10 +453,20 @@ function ZenoVideo({ reduced }: { reduced: boolean }): JSX.Element {
 /* Step 3 — Turn the key                                               */
 /* ------------------------------------------------------------------ */
 function TurnStep({
-  keyText, setKeyText, onTurn, onFallback,
-}: { keyText: string; setKeyText: (v: string) => void; onTurn: () => void; onFallback: () => void }): JSX.Element {
+  keyText, setKeyText, onTurn, onFallback, turnstileToken, onToken, error,
+}: {
+  keyText: string;
+  setKeyText: (v: string) => void;
+  onTurn: () => void;
+  onFallback: () => void;
+  turnstileToken: string | null;
+  onToken: (token: string | null) => void;
+  error: string | null;
+}): JSX.Element {
   const id = useId();
   const hasKey = keyText.trim().length > 12;
+  // When bot protection is on, both paths wait for a verified token.
+  const needsToken = TURNSTILE_ENABLED && !turnstileToken;
   return (
     <section className="rounded-2xl border border-brand-warmgold/20 bg-white/[0.03] p-6 sm:p-8">
       <StepHead kicker="Step Three" title="Turn the key." sub="Paste your master prompt below. X marks the spot." />
@@ -449,11 +479,21 @@ function TurnStep({
         value={keyText}
         onChange={(e) => setKeyText(e.target.value)}
       />
+
+      {/* Bot check — renders only when a site key is configured. */}
+      <TurnstileWidget onToken={onToken} />
+
+      {error && (
+        <p role="alert" className="mt-4 rounded-md border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          {error}
+        </p>
+      )}
+
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
         <button
           type="button"
           onClick={onTurn}
-          disabled={!hasKey}
+          disabled={!hasKey || needsToken}
           className="inline-flex items-center justify-center gap-2 rounded-[3px] border border-brand-warmgold bg-brand-warmgold px-8 py-3.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-brand-deep transition hover:bg-brand-warmgold/90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <XIcon className="h-4 w-4" aria-hidden />
@@ -462,11 +502,15 @@ function TurnStep({
         <button
           type="button"
           onClick={onFallback}
-          className="text-left text-sm text-brand-cream/55 underline decoration-brand-cream/25 decoration-1 underline-offset-4 transition hover:text-brand-cream/80"
+          disabled={needsToken}
+          className="text-left text-sm text-brand-cream/55 underline decoration-brand-cream/25 decoration-1 underline-offset-4 transition hover:text-brand-cream/80 disabled:cursor-not-allowed disabled:opacity-50"
         >
           No AI handy? The crew can chart from your log alone →
         </button>
       </div>
+      {needsToken && (
+        <p className="mt-3 text-xs text-brand-cream/50">Complete the quick check above to dig.</p>
+      )}
     </section>
   );
 }

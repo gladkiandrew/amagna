@@ -13,6 +13,7 @@ import {
   type PlanResult,
 } from '@/lib/gold-map-shared';
 import { getSupabaseAdmin, getAmagnaOrgId } from '@/lib/supabase-server';
+import { verifyTurnstile } from '@/lib/turnstile';
 
 const FROM = 'Amagna AI <noreply@amagna.co>';
 const ANDREW = 'andrew@amagna.co';
@@ -88,8 +89,17 @@ export async function generateGoldMapPlanAction(args: {
   submissionId: string | null;
   intake: GoldMapIntake;
   key?: string;
+  turnstileToken?: string;
 }): Promise<PlanResult> {
-  const { submissionId, intake, key } = args;
+  const { submissionId, intake, key, turnstileToken } = args;
+
+  // Bot gate — Step 1 already saved the lead, so this only protects the
+  // expensive generation. 'unconfigured' (no secret in this env) passes
+  // through; an invalid/missing token when the secret IS set is refused.
+  const gate = await verifyTurnstile(turnstileToken);
+  if (gate === 'invalid') {
+    return { ok: false, message: 'Bot check failed — complete the verification and try again.' };
+  }
 
   const supabase = getSupabaseAdmin();
 
