@@ -36,9 +36,9 @@ const GROWTH_FEATURES = [
 ] as const;
 
 const INCLUDED = [
-  'One client per zip code — your exclusivity guarantee. We never work with your competitor.',
   'A one-time setup fee ($500–$2,000) covers onboarding and the initial build.',
   'Month-to-month. No long-term contracts.',
+  'Your own dedicated AI crew — built for your business, run every day.',
 ];
 
 const FAQ = [
@@ -76,7 +76,7 @@ export default function PricingPage() {
           One retainer. More calls, more listings, every month.
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-          No hourly billing. No surprises. Month-to-month. One client per zip code.
+          No hourly billing. No surprises. Month-to-month.
         </p>
       </section>
 
