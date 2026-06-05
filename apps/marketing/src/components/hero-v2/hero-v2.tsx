@@ -36,11 +36,14 @@ export function HeroV2(): JSX.Element {
           of the viewport, "Autonomous" above it, the hairline / subtitle / CTAs
           flowing below. Pure CSS translate; layout centering is unchanged. */}
       {/* Copy anchored to the TRUE viewport centre (left: 50vw) rather than the
-          scrollbar-excluded content box, so the H1 is precisely centred even
-          when a classic scrollbar reserves space. The section's overflow-hidden
-          clips any breakout. */}
+          scrollbar-excluded content box, so it's precisely centred even when a
+          classic scrollbar reserves space. The section's overflow-hidden clips
+          any breakout. The H1 centres in this FULL-WIDTH box (no max-width) so
+          the large second line never overflows a narrow column and gets pinned
+          left — both lines share the same visual centre axis. The hairline /
+          subtitle / CTAs sit in an inner narrow-measure wrapper. */}
       <div
-        className="absolute z-[2] w-full max-w-[50rem] px-4 text-center sm:px-6"
+        className="absolute z-[2] w-full px-4 text-center sm:px-6"
         style={{ left: '50vw', top: '50%', transform: 'translate(-50%, calc(-50% - 1vh))' }}
       >
         <h1
@@ -52,25 +55,27 @@ export function HeroV2(): JSX.Element {
           <span className="block text-[clamp(1.9rem,8.8vw,7.4rem)]">Marketing&nbsp;Systems</span>
         </h1>
 
-        {/* Thin gold hairline, centered. */}
-        <div
-          aria-hidden
-          className="hero-rise gold-rule mx-auto mt-7"
-          style={{ '--i': 1 } as CSSProperties}
-        />
+        <div className="mx-auto max-w-[50rem]">
+          {/* Thin gold hairline, centered. */}
+          <div
+            aria-hidden
+            className="hero-rise gold-rule mx-auto mt-7"
+            style={{ '--i': 1 } as CSSProperties}
+          />
 
-        <p
-          className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-normal leading-[1.5] text-brand-cream/90 [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
-          style={{ '--i': 2 } as CSSProperties}
-        >
-          We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
-        </p>
+          <p
+            className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-normal leading-[1.5] text-brand-cream/90 [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
+            style={{ '--i': 2 } as CSSProperties}
+          >
+            We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
+          </p>
 
-        <div
-          className="hero-rise mt-9 flex justify-center"
-          style={{ '--i': 3 } as CSSProperties}
-        >
-          <VoyageCtas onDark align="center" size="lg" />
+          <div
+            className="hero-rise mt-9 flex justify-center"
+            style={{ '--i': 3 } as CSSProperties}
+          >
+            <VoyageCtas onDark align="center" size="lg" />
+          </div>
         </div>
       </div>
     </section>
