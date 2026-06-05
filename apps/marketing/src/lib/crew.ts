@@ -42,11 +42,11 @@ export const CREW: readonly CrewMember[] = [
   {
     slug: 'exodus',
     name: 'Exodus',
-    title: 'Data Specialist',
-    blurb: 'Data extraction and intelligence — turns raw signal into an edge.',
+    title: 'Creative Specialist',
+    blurb: 'Generates the videos, content, and blogs that fill your channels.',
     description:
-      'Exodus pulls the data others can’t reach and turns it into intelligence: who to talk to, what’s working, and where the next opportunity is hiding.',
-    trust: 'Findings are reviewed by a human before they drive a decision.',
+      'Exodus is the maker — it produces the short-form videos, writes the posts and blogs, and turns your brand into a steady stream of creative that still sounds like you.',
+    trust: 'You see and can edit every piece before it publishes.',
     w: 1200,
     h: 675,
   },
