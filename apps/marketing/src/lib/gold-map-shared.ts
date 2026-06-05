@@ -163,6 +163,19 @@ export function validateIntake(input: GoldMapIntake): Partial<Record<keyof GoldM
   return e;
 }
 
+/**
+ * Normalize a business name for cache-key comparison: lowercase, strip
+ * punctuation, collapse whitespace. So "HydroClean", "hydroclean", and
+ * "Hydro Clean!" all compare equal, but a genuinely different business
+ * (e.g. "Breaking the Fast") never collides with another.
+ */
+export function normalizeBusiness(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
 /** Map a free business type onto the DB `niche` enum when it clearly matches. */
 export function nicheFromType(businessType: string): 'home_services' | 'real_estate' | null {
   const t = businessType.toLowerCase();

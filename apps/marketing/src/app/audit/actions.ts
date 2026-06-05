@@ -6,6 +6,7 @@ import {
   validateIntake,
   intakeSummary,
   nicheFromType,
+  normalizeBusiness,
   type GoldMapIntake,
   type GoldMapPlan,
   type IntakeResult,
@@ -105,22 +106,48 @@ export async function generateGoldMapPlanAction(args: {
     }
   }
 
-  // Cost guard 2 — reuse a recent plan for the same email (repeat-generation
-  // spam protection across fresh submissions from the same lead).
+  // Cost guard 2 — same email AND same business: reuse that business's recent
+  // plan. Reusing is keyed on the NORMALIZED business name, so a second business
+  // from the same email (HydroClean → Breaking the Fast) generates fresh and is
+  // stored on its own submission row — it never returns or overwrites the other
+  // business's plan. A per-email rate cap (max 3 generations / 24h) is the cost
+  // backstop: over the cap we politely return the lead's most recent plan.
   if (supabase && intake.email) {
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
     const { data } = await supabase
       .from('widget_submissions')
-      .select('audit_json')
+      .select('audit_json, created_at')
       .eq('email', intake.email)
       .gte('created_at', since)
       .order('created_at', { ascending: false })
-      .limit(5);
+      .limit(20);
     const recent = (data ?? [])
       .map((r) => r.audit_json as GoldMapPayload | undefined)
-      .find((pl) => pl?.source === 'gold-map' && pl?.plan);
-    if (recent?.plan) {
-      return { ok: true, plan: recent.plan, emailed: true };
+      .filter((pl): pl is GoldMapPayload => pl?.source === 'gold-map');
+
+    // (a) Same business → reuse its plan, never regenerate.
+    const targetBiz = normalizeBusiness(intake.businessName);
+    const sameBusiness = recent.find(
+      (pl) => pl.plan && normalizeBusiness(pl.intake?.businessName ?? '') === targetBiz,
+    );
+    if (sameBusiness?.plan) {
+      return { ok: true, plan: sameBusiness.plan, emailed: true };
+    }
+
+    // (b) Different business, but the email is over its 24h generation cap →
+    // hand back the most recent plan rather than paying for another generation.
+    const generatedInWindow = recent.filter((pl) => pl.status === 'plan_generated' && pl.plan).length;
+    if (generatedInWindow >= 3) {
+      const mostRecent = recent.find((pl) => pl.plan);
+      if (mostRecent?.plan) {
+        return {
+          ok: true,
+          plan: mostRecent.plan,
+          emailed: true,
+          message:
+            "You've charted a few maps recently — here's your latest. Reply to the email and the crew will help with more.",
+        };
+      }
     }
   }
 
