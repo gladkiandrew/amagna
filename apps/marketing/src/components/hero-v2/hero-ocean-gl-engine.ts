@@ -77,11 +77,12 @@ const float PI = 3.141592653589793;
 // --- Amagna palette (water stays deep navy / blue-black — no purple) ---
 const vec3  SEA_BASE    = vec3(0.012, 0.040, 0.085); // deep navy / blue-black
 const vec3  SEA_SCATTER = vec3(0.34, 0.30, 0.19);    // subsurface body (unchanged)
-const vec3  SUN_TINT    = vec3(1.0, 0.72, 0.42);     // warm sunset specular glitter
-// Low sun near the horizon, ahead of the camera (which looks down −z), so it
-// sits just above the waterline. Pre-normalised: normalize(vec3(0,0.16,-1)).
-// Drives the sky glow, the god rays, and the water's specular sun-glitter path.
-const vec3  SUN_DIR     = vec3(0.0, 0.158, -0.9874);
+const vec3  SUN_TINT    = vec3(1.0, 0.55, 0.40);     // soft warm-pink afterglow shimmer
+// The sun has SET: this is where it went down — right at the waterline ahead of
+// the camera (which looks down −z). It no longer renders a disk or rays; it only
+// anchors the soft afterglow bloom and the gentle water shimmer.
+// Pre-normalised: normalize(vec3(0,0.06,-1)).
+const vec3  SUN_DIR     = vec3(0.0, 0.0599, -0.9982);
 
 #define SEA_TIME (1.0 + uTime * uSpeed)
 const mat2 OCTAVE_M = mat2(1.6, 1.2, -1.2, 1.6);
@@ -129,50 +130,43 @@ float specular(vec3 n, vec3 l, vec3 e, float s) {
   return pow(max(dot(reflect(e, n), l), 0.0), s) * nrm;
 }
 
-// Sunset sky (Andrew-approved — overrides the gold-only palette). Vivid warm
-// orange at the waterline → gold → dusky rose → deep blue at the zenith, with a
-// hot low sun glowing toward SUN_DIR. This is the base sky AND the sky the water
-// reflects (called from getSeaColor), so the sea picks up the sunset tones.
+// Post-sunset AFTERGLOW sky (Andrew-approved — purple is allowed in the SKY,
+// never in the water). The sun has already set: no disk, no god rays. Dark warm
+// orange low at the horizon → bright orange → pink → bright purple higher →
+// dusk blue at the zenith, with a soft afterglow bloom where the sun went down.
+// The water samples only a warm low slice of this (see getSeaColor).
 vec3 getSkyColor(vec3 e) {
   float h = clamp(e.y, 0.0, 1.0);
-  vec3 cHorizon = vec3(1.00, 0.41, 0.16); // vivid warm orange at the waterline
-  vec3 cLow     = vec3(1.00, 0.58, 0.24); // orange-gold
-  vec3 cMid     = vec3(0.72, 0.44, 0.40); // dusky rose transition
-  vec3 cHigh    = vec3(0.12, 0.25, 0.47); // deep blue zenith
-  vec3 col = mix(cHorizon, cLow, smoothstep(0.0, 0.09, h));
-  col = mix(col, cMid, smoothstep(0.07, 0.30, h));
-  col = mix(col, cHigh, smoothstep(0.28, 0.92, h));
+  vec3 cHorizon = vec3(0.92, 0.34, 0.13); // dark warm orange at the waterline
+  vec3 cLow     = vec3(1.00, 0.46, 0.24); // bright orange just above
+  vec3 cPink    = vec3(0.85, 0.36, 0.50); // pink
+  vec3 cPurple  = vec3(0.53, 0.27, 0.74); // bright purple (SKY only)
+  vec3 cZenith  = vec3(0.10, 0.12, 0.31); // dusk blue
+  // Gradient compressed into the visible sky band: with the horizon raised, the
+  // top of the frame only reaches h≈0.16, so all four bands live below that.
+  vec3 col = mix(cHorizon, cLow, smoothstep(0.0, 0.02, h));
+  col = mix(col, cPink, smoothstep(0.015, 0.06, h));
+  col = mix(col, cPurple, smoothstep(0.05, 0.095, h));
+  col = mix(col, cZenith, smoothstep(0.12, 0.19, h));
 
-  // Low sun: a broad warm glow plus a hot near-white core.
+  // Soft afterglow bloom where the sun went down — broad and gentle, no core.
   float s = max(dot(e, SUN_DIR), 0.0);
-  col += vec3(1.00, 0.60, 0.28) * pow(s, 5.0) * 0.55;
-  col += vec3(1.00, 0.92, 0.78) * pow(s, 280.0) * 1.7;
+  col += vec3(1.00, 0.48, 0.24) * pow(s, 3.0) * 0.34;
   return col;
 }
 
-// Drama layer for the DIRECT sky only (skipped on the water, which reflects the
-// cheaper gradient sky): crepuscular god rays fanning from the sun + warm-lit
-// procedural clouds. Reference: the attached sunset photo (its sky only).
+// Drama layer for the DIRECT sky only (the water reflects the cheaper gradient).
+// The sun has set, so there are NO god rays — just procedural afterglow clouds:
+// warm pink/orange undersides low near where the sun went down, cooling to a
+// dusky purple-grey higher and away.
 vec3 skyDrama(vec3 dir, vec3 col) {
   float sunAmt = max(dot(dir, SUN_DIR), 0.0);
-
-  // God rays — bearing around the sun, modulated into spokes that fade with
-  // angular distance from it.
-  vec3 perp1 = normalize(cross(SUN_DIR, vec3(0.0, 1.0, 0.0)));
-  vec3 perp2 = cross(SUN_DIR, perp1);
-  vec2 q = vec2(dot(dir, perp1), dot(dir, perp2));
-  float ang = atan(q.x, q.y);
-  float rays = pow(0.5 + 0.5 * sin(ang * 14.0 + noise(q * 4.0) * 1.6), 2.0);
-  col += vec3(1.0, 0.72, 0.40) * rays * pow(sunAmt, 2.2) * 0.42;
-
-  // Clouds — fbm cover over a projected sky plane, warm underside near the sun,
-  // cool blue-grey away from it, faded out at the horizon.
   vec2 cuv = dir.xz / max(dir.y, 0.06);
   cuv = cuv * 0.6 + vec2(uTime * 0.004, 0.0);
   float cover = smoothstep(0.50, 0.92, fbm(cuv));
-  vec3 cloudWarm = vec3(1.00, 0.52, 0.40);
-  vec3 cloudCool = vec3(0.26, 0.28, 0.40);
-  vec3 cloudCol = mix(cloudCool, cloudWarm, pow(sunAmt, 1.5) * 0.85 + 0.12);
+  vec3 cloudWarm = vec3(1.00, 0.46, 0.40); // pink-orange lit underside
+  vec3 cloudCool = vec3(0.30, 0.22, 0.40); // dusky purple-grey
+  vec3 cloudCol = mix(cloudCool, cloudWarm, pow(sunAmt, 1.4) * 0.8 + 0.12);
   float cloudFade = smoothstep(0.015, 0.16, dir.y);
   col = mix(col, cloudCol, cover * cloudFade * 0.8);
   return col;
@@ -206,12 +200,18 @@ float seaMap(vec3 p, int iters) {
 vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {
   float fresnel = clamp(1.0 - dot(n, -eye), 0.0, 1.0);
   fresnel = min(fresnel * fresnel * fresnel, 0.5);
-  vec3 reflected = getSkyColor(reflect(eye, n));
+  // The sea reflects only the WARM LOW slice of the afterglow sky — capping the
+  // reflected ray's height keeps the approved sky-purple OUT of the water, so it
+  // stays deep navy with warm orange/pink glints near the horizon.
+  vec3 r = reflect(eye, n);
+  r.y = min(r.y, 0.035);
+  vec3 reflected = getSkyColor(r);
   vec3 refracted = SEA_BASE + diffuse(n, l, 80.0) * SEA_SCATTER * 0.12;
   vec3 color = mix(refracted, reflected, fresnel);
   float atten = max(1.0 - dot(dist, dist) * 0.001, 0.0);
   color += SEA_SCATTER * (p.y - uSeaHeight) * 0.18 * atten;
-  color += SUN_TINT * specular(n, l, eye, 60.0);
+  // No sun = no hard glitter highway — just a soft, broad afterglow shimmer.
+  color += SUN_TINT * specular(n, l, eye, 24.0) * 0.30;
   return color;
 }
 
