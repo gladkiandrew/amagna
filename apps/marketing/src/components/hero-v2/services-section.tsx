@@ -57,8 +57,10 @@ export function ServicesSection(): JSX.Element {
           Here&apos;s what it does.
         </p>
 
-        {/* Integrations hub — every platform flows through the Amagna AI core. */}
-        <div className="mt-12">
+        {/* Integrations hub — every platform flows through the Amagna AI core.
+            Slight negative margin on mobile lets the diagram use the full width
+            so the orbit logos render larger. */}
+        <div className="-mx-2 mt-12 sm:mx-0">
           <IntegrationsHub />
         </div>
 

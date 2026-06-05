@@ -114,15 +114,16 @@ export function IntegrationsHub(): JSX.Element {
         </text>
       </svg>
 
-      {/* Top platform logos */}
+      {/* Top platform logos — sized up (and tighter inner padding on phones) so
+          the marks stay legible when the whole diagram scales down on mobile. */}
       {APPS.map((app, i) => (
         <div
           key={app.alt}
-          className="absolute flex items-center justify-center rounded-lg border border-brand-lightgray bg-white p-2"
-          style={overlayStyle(APP_CX[i], 50, 44, 44)}
+          className="absolute flex items-center justify-center rounded-lg border border-brand-lightgray bg-white p-1 sm:p-2"
+          style={overlayStyle(APP_CX[i], 50, 60, 60)}
         >
           <div className="relative h-full w-full">
-            <Image src={app.src} alt={app.alt} fill className="object-contain" sizes="44px" />
+            <Image src={app.src} alt={app.alt} fill className="object-contain" sizes="60px" />
           </div>
         </div>
       ))}
