@@ -130,42 +130,42 @@ float specular(vec3 n, vec3 l, vec3 e, float s) {
   return pow(max(dot(reflect(e, n), l), 0.0), s) * nrm;
 }
 
-// Post-sunset AFTERGLOW sky (Andrew-approved — purple is allowed in the SKY,
-// never in the water). The sun has already set: no disk, no god rays. Dark warm
-// orange low at the horizon → bright orange → pink → bright purple higher →
-// dusk blue at the zenith, with a soft afterglow bloom where the sun went down.
-// The water samples only a warm low slice of this (see getSeaColor).
+// Post-sunset AFTERGLOW sky — realistic: dominated by warm ORANGE and YELLOW at
+// and above the horizon, fading naturally upward through just a LITTLE dusky
+// pink to a deep dusk blue, with only a minimal purple cast. The sun has set:
+// no disk, no god rays. The water samples only a warm low slice (see getSeaColor).
 vec3 getSkyColor(vec3 e) {
   float h = clamp(e.y, 0.0, 1.0);
-  vec3 cHorizon = vec3(0.92, 0.34, 0.13); // dark warm orange at the waterline
-  vec3 cLow     = vec3(1.00, 0.46, 0.24); // bright orange just above
-  vec3 cPink    = vec3(0.85, 0.36, 0.50); // pink
-  vec3 cPurple  = vec3(0.53, 0.27, 0.74); // bright purple (SKY only)
-  vec3 cZenith  = vec3(0.10, 0.12, 0.31); // dusk blue
-  // Gradient compressed into the visible sky band: with the horizon raised, the
-  // top of the frame only reaches h≈0.16, so all four bands live below that.
-  vec3 col = mix(cHorizon, cLow, smoothstep(0.0, 0.02, h));
-  col = mix(col, cPink, smoothstep(0.015, 0.06, h));
-  col = mix(col, cPurple, smoothstep(0.05, 0.095, h));
-  col = mix(col, cZenith, smoothstep(0.12, 0.19, h));
+  vec3 cHorizon = vec3(0.96, 0.46, 0.18); // warm orange at the waterline
+  vec3 cYellow  = vec3(0.99, 0.74, 0.34); // golden yellow — the dominant band
+  vec3 cWarm    = vec3(0.82, 0.50, 0.32); // soft warm orange, fading
+  vec3 cPink    = vec3(0.58, 0.40, 0.46); // a little muted dusky pink
+  vec3 cZenith  = vec3(0.13, 0.17, 0.34); // deep dusk blue (minimal purple)
+  // Gradient compressed into the visible sky band (raised horizon → top of frame
+  // only reaches h≈0.16): orange/yellow own most of it, then a touch of pink,
+  // then dusk blue.
+  vec3 col = mix(cHorizon, cYellow, smoothstep(0.0, 0.045, h));
+  col = mix(col, cWarm, smoothstep(0.04, 0.085, h));
+  col = mix(col, cPink, smoothstep(0.09, 0.135, h));
+  col = mix(col, cZenith, smoothstep(0.13, 0.19, h));
 
-  // Soft afterglow bloom where the sun went down — broad and gentle, no core.
+  // Soft warm-gold afterglow bloom where the sun went down — broad, no core.
   float s = max(dot(e, SUN_DIR), 0.0);
-  col += vec3(1.00, 0.48, 0.24) * pow(s, 3.0) * 0.34;
+  col += vec3(1.00, 0.66, 0.30) * pow(s, 3.0) * 0.38;
   return col;
 }
 
 // Drama layer for the DIRECT sky only (the water reflects the cheaper gradient).
 // The sun has set, so there are NO god rays — just procedural afterglow clouds:
-// warm pink/orange undersides low near where the sun went down, cooling to a
-// dusky purple-grey higher and away.
+// warm orange/gold undersides low near where the sun went down, cooling to a
+// neutral dusk-blue grey higher and away (no purple cast).
 vec3 skyDrama(vec3 dir, vec3 col) {
   float sunAmt = max(dot(dir, SUN_DIR), 0.0);
   vec2 cuv = dir.xz / max(dir.y, 0.06);
   cuv = cuv * 0.6 + vec2(uTime * 0.004, 0.0);
   float cover = smoothstep(0.50, 0.92, fbm(cuv));
-  vec3 cloudWarm = vec3(1.00, 0.46, 0.40); // pink-orange lit underside
-  vec3 cloudCool = vec3(0.30, 0.22, 0.40); // dusky purple-grey
+  vec3 cloudWarm = vec3(1.00, 0.58, 0.30); // orange-gold lit underside
+  vec3 cloudCool = vec3(0.26, 0.26, 0.34); // neutral dusk-blue grey
   vec3 cloudCol = mix(cloudCool, cloudWarm, pow(sunAmt, 1.4) * 0.8 + 0.12);
   float cloudFade = smoothstep(0.015, 0.16, dir.y);
   col = mix(col, cloudCol, cover * cloudFade * 0.8);

@@ -56,11 +56,11 @@ export const MOBILE_KNOBS: Partial<HeroOceanKnobs> = {
 /* --- Palette. Post-sunset AFTERGLOW (matches the WebGL hero). Purple is
    approved in the SKY only; the water stays deep navy with warm orange/pink
    glints near the horizon — NO purple in the water. */
-const SKY_TOP = '#241A42'; // dusk blue-purple, zenith
-const SKY_MID = '#7C3D9C'; // bright purple (sky only)
-const SKY_PINK = '#C85A82'; // pink band
-const SKY_HORIZON = '#E87432'; // warm orange just above the waterline
-const BLOOM = '#F0883A'; // warm orange afterglow bloom (additive)
+const SKY_TOP = '#1E2440'; // deep dusk blue, zenith (minimal purple)
+const SKY_MID = '#8F5168'; // a little muted dusky pink (upper transition)
+const SKY_GOLD = '#F2B24E'; // golden yellow — the dominant band
+const SKY_HORIZON = '#EE7A2E'; // warm orange just above the waterline
+const BLOOM = '#F4A23C'; // warm gold afterglow bloom (additive)
 const WATER_HORIZON = '#1A2C46'; // navy just under the horizon (lifted)
 const WATER_MID = '#0C1626';
 const WATER_DEEP = '#05080F'; // deepest foreground — NOT pure black
@@ -229,8 +229,8 @@ export class HeroOcean {
     const pad = horizonY * 0.08;
     const sky = ctx.createLinearGradient(0, 0, 0, horizonY + pad);
     sky.addColorStop(0, SKY_TOP);
-    sky.addColorStop(0.42, SKY_MID);
-    sky.addColorStop(0.72, SKY_PINK);
+    sky.addColorStop(0.5, SKY_MID);
+    sky.addColorStop(0.7, SKY_GOLD);
     sky.addColorStop(1, SKY_HORIZON);
     ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, horizonY + pad);
