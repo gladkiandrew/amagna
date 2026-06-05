@@ -12,7 +12,7 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { BOOK_A_CALL_HREF, AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
-  'One productized retainer at $1,497/month — Amagna Growth. Update tier ($500 one-time website + GBP rebuild) and custom solutions available. Clear pricing, no long-term contracts.';
+  'Productized retainers starting at $997, $1,497, and $2,497/mo — final cost scales with your content credits and ad spend. A $500 one-time Update tier and custom solutions too. No long-term contracts.';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -90,13 +90,20 @@ export default function PricingPage() {
 
           <div className="grid gap-8 sm:grid-cols-[1.2fr_1fr] sm:items-center">
             <div>
+              <p className="text-xs font-medium uppercase tracking-wider text-ink-muted">
+                Starting at
+              </p>
               <p className="flex items-baseline gap-1">
                 <span className="text-5xl font-semibold tracking-tight text-ink">$1,497</span>
-                <span className="text-base text-ink-muted">/ month</span>
+                <span className="text-base text-ink-muted">/mo</span>
               </p>
               <p className="mt-3 text-base leading-relaxed text-ink-muted">
                 The full system: funnel, ads, content, reviews, SEO, nurture, and a weekly
                 report — built once for your business and run every day.
+              </p>
+              <p className="mt-3 text-xs leading-relaxed text-ink-muted">
+                Final monthly cost scales with your content credits and ad spend — we quote it
+                with you on your call. No long-term contract.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
@@ -128,7 +135,32 @@ export default function PricingPage() {
         </div>
 
         {/* Alternative tiers — secondary, deliberately smaller */}
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-2xl border border-black/5 bg-white p-6">
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
+                Foundation
+              </h2>
+              <p className="text-right text-lg font-semibold text-ink">
+                <span className="block text-[10px] font-medium uppercase tracking-wider text-ink-muted">
+                  Starting at
+                </span>
+                $997<span className="text-xs font-normal text-ink-muted">/mo</span>
+              </p>
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+              A leaner start — one niche funnel, core content, and base outreach. The on-ramp to
+              the full system.
+            </p>
+            <Link
+              href={BOOK_A_CALL_HREF}
+              className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-royal-purple"
+            >
+              Book a call
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+
           <div className="rounded-2xl border border-black/5 bg-white p-6">
             <div className="flex items-baseline justify-between gap-3">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
@@ -140,7 +172,7 @@ export default function PricingPage() {
             </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
               A flat-rate website + Google Business Profile rebuild. Modern, on-brand,
-              conversion-ready. The natural on-ramp to Growth.
+              conversion-ready.
             </p>
             <Link
               href="/checkout"
@@ -156,11 +188,15 @@ export default function PricingPage() {
               <h2 className="text-sm font-semibold uppercase tracking-wider text-ink-muted">
                 Authority
               </h2>
-              <p className="text-lg font-semibold text-ink">Talk to us</p>
+              <p className="text-right text-lg font-semibold text-ink">
+                <span className="block text-[10px] font-medium uppercase tracking-wider text-ink-muted">
+                  Starting at
+                </span>
+                $2,497<span className="text-xs font-normal text-ink-muted">/mo</span>
+              </p>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
               For larger operators — premium creative, founder-led strategy, priority support.
-              Scoped to your operation.
             </p>
             <Link
               href={BOOK_A_CALL_HREF}
@@ -171,6 +207,11 @@ export default function PricingPage() {
             </Link>
           </div>
         </div>
+
+        <p className="mt-4 text-center text-xs leading-relaxed text-ink-muted">
+          Monthly tiers show a starting price. Final cost scales with your content credits and
+          ad spend, agreed up front — ad spend is paid to the platforms separately.
+        </p>
 
         {/* What every plan includes */}
         <ul className="mt-8 grid gap-4 rounded-2xl border border-black/5 bg-white p-6 sm:grid-cols-3">
