@@ -1,0 +1,173 @@
+/**
+ * Client-safe types, options, validation, and prompt assembly for the Gold Map
+ * (the /audit treasure-hunt funnel). NO server-only imports here — the Anthropic
+ * generator lives in lib/gold-map.ts and must never reach the client bundle.
+ */
+
+export type GoldMapIntake = {
+  name: string;
+  email: string;
+  phone: string;
+  businessName: string;
+  businessType: string;
+  monthlyRevenue: string;
+  employees: string;
+  serviceArea: string;
+  socialChannels: string[];
+  currentMarketing: string;
+  goals: string;
+};
+
+/** Where the lead got to in the hunt (stored on the submission). */
+export type GoldMapStatus = 'intake_only' | 'keyed' | 'plan_generated';
+
+/** Result of the Step-1 capture server action. */
+export type IntakeResult = {
+  ok: boolean;
+  submissionId: string | null;
+  fieldErrors: Partial<Record<keyof GoldMapIntake, string>>;
+  message?: string;
+};
+
+/** Result of the plan-generation server action. */
+export type PlanResult = {
+  ok: boolean;
+  plan?: GoldMapPlan;
+  emailed?: boolean;
+  message?: string;
+};
+
+/** The "Plan to Gold" — the genuinely-good, structured plan that IS the pitch. */
+export type GoldMapPlan = {
+  /** A punchy one-line framing of the opportunity, specific to them. */
+  headline: string;
+  /** One short paragraph: where they are → where this takes them. */
+  summary: string;
+  /** Ordered phases, each with concrete steps in plain English. */
+  phases: { title: string; timeframe: string; steps: string[] }[];
+  /** What the Amagna crew / system runs for them (plain English). */
+  crewHandles: string[];
+  /** The single first move to make. */
+  firstMove: string;
+};
+
+export const BUSINESS_TYPES = [
+  'Home services',
+  'Real estate',
+  'E-commerce',
+  'Local service business',
+  'Professional services',
+  'Restaurant / hospitality',
+  'Other',
+] as const;
+
+export const REVENUE_RANGES = [
+  'Under $25K / month',
+  '$25K–$75K / month',
+  '$75K–$150K / month',
+  '$150K–$400K / month',
+  '$400K+ / month',
+] as const;
+
+export const EMPLOYEE_RANGES = ['Just me', '2–5', '6–15', '16–40', '40+'] as const;
+
+export const SOCIAL_CHANNELS = [
+  'Instagram',
+  'Facebook',
+  'TikTok',
+  'YouTube',
+  'LinkedIn',
+  'X',
+  'Google Business Profile',
+  'None yet',
+] as const;
+
+export function emptyIntake(): GoldMapIntake {
+  return {
+    name: '',
+    email: '',
+    phone: '',
+    businessName: '',
+    businessType: '',
+    monthlyRevenue: '',
+    employees: '',
+    serviceArea: '',
+    socialChannels: [],
+    currentMarketing: '',
+    goals: '',
+  };
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function validateIntake(input: GoldMapIntake): Partial<Record<keyof GoldMapIntake, string>> {
+  const e: Partial<Record<keyof GoldMapIntake, string>> = {};
+  if (!input.name.trim()) e.name = 'Your name is required.';
+  if (!input.email.trim()) e.email = 'Email is required.';
+  else if (!EMAIL_RE.test(input.email.trim())) e.email = 'Enter a valid email address.';
+  if (!input.businessName.trim()) e.businessName = 'Business name is required.';
+  if (!input.businessType.trim()) e.businessType = 'Pick the closest type.';
+  if (!input.monthlyRevenue.trim()) e.monthlyRevenue = 'Pick a range.';
+  if (!input.serviceArea.trim()) e.serviceArea = 'Where do you operate?';
+  if (!input.goals.trim()) e.goals = 'What do you want more of?';
+  else if (input.goals.trim().length < 8) e.goals = 'A few more words helps us chart it.';
+  return e;
+}
+
+/** Map a free business type onto the DB `niche` enum when it clearly matches. */
+export function nicheFromType(businessType: string): 'home_services' | 'real_estate' | null {
+  const t = businessType.toLowerCase();
+  if (t.includes('home service')) return 'home_services';
+  if (t.includes('real estate')) return 'real_estate';
+  return null;
+}
+
+/** A readable one-blob rendering of the intake (for situation_text + emails). */
+export function intakeSummary(i: GoldMapIntake): string {
+  return [
+    `Business: ${i.businessName} (${i.businessType})`,
+    `Monthly revenue: ${i.monthlyRevenue || '—'}`,
+    `Team size: ${i.employees || '—'}`,
+    `Service area: ${i.serviceArea || '—'}`,
+    `Channels: ${i.socialChannels.length ? i.socialChannels.join(', ') : '—'}`,
+    `Current marketing: ${i.currentMarketing || '—'}`,
+    `Goals: ${i.goals || '—'}`,
+    `Contact: ${i.name} · ${i.email} · ${i.phone || '—'}`,
+  ].join('\n');
+}
+
+/**
+ * Assemble — CLIENT-SIDE, no AI call — the personalized "forge your key" prompt.
+ * The operator pastes this into their OWN AI (which already knows their
+ * business); it returns a single dense "master prompt" (the key), ending with a
+ * labeled, parseable data block.
+ */
+export function assembleKeyPrompt(i: GoldMapIntake): string {
+  return `I'm briefing a marketing agency (Amagna AI) so they can build me a custom growth plan. I want you to write ONE dense "master prompt" that describes my business completely.
+
+Using everything you already know about my business — plus the details below and anything else I tell you — write a single, information-rich prompt that another AI could read cold and fully understand my business, my current situation, and my goals. Be specific and concrete. Add real context you know about me that isn't listed here.
+
+End your answer with a labeled data block in EXACTLY this format (keep the brackets):
+
+[AMAGNA DATA]
+Business: ${i.businessName || '<name>'}
+Type: ${i.businessType || '<type>'}
+Monthly revenue: ${i.monthlyRevenue || '<range>'}
+Team size: ${i.employees || '<range>'}
+Service area: ${i.serviceArea || '<area>'}
+Channels: ${i.socialChannels.length ? i.socialChannels.join(', ') : '<channels>'}
+Current marketing: ${i.currentMarketing || '<what you do now>'}
+Goals: ${i.goals || '<what you want more of>'}
+[/AMAGNA DATA]
+
+Here's what I told the agency to get you started:
+- Business: ${i.businessName} — ${i.businessType}
+- Monthly revenue: ${i.monthlyRevenue}
+- Team size: ${i.employees}
+- Service area: ${i.serviceArea}
+- Channels: ${i.socialChannels.join(', ') || '—'}
+- Current marketing: ${i.currentMarketing || '—'}
+- Goals: ${i.goals}
+
+Write the master prompt now.`;
+}
