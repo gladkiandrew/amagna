@@ -1,8 +1,11 @@
+import { IntegrationsHub } from './integrations-hub';
+
 /**
- * Homepage services section — the pillars of an Autonomous Marketing System, in
- * plain English (Mike must understand every line). Editorial numbered list on
- * the cream content canvas (a deliberate break from the dark water frames), NOT
- * a generic icon grid. Pillars sourced from CLAUDE.md.
+ * Homepage services section — the integrations hub (orbit diagram) above the
+ * pillars of an Autonomous Marketing System, in plain English (Mike must
+ * understand every line). Editorial numbered list on the cream content canvas (a
+ * deliberate break from the dark water frames), NOT a generic icon grid.
+ * Pillars sourced from CLAUDE.md.
  */
 type Pillar = { name: string; body: string; eyebrow?: string };
 
@@ -54,7 +57,12 @@ export function ServicesSection(): JSX.Element {
           Here&apos;s what it does.
         </p>
 
-        <ol className="mt-14 grid gap-x-12 gap-y-px sm:grid-cols-2">
+        {/* Integrations hub — every platform flows through the Amagna AI core. */}
+        <div className="mt-12">
+          <IntegrationsHub />
+        </div>
+
+        <ol className="mt-8 grid gap-x-12 gap-y-px sm:grid-cols-2">
           {PILLARS.map((pillar, i) => (
             <li
               key={pillar.name}
