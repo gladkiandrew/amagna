@@ -149,3 +149,20 @@ glyphs are aria-hidden. Verified the new sections stack on 390px.
 Review-round commits: 89d7c2e (H1), bddbded (CTA), 59c0059 (Frame 2 gap),
 ae1c0af (deck arrows), 085143e (integrations hub), 02b7ce9 (pricing). Verified at
 desktop + 390px; build green at each commit.
+
+---
+
+## Follow-up — fact correction + testimonials — 2026-06-05
+
+7. **Breaking the Fast fact correction (site-wide).** It is Amagna's **first
+   client** (relationship ongoing), NOT Andrew's company. Rewrote both mentions —
+   `/about` Our Story founder section and `/crew` captain section — to the
+   first-client story; removed all "my own brand/business/money" and
+   "proof of concept I launched" framing. Grep confirms no inaccurate
+   self-framing remains. Commit 33971b4.
+8. **Testimonials section** added after the services frame (`In their words`) —
+   voyage visual language, three quote slots, clearly-labeled
+   "Client testimonial — coming soon" placeholders (no invented quotes/names per
+   CLAUDE.md). Drop-in is copy-paste: fill `quote`/`name`/`role` in the
+   `TESTIMONIALS` array (wrapped in comment banners showing the exact format) and
+   the slot renders as a real quote card. Verified desktop + 390px. Commit pending.
