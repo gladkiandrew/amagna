@@ -37,7 +37,7 @@ export function TestimonialsSection(): JSX.Element {
           id="testimonials-title"
           className="mt-5 max-w-[22ch] text-balance font-display text-[clamp(2rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-charcoal"
         >
-          Proof from the operators we crew for.
+          Proof from the operators we sail for.
         </h2>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
           Real results from real clients — the first stories are on the way.
