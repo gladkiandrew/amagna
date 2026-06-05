@@ -8,6 +8,10 @@
 
 **Andrew Michael Gladki.** Founder, Amagna AI. Saginaw, Michigan.
 
+**Fact check (important):** Andrew is NOT the founder of Breaking the Fast. Breaking the Fast is Amagna's FIRST CLIENT, and the relationship is ongoing. Never describe it as Andrew's company or project. Site copy may reference it only as the first client story.
+
+**Testimonials:** a testimonials area is planned on the site. NEVER fabricate testimonials — build the section with clearly-labeled placeholder slots only; real quotes come from Andrew.
+
 Andrew is a **rookie developer leveling up fast**. Treat every interaction as a teaching moment as well as a build moment. Explain what you are doing, why you are doing it, and what to watch out for. Default to walkthrough mode. Show diffs. Narrate decisions. Suggest verification commands he can run to confirm things worked.
 
 He uses Claude Max, Cursor, and Claude Code. This is the AI of record for the entire agency.
@@ -124,6 +128,10 @@ Service pillars to feature on the site: AI-generated content, ads management (Me
 ## Who we serve
 
 **Broad positioning:** the core offering — Autonomous Marketing Systems — serves any operator who wants their marketing to run itself. Site-wide copy (homepage, Who We Serve, Our Story) reflects this breadth.
+
+**Volume intake strategy (Andrew's call, 2026-06-05):** Amagna takes any business that wants in — NO exclusivity promises anywhere on the site or in funnels. Never offer "one client per zip/area" or "we won't work with your competitor" language. If a prospect raises competitor concerns on a call, Andrew handles it case by case. Scarcity in funnels is positional ("the crew reviews every application"), never contractual.
+
+**The Gold Map (flagship lead funnel, lives at /audit):** a treasure-hunt qualification flow. Scroll-styled page → Step 1 intake form (lead captured to Supabase IMMEDIATELY on submit — leads get email follow-up regardless of completion) → Step 2 personalized copy-paste prompt assembled from their intake; Zeno video explains taking it to their own AI with extra context to get back a "master prompt" key → Step 3 paste the key, X marks the map → dig animation while Claude writes the plan → treasure chest opens EMPTY: "the gold gets made — here's how," full step-by-step plan (on-screen + emailed) → book a call. The plan must be genuinely good; it is the sales pitch.
 
 **Two lead niches** get dedicated funnels, ad creative, voice, and agent tuning (use the matching playbook in `docs/playbooks/` once created; never mix niche assets):
 
