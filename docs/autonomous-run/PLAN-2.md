@@ -94,18 +94,29 @@ now exists:
    consistent with the contract's ship physics (eased progress, wave-driven
    bob, slope-driven pitch). Canvas sprite or transform-composited DOM/SVG —
    choose what integrates best with the existing scene, log the choice.
-2. **The crew presentation — 5 columns.** Introduce the five agents (The
-   Scout, The Storyteller, The Navigator, The Quartermaster, The First Mate —
-   reuse the exact names/roles from `/crew`). Five columns (stacking on
-   mobile), each with:
-   - a **portrait slot**: a styled placeholder (gold ring/frame on deep navy,
-     monogram or silhouette) sized and positioned for a real character
-     portrait. Andrew is generating face shots NOW — make swapping trivial:
-     one `portraitSrc` prop per crew member with a documented convention
-     (`public/brand/crew/<slug>.webp`), placeholder shown when missing.
-   - name, nautical title, one-line responsibility.
-   - a link that lands on `/crew` at that member's anchor (`/crew#the-scout`
-     etc. — add matching `id`s on `/crew`).
+2. **The crew presentation — 5 columns.** CORRECTION FROM ANDREW: the crew
+   names invented in run 1 (The Scout, The Storyteller, etc.) are WRONG.
+   The real Amagna crew, canon from Andrew (this overrides the `/crew` page
+   and the agent-fleet names in CLAUDE.md):
+   - **Zeno — Captain / The Brain.** Orchestrator; runs the whole operation.
+   - **Exodus — Data Specialist.** Data extraction & intelligence.
+   - **Solon — Outreach / Retention Specialist.** Keeps clients & leads in
+     the fold.
+   - **Hero — Automation Specialist.** Builds the systems that run
+     themselves.
+   - **Thales — Marketing Specialist.** Meta / TikTok / Google.
+   Their portraits ALREADY EXIST at `public/brand/crew/<slug>.webp`
+   (zeno, exodus, solon, hero, thales) — use them directly, no placeholders
+   needed. Note: most are 16:9 landscape (solon is portrait); use
+   `object-fit: cover` with center focus in the framed slots.
+   Five columns (stacking on mobile), each with portrait, name, title,
+   one-line responsibility, and a link to that member's anchor on `/crew`
+   (`/crew#zeno` etc.). Zeno is the Captain — give him a subtle visual
+   distinction (centered, slightly larger, or gold-framed vs. the others).
+   **Also rewrite the `/crew` page to this canon roster** — same names,
+   titles, responsibilities, portraits, and matching anchor `id`s. Andrew
+   (the founder) remains on `/crew` as the human at the helm of the company,
+   distinct from Zeno who captains the AI fleet.
 3. **Scroll reveals** per the contract: IntersectionObserver + CSS
    transitions, staggered; `prefers-reduced-motion` → final states. 60fps
    discipline; nothing new in the rAF loop except the ship.
