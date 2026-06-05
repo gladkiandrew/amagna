@@ -24,56 +24,46 @@ export function HeroV2(): JSX.Element {
       {/* Photoreal ocean — decorative, full-bleed, behind everything (z-0). */}
       <HeroOcean className="absolute inset-0 -z-0 h-full w-full" />
 
-      {/* Legibility scrim — a soft, focused halo behind the centered copy. Kept
-          deliberately tight with a quick falloff so the photoreal ocean and its
-          warm horizon still read across most of the frame; the cream copy holds
-          contrast through this plus its own text-shadow. */}
+      {/* Legibility scrim — a soft, focused halo behind the centered copy. The
+          sunset sun + glitter road run down the centre, so this keeps the cream
+          copy legible while the ocean and warm sky still read at the edges. */}
       <div
         aria-hidden
-        className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_62%_46%_at_50%_58%,rgba(4,7,13,0.66),rgba(4,7,13,0.2)_52%,transparent_78%)]"
+        className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_64%_50%_at_50%_52%,rgba(4,7,13,0.7),rgba(4,7,13,0.22)_52%,transparent_78%)]"
       />
 
-      {/* Copy column — seated in the lower third over the darker open water (the
-          bright gold horizon reads as sky above it), so cream copy keeps
-          contrast. Pure CSS translate; layout centering is unchanged. */}
-      <div className="relative z-[2] mx-auto w-full max-w-[44rem] translate-y-[9vh] px-4 text-center sm:px-6">
-        {/* Eyebrow — understated maritime label (no pill, no badge background). */}
-        <p
-          className="hero-rise flex items-center justify-center gap-3 text-[11px] font-medium uppercase tracking-[0.4em] text-brand-warmgold [text-shadow:0_1px_12px_rgba(4,7,13,0.7)]"
-          style={{ '--i': 0 } as CSSProperties}
-        >
-          <span aria-hidden className="h-px w-7 bg-brand-warmgold/55" />
-          Amagna&nbsp;AI
-          <span aria-hidden className="h-px w-7 bg-brand-warmgold/55" />
-        </p>
-
+      {/* Copy column — raised so "Marketing Systems" lands at the vertical centre
+          of the viewport, "Autonomous" above it, the hairline / subtitle / CTAs
+          flowing below. Pure CSS translate; layout centering is unchanged. */}
+      <div className="relative z-[2] mx-auto w-full max-w-[50rem] -translate-y-[1vh] px-4 text-center sm:px-6">
         <h1
           id="hero-v2-title"
-          className="hero-rise mt-6 font-display text-[clamp(1.3rem,6.2vw,5.75rem)] font-semibold leading-[1.05] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.85),0_0_64px_rgba(4,7,13,0.5)]"
-          style={{ '--i': 1 } as CSSProperties}
+          className="hero-rise font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
+          style={{ '--i': 0 } as CSSProperties}
         >
-          Autonomous<br className="sm:hidden" /> Marketing Systems
+          <span className="block text-[clamp(2rem,5.4vw,4.7rem)]">Autonomous</span>
+          <span className="block text-[clamp(2.5rem,7.1vw,6.1rem)]">Marketing&nbsp;Systems</span>
         </h1>
 
         {/* Thin gold hairline, centered. */}
         <div
           aria-hidden
           className="hero-rise gold-rule mx-auto mt-7"
-          style={{ '--i': 2 } as CSSProperties}
+          style={{ '--i': 1 } as CSSProperties}
         />
 
         <p
-          className="hero-rise mx-auto mt-7 max-w-[40ch] text-[clamp(1.02rem,1.3vw,1.2rem)] leading-[1.6] text-brand-cream/90 [text-shadow:0_1px_16px_rgba(4,7,13,0.75)]"
-          style={{ '--i': 3 } as CSSProperties}
+          className="hero-rise mx-auto mt-7 max-w-[40ch] text-[clamp(0.95rem,1.2vw,1.18rem)] leading-[1.6] text-brand-cream/90 [text-shadow:0_1px_16px_rgba(4,7,13,0.85)] sm:max-w-none sm:whitespace-nowrap"
+          style={{ '--i': 2 } as CSSProperties}
         >
-          We build your marketing machine — and the content that fuels&nbsp;it.
+          We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
         </p>
 
         <div
           className="hero-rise mt-9 flex justify-center"
-          style={{ '--i': 4 } as CSSProperties}
+          style={{ '--i': 3 } as CSSProperties}
         >
-          <VoyageCtas onDark align="center" />
+          <VoyageCtas onDark align="center" size="lg" />
         </div>
       </div>
     </section>

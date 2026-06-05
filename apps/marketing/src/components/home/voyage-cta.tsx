@@ -12,13 +12,19 @@ import { cn } from '@/lib/utils';
 export function VoyageCtas({
   onDark = false,
   align = 'start',
+  size = 'default',
   className,
 }: {
   onDark?: boolean;
   align?: 'start' | 'center';
+  /** `lg` enlarges the letters + button padding for the hero. */
+  size?: 'default' | 'lg';
   className?: string;
 }): JSX.Element {
   const ring = onDark ? 'focus-visible:ring-brand-warmgold' : 'focus-visible:ring-brand-purple';
+  const lg = size === 'lg';
+  const buttonText = lg ? 'px-8 py-4 text-[15px]' : 'px-7 py-3.5 text-[13px]';
+  const linkText = lg ? 'text-[15px]' : 'text-[13px]';
   return (
     <div
       className={cn(
@@ -32,7 +38,8 @@ export function VoyageCtas({
       <Link
         href={AUDIT_HREF}
         className={cn(
-          'group inline-flex items-center justify-center gap-2 rounded-[3px] px-7 py-3.5 text-[13px] font-semibold uppercase tracking-[0.14em] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          'group inline-flex items-center justify-center gap-2 rounded-[3px] font-semibold uppercase tracking-[0.14em] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+          buttonText,
           onDark
             ? 'border border-brand-warmgold/80 bg-brand-warmgold/[0.12] text-brand-warmgold hover:border-brand-warmgold hover:bg-brand-warmgold hover:text-brand-deep'
             : 'border border-brand-purple/70 bg-brand-purple/[0.06] text-brand-purple hover:bg-brand-purple hover:text-white',
@@ -48,7 +55,8 @@ export function VoyageCtas({
       <a
         href={CALCOM_DIRECT_URL}
         className={cn(
-          'inline-flex items-center justify-center gap-1.5 py-2 text-[13px] font-medium uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
+          'inline-flex items-center justify-center gap-1.5 py-2 font-medium uppercase tracking-[0.14em] underline decoration-1 underline-offset-[6px] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-transparent',
+          linkText,
           onDark
             ? 'text-brand-cream/85 decoration-brand-warmgold/50 hover:text-brand-cream hover:decoration-brand-warmgold'
             : 'text-brand-charcoal/85 decoration-brand-purple/40 hover:text-brand-charcoal hover:decoration-brand-purple',
