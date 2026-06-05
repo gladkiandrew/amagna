@@ -1,7 +1,7 @@
 import 'server-only';
 import Anthropic from '@anthropic-ai/sdk';
 import type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
-import { intakeSummary, linksHaveAndMissing } from './gold-map-shared';
+import { intakeSummary, linksHaveAndMissing, coercePlan } from './gold-map-shared';
 import { env } from './env';
 
 export type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
@@ -166,7 +166,14 @@ Produce the plan using the submit_plan tool.`;
     });
     const toolUse = response.content.find((b) => b.type === 'tool_use');
     if (toolUse && toolUse.type === 'tool_use') {
-      return toolUse.input as GoldMapPlan;
+      // The model forces the tool, but can still nest or omit fields — validate
+      // before trusting it, or a malformed plan crashes the email + render.
+      const coerced = coercePlan(toolUse.input);
+      if (coerced) return coerced;
+      console.error('[gold-map] tool output failed shape validation; using fallback', {
+        stopReason: response.stop_reason,
+        topKeys: toolUse.input && typeof toolUse.input === 'object' ? Object.keys(toolUse.input) : typeof toolUse.input,
+      });
     }
     return fallbackPlan(intake);
   } catch (error) {

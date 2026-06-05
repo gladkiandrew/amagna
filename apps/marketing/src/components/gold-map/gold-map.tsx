@@ -9,6 +9,7 @@ import { BOOK_A_CALL_HREF } from '@/lib/site';
 import {
   emptyIntake,
   validateIntake,
+  coercePlan,
   assembleKeyPrompt,
   BUSINESS_TYPES,
   REVENUE_RANGES,
@@ -89,7 +90,17 @@ export function GoldMap(): JSX.Element {
         scrollToTop();
         return;
       }
-      setPlan(res.plan ?? null);
+      // Defense in depth: never hand a malformed plan to the render (it would
+      // crash PlanView). The server already coerces, this is the backstop.
+      const safePlan = coercePlan(res.plan);
+      if (!safePlan) {
+        setTurnstileToken(null);
+        setDigError('The crew hit a snag charting your map. Please try the dig again.');
+        setPhase('turn');
+        scrollToTop();
+        return;
+      }
+      setPlan(safePlan);
       setPhase('chest');
     } catch {
       setTurnstileToken(null);

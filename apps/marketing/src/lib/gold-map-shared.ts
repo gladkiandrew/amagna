@@ -164,6 +164,58 @@ export function validateIntake(input: GoldMapIntake): Partial<Record<keyof GoldM
 }
 
 /**
+ * Coerce raw model tool-output into a well-formed GoldMapPlan, or null if it
+ * can't be salvaged.
+ *
+ * Why this exists: the generator forces a tool call, but an LLM still
+ * occasionally (a) wraps the result in an extra key — `{ plan: {...} }` — or
+ * (b) omits a required field. Passing that straight through crashed the email
+ * builder (`plan.phases.forEach`) and the on-screen render (`plan.phases.map`),
+ * blanking the page and dropping the email. So we unwrap one level of common
+ * nesting, then validate the shape; callers fall back to a safe plan on null.
+ */
+export function coercePlan(raw: unknown): GoldMapPlan | null {
+  if (!raw || typeof raw !== 'object') return null;
+  let obj = raw as Record<string, unknown>;
+
+  // Unwrap a single nested wrapper when the real fields aren't at top level.
+  if (!('headline' in obj)) {
+    for (const wrapperKey of ['plan', 'submit_plan', 'result', 'output']) {
+      const inner = obj[wrapperKey];
+      if (inner && typeof inner === 'object' && 'headline' in (inner as object)) {
+        obj = inner as Record<string, unknown>;
+        break;
+      }
+    }
+  }
+
+  const { headline, summary, phases, crewHandles, firstMove } = obj;
+  const phasesOk =
+    Array.isArray(phases) &&
+    phases.length > 0 &&
+    phases.every(
+      (p) =>
+        !!p &&
+        typeof p === 'object' &&
+        typeof (p as { title?: unknown }).title === 'string' &&
+        typeof (p as { timeframe?: unknown }).timeframe === 'string' &&
+        Array.isArray((p as { steps?: unknown }).steps) &&
+        (p as { steps: unknown[] }).steps.every((s) => typeof s === 'string'),
+    );
+
+  if (
+    typeof headline === 'string' && headline.trim().length > 0 &&
+    typeof summary === 'string' &&
+    phasesOk &&
+    Array.isArray(crewHandles) && crewHandles.every((c) => typeof c === 'string') &&
+    typeof firstMove === 'string'
+  ) {
+    return { headline, summary, phases, crewHandles, firstMove } as GoldMapPlan;
+  }
+  return null;
+}
+
+/**
  * Normalize a business name for cache-key comparison: lowercase, strip
  * punctuation, collapse whitespace. So "HydroClean", "hydroclean", and
  * "Hydro Clean!" all compare equal, but a genuinely different business
