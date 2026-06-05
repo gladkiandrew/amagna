@@ -63,7 +63,7 @@ export function VoyageReveal(): JSX.Element {
         const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         canvas.width = Math.round(rect.width * dpr);
         canvas.height = Math.round(rect.height * dpr);
-        drawWater(ctx, canvas.width, canvas.height, 4, dpr);
+        drawWater(ctx, canvas.width, canvas.height, 4, dpr, canvas.height * 0.42);
       }
       return;
     }
@@ -96,6 +96,7 @@ export function VoyageReveal(): JSX.Element {
     let raf = 0;
     let running = false;
     let triggered = false;
+    let armed = true; // ready to play; rearmed each time Frame 2 fully leaves view
     let startMs = 0;
     let pausedAccum = 0;
     let pauseStart = 0;
@@ -110,7 +111,7 @@ export function VoyageReveal(): JSX.Element {
 
       const W = canvas.width;
       const H = canvas.height;
-      drawWater(ctx, W, H, tNow, dpr);
+      drawWater(ctx, W, H, tNow, dpr, shipYpx);
 
       // Ship position along the waterline.
       let shipCenterFrac = 1.18;
@@ -186,16 +187,46 @@ export function VoyageReveal(): JSX.Element {
       cancelAnimationFrame(raf);
     };
 
+    // Play once when ≥25% in view AND armed; the whole sequence restarts.
     const trigger = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !triggered) {
+        if (entry.isIntersecting && armed) {
+          armed = false;
           triggered = true;
-          startMs = performance.now() - pausedAccum;
+          startMs = performance.now();
+          pausedAccum = 0;
+          pauseStart = 0;
+          wake.length = 0;
+          lastSternX = 0;
+          dealtLocal = 0;
+          emptyLocal = false;
+          setDealt(0);
+          setEmpty(false);
         }
       },
       { threshold: 0.25 },
     );
     trigger.observe(section);
+
+    // Rearm whenever Frame 2 fully leaves the viewport (above OR below), so the
+    // next entry replays from the start. Reset the visuals immediately.
+    const rearm = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          armed = true;
+          triggered = false;
+          dealtLocal = 0;
+          emptyLocal = false;
+          wake.length = 0;
+          lastSternX = 0;
+          setDealt(0);
+          setEmpty(false);
+          if (ship) ship.style.opacity = '0';
+        }
+      },
+      { threshold: 0 },
+    );
+    rearm.observe(section);
 
     const io = new IntersectionObserver(([entry]) => (entry.isIntersecting ? start() : stop()), {
       rootMargin: '200px 0px 200px 0px',
@@ -208,6 +239,7 @@ export function VoyageReveal(): JSX.Element {
       stop();
       ro.disconnect();
       trigger.disconnect();
+      rearm.disconnect();
       io.disconnect();
       document.removeEventListener('visibilitychange', onVis);
     };
@@ -222,10 +254,11 @@ export function VoyageReveal(): JSX.Element {
       {/* Live dark water + wake (the only animated background element). */}
       <canvas ref={canvasRef} aria-hidden className="absolute inset-0 h-full w-full" />
 
-      {/* Seamless seam: the hero's foreground water blends into Frame 2's. */}
+      {/* Seamless hand-off: blend the hero's foreground water tone down into
+          Frame 2's so there's no hard line at the boundary. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 bg-gradient-to-b from-[#05080F] to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-44 bg-gradient-to-b from-[#0b1320] via-[#0b1320]/55 to-transparent"
       />
 
       {/* The ship — rides the waterline, cruises in, then sails off. Crew + empty
@@ -234,7 +267,7 @@ export function VoyageReveal(): JSX.Element {
         <div
           ref={shipRef}
           aria-hidden
-          className="absolute left-0 top-[9vh] z-[3] w-[38%]"
+          className="absolute left-0 top-[17vh] z-[3] w-[38%]"
           style={{ transform: 'translate3d(120%,0,0) translateX(-50%)', opacity: 0 }}
         >
           <Image
@@ -255,7 +288,7 @@ export function VoyageReveal(): JSX.Element {
         </div>
       )}
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-24 pt-[42vh]">
+      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-24 pt-[50vh]">
         <h2
           id="crew-frame-title"
           className="text-center font-display text-[clamp(1.9rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream"
@@ -331,47 +364,86 @@ export function VoyageReveal(): JSX.Element {
   );
 }
 
-/** Dark, near-black navy water with a faint warm sheen up top + subtle ripples. */
+/**
+ * Dark navy ocean continuing the hero water — filled wave layers (same visual
+ * family as the hero) with subtle crest rim-light, warmer near the top sunset
+ * hint and darkening downward. Waves cluster around `waterlinePx` (where the
+ * ship rides); below the foreground layer it settles into flat deep navy.
+ */
 function drawWater(
   ctx: CanvasRenderingContext2D,
   w: number,
   h: number,
   t: number,
   dpr: number,
+  waterlinePx: number,
 ): void {
-  const grad = ctx.createLinearGradient(0, 0, 0, h);
-  grad.addColorStop(0, '#0b1426'); // continues the hero's dark foreground water
-  grad.addColorStop(0.32, '#070d1c');
-  grad.addColorStop(1, '#03060e'); // super dark navy
-  ctx.fillStyle = grad;
+  const g = ctx.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, '#0c1626'); // continues the hero's dark foreground water
+  g.addColorStop(0.5, '#070e1b');
+  g.addColorStop(1, '#03060d'); // super dark navy
+  ctx.fillStyle = g;
   ctx.fillRect(0, 0, w, h);
 
-  const sheen = ctx.createLinearGradient(0, 0, 0, h * 0.16);
-  sheen.addColorStop(0, 'rgba(228,150,70,0.10)');
-  sheen.addColorStop(1, 'rgba(228,150,70,0)');
+  // Sunset reflection on the top of the water — starts near the hero's lit
+  // foreground tone for a seamless hand-off, then darkens to deep navy. Only a
+  // faint hint survives below the fade.
+  const sheenH = Math.max(1, waterlinePx * 0.9);
+  const sheen = ctx.createLinearGradient(0, 0, 0, sheenH);
+  sheen.addColorStop(0, 'rgba(232,150,78,0.30)');
+  sheen.addColorStop(0.4, 'rgba(226,140,72,0.11)');
+  sheen.addColorStop(1, 'rgba(226,140,72,0)');
   ctx.fillStyle = sheen;
-  ctx.fillRect(0, 0, w, h * 0.16);
+  ctx.fillRect(0, 0, w, sheenH);
 
-  ctx.save();
-  ctx.globalCompositeOperation = 'lighter';
-  const step = 8 * dpr;
-  for (let i = 0; i < 6; i++) {
-    const baseY = h * (0.1 + i * 0.05);
+  const LAYERS = 7;
+  const bottom = waterlinePx + 26 * dpr;
+  const step = 6 * dpr;
+  for (let i = 0; i < LAYERS; i++) {
+    const depth = i / (LAYERS - 1); // 0 far/top … 1 near
+    const baseY = bottom * Math.pow(depth, 1.3);
+    const amp = (3 + depth * 15) * dpr;
+    const wl = 200 + depth * 460;
+    const k1 = (Math.PI * 2) / wl;
+    const k2 = (Math.PI * 2) / (wl * 0.45);
+    const k3 = (Math.PI * 2) / (wl * 0.22);
+    const sp = (0.5 + depth * 0.7) * (i % 2 ? -1 : 1);
+    const phase = i * 1.7;
+    const crestY = (x: number) =>
+      baseY +
+      amp *
+        (0.6 * Math.sin(k1 * x + sp * t + phase) +
+          0.28 * Math.sin(k2 * x + sp * 1.3 * t + phase * 1.3) +
+          0.12 * Math.sin(k3 * x - sp * 1.8 * t + phase));
+
     ctx.beginPath();
-    for (let x = 0; x <= w; x += step) {
-      const yy =
-        baseY +
-        (Math.sin((x * 0.012) / dpr + t * 0.8 + i * 0.9) * 3 +
-          Math.sin((x * 0.031) / dpr - t * 0.5 + i) * 1.4) *
-          dpr;
-      if (x === 0) ctx.moveTo(x, yy);
-      else ctx.lineTo(x, yy);
-    }
-    ctx.strokeStyle = `rgba(120,140,180,${Math.max(0, 0.05 - i * 0.007)})`;
-    ctx.lineWidth = 1.2 * dpr;
+    ctx.moveTo(0, h);
+    ctx.lineTo(0, crestY(0));
+    for (let x = step; x <= w; x += step) ctx.lineTo(x, crestY(x));
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    // Visible-but-dark wave bands: a lit navy crest fading to a deep trough, so
+    // the wave forms read against each other (lighter toward the foreground).
+    const crestShade = 14 + Math.round(depth * 18); // 14..32 lightness-ish
+    const fg = ctx.createLinearGradient(0, baseY - amp, 0, baseY + amp * 3);
+    fg.addColorStop(0, `rgb(${crestShade},${crestShade + 12},${crestShade + 30})`);
+    fg.addColorStop(1, '#04070f');
+    ctx.fillStyle = fg;
+    ctx.fill();
+
+    // crest rim-light — warmer near the top (sunset), cooler toward the front.
+    ctx.beginPath();
+    ctx.moveTo(0, crestY(0));
+    for (let x = step; x <= w; x += step) ctx.lineTo(x, crestY(x));
+    const warm = Math.max(0, 1 - depth * 1.7);
+    const r = Math.round(120 + warm * 120);
+    const gch = Math.round(150 - warm * 20);
+    const b = Math.round(195 - warm * 100);
+    ctx.strokeStyle = `rgba(${r},${gch},${b},${(0.12 + depth * 0.2).toFixed(3)})`;
+    ctx.lineWidth = (1 + depth * 0.6) * dpr;
+    ctx.lineCap = 'round';
     ctx.stroke();
   }
-  ctx.restore();
 }
 
 /** White foam wake — a diverging V that widens and fades behind the ship. */
