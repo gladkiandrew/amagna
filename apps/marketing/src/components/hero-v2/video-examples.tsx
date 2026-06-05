@@ -97,17 +97,17 @@ export function VideoExamples(): JSX.Element {
                 type="button"
                 onClick={retreat}
                 aria-label="Previous example"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-warmgold/40 text-brand-warmgold transition-colors hover:bg-brand-warmgold/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
+                className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
               >
-                <ArrowLeft className="h-5 w-5" aria-hidden />
+                <ArrowLeft className="h-7 w-7" aria-hidden />
               </button>
               <button
                 type="button"
                 onClick={advance}
                 aria-label="Next example"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-brand-warmgold/40 text-brand-warmgold transition-colors hover:bg-brand-warmgold/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
+                className="inline-flex h-16 w-16 items-center justify-center rounded-full border-2 border-brand-warmgold/50 text-brand-warmgold transition-colors hover:border-brand-warmgold hover:bg-brand-warmgold/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep"
               >
-                <ArrowRight className="h-5 w-5" aria-hidden />
+                <ArrowRight className="h-7 w-7" aria-hidden />
               </button>
             </div>
           </div>
