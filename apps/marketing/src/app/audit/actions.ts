@@ -105,6 +105,25 @@ export async function generateGoldMapPlanAction(args: {
     }
   }
 
+  // Cost guard 2 — reuse a recent plan for the same email (repeat-generation
+  // spam protection across fresh submissions from the same lead).
+  if (supabase && intake.email) {
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { data } = await supabase
+      .from('widget_submissions')
+      .select('audit_json')
+      .eq('email', intake.email)
+      .gte('created_at', since)
+      .order('created_at', { ascending: false })
+      .limit(5);
+    const recent = (data ?? [])
+      .map((r) => r.audit_json as GoldMapPayload | undefined)
+      .find((pl) => pl?.source === 'gold-map' && pl?.plan);
+    if (recent?.plan) {
+      return { ok: true, plan: recent.plan, emailed: true };
+    }
+  }
+
   const plan = await generateGoldMapPlan(intake, key?.trim() || undefined);
 
   // Email the lead (hard requirement) — never block the on-screen render on it.

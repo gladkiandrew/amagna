@@ -12,12 +12,12 @@ type CtaBandProps = {
  * Royal-purple closing call-to-action band. Reused at the bottom of the home
  * page and the niche / pricing pages, so the copy is overridable.
  *
- * Primary CTA is the free audit (the qualified-lead path); secondary is the
- * 20-minute call (for visitors who already know what they want).
+ * Primary CTA is the Gold Map (the qualified-lead funnel at /audit); secondary
+ * is the 20-minute call (for visitors who already know what they want).
  */
 export function CtaBand({
   heading = 'Ready for more calls and more listings?',
-  subheading = 'Get a free 60-second audit of where you stand and what is missing — or skip ahead and book a 20-minute call.',
+  subheading = 'Get your Gold Map — a custom plan for where you stand and what to do next — or skip ahead and book a 20-minute call.',
 }: CtaBandProps): JSX.Element {
   return (
     <section className="bg-royal-purple">
@@ -33,7 +33,7 @@ export function CtaBand({
             href={AUDIT_HREF}
             className="rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get your free audit
+            Get your Gold Map
           </Link>
           <Link
             href={BOOK_A_CALL_HREF}

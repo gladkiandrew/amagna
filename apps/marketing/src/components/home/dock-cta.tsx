@@ -20,7 +20,7 @@ export function DockCta(): JSX.Element {
           Drop anchor. Let&rsquo;s get your pipeline full.
         </h2>
         <p className="mx-auto mt-6 max-w-[52ch] text-[1.075rem] leading-[1.7] text-brand-slate">
-          Start with a free audit — we&rsquo;ll show you exactly where your leads are leaking and
+          Start with your Gold Map — we&rsquo;ll show you exactly where your leads are leaking and
           what we&rsquo;d fix first. No pitch, no jargon, just the map.
         </p>
         <VoyageCtas align="center" className="mt-9" />

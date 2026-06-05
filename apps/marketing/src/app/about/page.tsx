@@ -110,10 +110,10 @@ export default function AboutPage(): JSX.Element {
             <p>
               Amagna is the ship and the crew. We don&apos;t hand you a paddle and a pep talk;
               we get you to a coast you chose — steady, owned leads if you&apos;re in home
-              services, a sphere that never goes cold if you&apos;re in real estate. The free
-              audit is the <strong className="font-semibold text-brand-charcoal">gold map</strong>:
-              it charts where you are and the route to where you want to be, yours to keep
-              whether you sail with us or not.
+              services, a sphere that never goes cold if you&apos;re in real estate. The{' '}
+              <strong className="font-semibold text-brand-charcoal">Gold Map</strong> charts where
+              you are and the route to where you want to be, yours to keep whether you sail with us
+              or not.
             </p>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function AboutPage(): JSX.Element {
 
       <CtaBand
         heading="Want to build with us early?"
-        subheading="The first clients get the founder's full attention. Get your free audit — your gold map — or book a 20-minute call and let's talk."
+        subheading="The first clients get the founder's full attention. Get your Gold Map — or book a 20-minute call and let's talk."
       />
     </main>
   );

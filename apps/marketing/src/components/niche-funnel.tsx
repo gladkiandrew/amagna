@@ -30,7 +30,7 @@ export function NicheFunnel({ content }: NicheFunnelProps): JSX.Element {
             href={AUDIT_HREF}
             className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
           >
-            Get your free audit
+            Get your Gold Map
           </Link>
           <Link
             href={BOOK_A_CALL_HREF}

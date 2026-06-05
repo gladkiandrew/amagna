@@ -109,7 +109,7 @@ export default function PricingPage() {
                   href={AUDIT_HREF}
                   className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
                 >
-                  Get your free audit
+                  Get your Gold Map
                 </Link>
                 <Link
                   href={BOOK_A_CALL_HREF}
@@ -251,7 +251,7 @@ export default function PricingPage() {
 
       <CtaBand
         heading="Not sure if it is a fit?"
-        subheading="Get a free audit of where you stand — or book a 20-minute call. Either way you leave with a plan."
+        subheading="Get your Gold Map — a custom plan for where you stand — or book a 20-minute call. Either way you leave with a plan."
       />
     </>
   );

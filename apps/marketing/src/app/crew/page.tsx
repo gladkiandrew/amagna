@@ -132,7 +132,7 @@ export default function CrewPage(): JSX.Element {
 
       <CtaBand
         heading="Want this crew working your pipeline?"
-        subheading="Get your free audit — your gold map — or book a 20-minute call and meet the captain directly."
+        subheading="Get your Gold Map — or book a 20-minute call and meet the captain directly."
       />
     </main>
   );

@@ -129,7 +129,7 @@ export default function WhoWeServePage(): JSX.Element {
 
       <CtaBand
         heading="Not sure which coast is yours?"
-        subheading="Get your free audit — your gold map — and we'll show you exactly where you stand and what to do next. Or book a 20-minute call."
+        subheading="Get your Gold Map — and we'll show you exactly where you stand and what to do next. Or book a 20-minute call."
       />
     </main>
   );

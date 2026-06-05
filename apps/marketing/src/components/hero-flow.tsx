@@ -225,7 +225,7 @@ export function HeroFlow(): JSX.Element {
           href="/audit"
           className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
         >
-          Get your free audit
+          Get your Gold Map
         </a>
         <a
           href="/book"
