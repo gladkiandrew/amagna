@@ -18,6 +18,10 @@ dist/
 .env.cloudflare
 .env.cloudflare.local
 .env.*.local
+# Editor/CLI backups of env files (e.g. .env.local.save) — also never commit
+.env*.save
+.env*.bak
+.env*~
 
 # Logs
 *.log
