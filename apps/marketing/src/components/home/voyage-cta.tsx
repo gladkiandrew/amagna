@@ -43,7 +43,7 @@ export function VoyageCtas({
           'group inline-flex items-center justify-center gap-2 rounded-[3px] font-semibold uppercase tracking-[0.14em] transition duration-300 ease-voyage focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
           buttonText,
           onDark
-            ? 'border border-brand-warmgold/80 bg-brand-warmgold/[0.12] text-brand-warmgold hover:border-brand-warmgold hover:bg-brand-warmgold hover:text-brand-deep'
+            ? 'border border-brand-warmgold bg-brand-warmgold text-brand-deep hover:bg-brand-warmgold/90'
             : 'border border-brand-purple/70 bg-brand-purple/[0.06] text-brand-purple hover:bg-brand-purple hover:text-white',
           ring,
         )}
