@@ -267,7 +267,7 @@ export function VoyageReveal(): JSX.Element {
         <div
           ref={shipRef}
           aria-hidden
-          className="absolute left-0 top-[17vh] z-[3] w-[38%]"
+          className="absolute left-0 top-[8vh] z-[3] w-[38%]"
           style={{ transform: 'translate3d(120%,0,0) translateX(-50%)', opacity: 0 }}
         >
           <Image
@@ -288,7 +288,7 @@ export function VoyageReveal(): JSX.Element {
         </div>
       )}
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-24 pt-[50vh]">
+      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-24 pt-[40vh]">
         <h2
           id="crew-frame-title"
           className="text-center font-display text-[clamp(1.9rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream"
