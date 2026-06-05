@@ -1,4 +1,19 @@
-# Cutover status — 2026-06-01
+# Cutover status — ✅ COMPLETE 2026-06-05
+
+**amagna.co + www.amagna.co are LIVE on the Worker `amagna-marketing-app`.**
+
+- **Serving:** Worker `amagna-marketing-app`, current Version `22c20c0e-fd41-4efc-88c2-fb7974571bfe` (2026-06-05). Both custom domains attached via the `routes` block in `apps/marketing/wrangler.jsonc` (`custom_domain: true`, zone `945e4c1755f729e954b82f565ffc5e58`).
+- **Pages project `amagna-marketing`:** domains detached by Andrew (2026-06-05) before this run; project preserved as the rollback target (still holds the `feaf751` deploy — re-add the two custom domains there to roll back).
+- **How the attach happened:** `opennextjs-cloudflare deploy` from a working tree with the `routes` block un-neutralized attached both domains automatically (no Pages conflict, since they were detached). No manual `workers/domains` API call needed.
+- **Worker SECRETS (8):** ANTHROPIC_API_KEY, RESEND_API_KEY, STRIPE_PRICE_GROWTH, STRIPE_PRICE_UPDATE, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY, **TURNSTILE_SECRET_KEY** (added for the Gold Map).
+- **Live verification (2026-06-05):** all 16 routes 200; Stripe checkout → `cs_test_…`; webhook no-sig → 400; homepage TTFB ~0.13–0.16s. See `docs/autonomous-run/REPORT-5.md`.
+- **Rollback:** still as described in §"Rollback" below (swap the two custom domains back to the Pages project in the dashboard).
+
+The original pre-cutover plan and permission probing are retained below as historical record.
+
+---
+
+# Cutover status — 2026-06-01 (historical — pre-cutover plan)
 
 Target worker: **amagna-marketing-app** at https://amagna-marketing-app.gladkiandrew47.workers.dev
 Domain cutover step (C7) **not executed**. Live amagna.co still on the Pages project `amagna-marketing` (serving `feaf751`).
