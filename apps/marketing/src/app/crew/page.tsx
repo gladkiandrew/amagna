@@ -118,13 +118,13 @@ export default function CrewPage(): JSX.Element {
               public.
             </p>
             <p>
-              The crew above isn&apos;t a metaphor I hide behind — it&apos;s the same system I
-              run on my own brand,{' '}
+              The crew above isn&apos;t a metaphor we hide behind — it&apos;s the system we
+              proved on our first client,{' '}
               <strong className="font-semibold text-brand-charcoal">Breaking the Fast</strong>, a
-              profitable consumer brand on Meta ads that proved the playbook before I ever sold
-              it. The agents do the repetitive work at a scale a human team can&apos;t match; a
-              human — usually me, early on — signs off on anything that reaches you or your
-              customers. Software for the volume, people for the judgment.
+              consumer brand on Meta ads we still run today. The agents do the repetitive work at
+              a scale a human team can&apos;t match; a human — usually me, early on — signs off on
+              anything that reaches you or your customers. Software for the volume, people for the
+              judgment.
             </p>
           </div>
         </div>

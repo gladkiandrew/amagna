@@ -160,18 +160,18 @@ export default function AboutPage(): JSX.Element {
               way I wish someone had built it for me.
             </p>
             <p>
-              Before Amagna I launched{' '}
+              Our first client was{' '}
               <strong className="font-semibold text-brand-charcoal">Breaking the Fast</strong>,
-              a profitable consumer brand running Meta ad campaigns — the proof of concept for
-              the Amagna playbook, with its marketing infrastructure running on Sapt. Every play
-              in the Amagna system comes from spending my own money on growth and watching what
-              actually moves the number.
+              a consumer brand running Meta ad campaigns — and we still run their growth today.
+              That&apos;s where the playbook got proven: real budget, real numbers, a real
+              feedback loop. Every play in the Amagna system earned its place on live client work
+              before we offered it to anyone else.
             </p>
             <p>
               So when we run your marketing, it isn&apos;t a junior account manager reading from
-              a template. It&apos;s the same playbook I run on my own businesses, applied to
-              yours — with the AI doing the repetitive work so we can charge a fraction of what
-              an old-school agency would.
+              a template. It&apos;s a system we&apos;ve sharpened on real client work, with the AI
+              doing the repetitive lifting so we can charge a fraction of what an old-school
+              agency would.
             </p>
             <p>
               The deal is simple: we show our work, we report in plain English, and we earn your
