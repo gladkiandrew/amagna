@@ -52,6 +52,56 @@ from Zeno who captains the AI fleet.
 
 ---
 
+### Priority 2 — Navigation redesign ✅
+- Header home link = the logo-mark icon + the Amagna AI wordmark → `/`.
+- Nav: **Who We Serve · Our Story · Pricing · Gold Map · Book a Call** (button).
+  Removed Home services / Real estate / Custom.
+- Routing: Who We Serve → new **`/who-we-serve`** (hero + two niche panels linking
+  to the still-live `/home-services` + `/real-estate` ad-landing funnels); Our
+  Story → `/about`; Gold Map → `/audit`; Book a Call → `/book`.
+- `NAV_LINKS` drives header + footer + mobile menu (verified the mobile menu lists
+  all five); sitemap adds `/who-we-serve`; focus-visible rings on nav links.
+
+### Priority 3 — Frame 2 of the voyage ✅
+- **Ship enters on scroll:** the gold dragon-ship sails in with eased travel +
+  sine bob + pitch, one IO/visibility-gated rAF loop; reduced-motion → static
+  pose. **Decision:** used `ship-display-hull-gold.svg` (11 KB vector) over the
+  6–7 MB crew PNGs — far lighter, scales crisply, and is the plan's named asset.
+- **Five crew columns** from the canon roster with **real portraits**
+  (`public/brand/crew/<slug>.webp`, object-cover center), names, titles, blurbs,
+  and `/crew#<slug>` links. Zeno (captain) gets a brighter double ring + a
+  "Captain" badge. Staggered IO + CSS reveals; reduced-motion → final states;
+  closes into the footer with no dead band.
+- **`/crew` rewritten** to the same canon roster (shared `lib/crew.ts`) with
+  anchor ids; Andrew kept as the human at the helm, distinct from Zeno.
+- Verified at desktop + 390px + reduced-motion.
+
+### Priority 4 — Promotion gate check ✅ (NOT promoted — gate not met)
+Re-ran the `CONTRACT-AUDIT.md` checklist against the upgraded `/hero-v2`
+(hero + Frame 2). **`/hero-v2` is now "afterglow hero + crew reveal" — it does
+NOT satisfy the contract's 7-beat voyage gate**, so per the plan ("promoting a
+worse homepage is the only wrong answer") I did **not** promote it.
+
+| Gate item | /hero-v2 |
+|---|---|
+| Reduced-motion fallback | ✅ |
+| Visibility pause + DPR caps + adaptive | ✅ (GL canvas + ship loop) |
+| Color law (no purple in water) | ✅ (purple sky approved; water reflection capped) |
+| Ship physics (travel+bob+pitch) | ✅ (Frame 2) |
+| **7-beat rhythm** (Honest Turn · Storm · Method · …) | ❌ missing |
+| **Two-island landfall fork** → niche pages | ❌ missing |
+| **Dock CTA close** | ❌ (closes into footer instead) |
+
+The full 7-beat voyage **with the landfall fork still lives at `/`** (the v1).
+Promoting `/hero-v2` now would replace it with a hero+crew page and lose the
+Storm / Method / Fork / Dock — a downgrade. **Recommended path** (needs Andrew):
+port the afterglow GL hero into the existing `/` voyage as its hero (the `/` ocean
+is one scroll-coupled, ship-bearing fixed canvas; the GL afterglow is a
+hero-viewport raymarcher — a real integration, not a drop-in), and graft Frame 2's
+crew section in ahead of the Dock. Then `/hero-v2` retires.
+
+---
+
 ## Commits made this run
 
 | Commit | Concern |
@@ -59,7 +109,17 @@ from Zeno who captains the AI fleet.
 | 8c984a4 | Checkpoint: restore ship SVG + add run-2 plan |
 | 4612cee | Hero afterglow sky (sun set) — orange/pink/purple, water stays navy |
 | d1be3af | Hero copy: bigger H1, bigger + bolder subtitle and CTAs |
-| _pending_ | Repaint Canvas-2D fallback to the afterglow |
+| 852bdc1 | Repaint Canvas-2D fallback to the afterglow |
+| 4dd655f | Redesign nav + add /who-we-serve |
+| 52e1dd6 | Build Frame 2 + rewrite /crew to the canon roster |
+| _final_ | Update autonomous run 2 report |
+
+### Priority 5 — Quality sweep ✅
+`/who-we-serve` ships with per-page metadata + OpenGraph. No `any` in any new
+file; named exports; kebab-case; one `<h1>` per page with ordered `<h2>`s;
+portrait `alt` text = "Name, Title"; decorative ship/logo are `aria-hidden`;
+focus-visible rings on the nav, the niche panels, and the Frame 2 crew links.
+`tsc --noEmit` clean; `npm run build` green (24 routes).
 
 ---
 
@@ -69,10 +129,54 @@ from Zeno who captains the AI fleet.
    `getSkyColor`.
 2. **Purple kept out of the water** by capping the reflected-ray height (0.035)
    so the sea only mirrors the warm low afterglow — honours the color law while
-   the sky shows purple.
+   the sky shows the approved purple.
+3. **Crew roster correction applied** (your mid-run note): canon roster
+   Zeno/Exodus/Solon/Hero/Thales with the real portraits, both in Frame 2 and a
+   `/crew` rewrite. Single source of truth = `lib/crew.ts`.
+4. **Ship asset = the SVG**, not the crew PNGs — 11 KB vector vs 6–7 MB PNGs,
+   scales crisply, and is the plan's named asset. The PNGs in `Pics for Amagna/`
+   stay uncommitted (forbidden path) and unused; say the word if you'd rather the
+   ship be the crew render and I'll add an optimized webp of it to `public/`.
+5. **Did not promote `/hero-v2` to `/`** — it's an afterglow hero + crew reveal,
+   not the contract's 7-beat voyage (no Storm/Method/Fork/Dock). Promoting would
+   downgrade the live homepage. Full reasoning + the recommended integration path
+   are in the Priority 4 table above.
 
 ## Open questions for Andrew
-_(none yet)_
+1. Hero water **mood / afterglow intensity** — purple band height, how warm the
+   horizon glows, shimmer strength are all dial-able in the shader.
+2. **Frame 2 ship**: SVG dragon-ship now. Want the crew render instead?
+3. **Homepage promotion**: ready when you are to do the `/`-integration above
+   (porting the afterglow hero onto the full voyage) — best done with you around.
 
 ## Circuit-breaker / blocker log
-_(none — 0 consecutive failures)_
+_(none — 0 consecutive failures; circuit breaker never tripped)_
+
+---
+
+## Session summary
+All five run-2 priorities completed and committed on
+`auto/2026-06-04-website-build`; build green at every commit and at the end.
+Nothing pushed; `main`/`staging` untouched; money path frozen; zero new
+dependencies; no `.env*` read/written; no forbidden paths committed.
+
+**Headline results:** the `/hero-v2` ocean is now a post-sunset **afterglow**
+(sun set, orange→pink→bright-purple sky; navy water reflecting only the warm
+low band) with bigger/bolder copy and a matching 2D fallback; the **nav** is
+redesigned (logo + Who We Serve · Our Story · Pricing · Gold Map · Book a Call)
+with a new `/who-we-serve`; and **Frame 2** now exists — the gold ship sails in
+and the five-agent crew is introduced with their real portraits, captained by
+Zeno, linking through to a `/crew` rewritten to the canon roster.
+
+### Review commands
+```bash
+git log --oneline 38cfa7e..HEAD            # run-2 commits
+cd apps/marketing && npm run build         # confirm green
+npm run dev                                # then eyeball:
+#   /hero-v2     afterglow hero (desktop + 390px); scroll → ship + crew (Frame 2)
+#   any page     new nav + mobile menu
+#   /who-we-serve  two-coasts landing
+#   /crew        canon roster (Zeno/Exodus/Solon/Hero/Thales) + #anchors
+#   /            unchanged live voyage (afterglow hero not promoted here — see P4)
+```
+Run ended cleanly. — Claude
