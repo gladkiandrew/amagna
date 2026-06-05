@@ -105,8 +105,19 @@ export function VoyageReveal(): JSX.Element {
     let dealtLocal = 0;
     let emptyLocal = false;
 
+    // Throttle the ambient water to ~30fps on touch devices: it's a slow,
+    // low-frequency wave, visually identical at 30 vs 60fps, and halving the
+    // per-frame full-canvas repaint frees the main thread so iOS scroll through
+    // this section stays smooth (the prime mobile scroll-jank contributor).
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const minDrawDelta = coarse ? 1000 / 30 : 0;
+    let lastDrawMs = 0;
+
     const frame = (now: number) => {
       if (!running) return;
+      raf = requestAnimationFrame(frame);
+      if (now - lastDrawMs < minDrawDelta) return;
+      lastDrawMs = now;
       const tNow = now / 1000;
       const e = triggered ? (now - startMs - pausedAccum) / 1000 : -1;
 
@@ -168,8 +179,6 @@ export function VoyageReveal(): JSX.Element {
           setEmpty(true);
         }
       }
-
-      raf = requestAnimationFrame(frame);
     };
 
     const start = () => {
@@ -289,7 +298,7 @@ export function VoyageReveal(): JSX.Element {
         </div>
       )}
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-24 pt-[40vh]">
+      <div className="relative z-[2] mx-auto w-full max-w-[1200px] px-6 pb-20 pt-[26vh] sm:pb-24 sm:pt-[40vh]">
         <h2
           id="crew-frame-title"
           className="text-center font-display text-[clamp(1.9rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream"
@@ -297,8 +306,10 @@ export function VoyageReveal(): JSX.Element {
           The Amagna Crew sailing your marketing.
         </h2>
 
-        {/* Crew cards — dealt from the ship into place. */}
-        <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+        {/* Crew cards — dealt from the ship into place. Mobile is a compact 3+2
+            grid (portrait + name + title only) so the whole crew fits ~one
+            screen; ≥sm restores the full card with blurb and the "Meet" link. */}
+        <div className="mt-9 grid grid-cols-3 gap-x-3 gap-y-6 sm:mt-12 sm:gap-x-5 sm:gap-y-8 lg:grid-cols-5">
           {CREW.map((member, i) => {
             const isDealt = dealt > i;
             const cardStyle: CSSProperties = {
@@ -308,7 +319,10 @@ export function VoyageReveal(): JSX.Element {
                 : `translateY(-300px) scale(0.86) rotate(${DEAL_ROT[i]}deg)`,
               transition:
                 'transform 0.7s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1)',
-              willChange: 'transform, opacity',
+              // Only promote to a layer while the card is still animating in;
+              // once dealt, release it so we don't keep N composited layers
+              // alive (cheaper compositing during scroll on mobile).
+              willChange: isDealt ? 'auto' : 'transform, opacity',
             };
             return (
               <Link
@@ -338,12 +352,12 @@ export function VoyageReveal(): JSX.Element {
                     </span>
                   )}
                 </div>
-                <p className="mt-4 font-display text-xl font-semibold text-brand-cream">{member.name}</p>
-                <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-warmgold">
+                <p className="mt-2.5 font-display text-sm font-semibold leading-tight text-brand-cream sm:mt-4 sm:text-xl">{member.name}</p>
+                <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-brand-warmgold sm:text-[11px] sm:tracking-[0.16em]">
                   {member.title}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-brand-cream/70">{member.blurb}</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-cream/60 transition-colors group-hover:text-brand-warmgold">
+                <p className="mt-2 hidden text-sm leading-relaxed text-brand-cream/70 sm:block">{member.blurb}</p>
+                <span className="mt-3 hidden items-center gap-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-cream/60 transition-colors group-hover:text-brand-warmgold sm:inline-flex">
                   Meet {member.name}
                   <ArrowUpRight
                     className="h-3.5 w-3.5 transition-transform duration-300 ease-voyage group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
