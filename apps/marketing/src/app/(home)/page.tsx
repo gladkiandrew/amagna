@@ -1,13 +1,10 @@
-import { OceanCanvas } from '@/components/home/ocean/ocean-canvas';
-import { VoyageHero } from '@/components/home/voyage-hero';
-import { HonestTurn } from '@/components/home/honest-turn';
-import { TheStorm } from '@/components/home/the-storm';
-import { TheMethod } from '@/components/home/the-method';
-import { LandfallFork } from '@/components/home/landfall-fork';
-import { LegacyHeroSection } from '@/components/home/legacy-hero-section';
 import type { Metadata } from 'next';
+import { HeroV2 } from '@/components/hero-v2/hero-v2';
+import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
+import { VideoExamples } from '@/components/hero-v2/video-examples';
+import { ServicesSection } from '@/components/hero-v2/services-section';
+import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { OG_IMAGE } from '@/lib/site';
-import { DockCta } from '@/components/home/dock-cta';
 
 const HOME_DESCRIPTION =
   'Amagna AI is an AI-native marketing agency for home-services and real-estate operators. We sell outcomes — more calls, more listings — not hours. Get a free 60-second audit.';
@@ -24,28 +21,19 @@ export const metadata: Metadata = {
 };
 
 /**
- * The Amagna homepage — a single-scroll "voyage". The dragon-ship sails a live
- * ocean canvas (fixed, behind everything); dark-water sections reveal it, cream
- * panels cover it, and the journey ends at the two-island landfall fork.
- * See docs/marketing/PLAN.md for the full architecture.
+ * The Amagna homepage (promoted from the hero-v2 build on 2026-06-05).
+ * Frame 1 is the photoreal WebGL ocean hero; Frame 2 is the crew/voyage reveal;
+ * then the video examples, the services + integrations grid, and testimonials.
+ * The original voyage homepage is preserved at /voyage-v1 as a fallback.
  */
 export default function Home(): JSX.Element {
   return (
     <>
-      {/* Fixed ocean canvas (z-0). Decorative; all meaning is in the DOM below. */}
-      <OceanCanvas />
-
-      {/* Content rides above the sea. Dark sections are transparent (ocean shows
-          through); cream sections are opaque (the "land"). */}
-      <div className="relative z-10">
-        <VoyageHero />
-        <HonestTurn />
-        <TheStorm />
-        <TheMethod />
-        <LandfallFork />
-        <LegacyHeroSection />
-        <DockCta />
-      </div>
+      <HeroV2 />
+      <VoyageReveal />
+      <VideoExamples />
+      <ServicesSection />
+      <TestimonialsSection />
     </>
   );
 }
