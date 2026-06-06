@@ -17,6 +17,7 @@ export const NAV_LINKS = [
   { href: '/who-we-serve', label: 'Who We Serve' },
   { href: '/about', label: 'Our Story' },
   { href: '/pricing', label: 'Pricing' },
+  { href: '/blog', label: 'Field Notes' },
   { href: '/audit', label: 'Gold Map' },
 ] as const;
 

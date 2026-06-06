@@ -35,7 +35,15 @@
     // time (NEXT_PUBLIC_* is inlined into the bundle); this var is runtime
     // parity. Paste your real site key here. The matching TURNSTILE_SECRET_KEY
     // is a Worker SECRET, never a var — see the secret-put command in the ADR.
-    "NEXT_PUBLIC_TURNSTILE_SITE_KEY": ""
+    "NEXT_PUBLIC_TURNSTILE_SITE_KEY": "",
+    // Sapt CMS (blog source of truth). SAPT_API_URL + SAPT_PROJECT_ID are
+    // non-secret config; SAPT_API_KEY is a Worker SECRET (never a var):
+    //   cd apps/marketing && npx wrangler secret put SAPT_API_KEY   (paste sapt_…)
+    // SAPT_PROJECT_ID is your Sapt workspace/project id (from the dashboard).
+    // Until SAPT_API_KEY + SAPT_PROJECT_ID are set, /blog serves the local
+    // fallback posts. SAPT_API_URL defaults to https://api.sapt.ai if blank.
+    "SAPT_API_URL": "https://api.sapt.ai",
+    "SAPT_PROJECT_ID": ""
   },
   // Live cutover 2026-06-05: amagna.co + www detached from the Pages project by
   // Andrew, so this Worker now owns both custom domains. workers_dev stays true
