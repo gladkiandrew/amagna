@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Clock, MessageSquare, ClipboardList } from 'lucide-react';
 import { CalcomEmbed } from '@/components/calcom-embed';
+import { BookIntentTracker } from '@/components/book-intent-tracker';
 import { env } from '@/lib/env';
 
 // The Cal.com URL is a Cloudflare runtime env var — reading it forces this
@@ -38,6 +39,7 @@ export default function BookPage() {
 
   return (
     <section className="mx-auto w-full max-w-[900px] px-6 py-20">
+      <BookIntentTracker />
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
         Book a call
       </p>

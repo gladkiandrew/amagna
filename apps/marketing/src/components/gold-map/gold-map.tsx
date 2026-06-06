@@ -16,11 +16,13 @@ import {
   EMPLOYEE_RANGES,
   SOCIAL_CHANNELS,
   LINK_FIELDS,
+  nicheFromType,
   type GoldMapIntake,
   type GoldMapLinks,
   type GoldMapPlan,
 } from '@/lib/gold-map-shared';
 import { captureGoldMapIntake, generateGoldMapPlanAction, markGoldMapKeyed } from '@/app/audit/actions';
+import { trackLead } from '@/lib/meta-pixel-events';
 import { TurnstileWidget, TURNSTILE_ENABLED } from './turnstile-widget';
 
 type Phase = 'intake' | 'forge' | 'turn' | 'digging' | 'chest' | 'plan';
@@ -60,6 +62,8 @@ export function GoldMap(): JSX.Element {
         return;
       }
       setSubmissionId(res.submissionId);
+      // Lead captured — fire the Meta pixel Lead event (no-ops if pixel unset).
+      trackLead({ niche: nicheFromType(intake.businessType), businessName: intake.businessName });
       setPhase('forge');
       scrollToTop();
     } finally {

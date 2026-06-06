@@ -32,6 +32,15 @@ export function trackLead(metadata?: { niche?: string | null; businessName?: str
   });
 }
 
+/**
+ * Fired when a visitor lands on /book (every "Book a call" CTA routes here, so
+ * this tracks book-a-call intent). Standard `Contact` event — a top-of-funnel
+ * signal, not a completed booking (the booking happens inside the Cal.com iframe).
+ */
+export function trackBookIntent(): void {
+  fire('track', 'Contact', { content_name: 'book_a_call' });
+}
+
 /** Fired on /checkout/success — a Stripe Checkout Session completed. */
 export function trackSubscribe(metadata?: {
   plan?: string;
