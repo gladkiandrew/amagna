@@ -2,7 +2,7 @@
 
 **amagna.co + www.amagna.co are LIVE on the Worker `amagna-marketing-app`.**
 
-- **Serving:** Worker `amagna-marketing-app`, current Version `22c20c0e-fd41-4efc-88c2-fb7974571bfe` (2026-06-05). Both custom domains attached via the `routes` block in `apps/marketing/wrangler.jsonc` (`custom_domain: true`, zone `945e4c1755f729e954b82f565ffc5e58`).
+- **Serving:** Worker `amagna-marketing-app`, current Version `0d6907df-e958-4866-ad6d-061d7afda34d` (2026-06-06, run 6: blog + pre-traffic SEO). Architecture unchanged since the 2026-06-05 cutover. Both custom domains attached via the `routes` block in `apps/marketing/wrangler.jsonc` (`custom_domain: true`, zone `945e4c1755f729e954b82f565ffc5e58`).
 - **Pages project `amagna-marketing`:** domains detached by Andrew (2026-06-05) before this run; project preserved as the rollback target (still holds the `feaf751` deploy — re-add the two custom domains there to roll back).
 - **How the attach happened:** `opennextjs-cloudflare deploy` from a working tree with the `routes` block un-neutralized attached both domains automatically (no Pages conflict, since they were detached). No manual `workers/domains` API call needed.
 - **Worker SECRETS (8):** ANTHROPIC_API_KEY, RESEND_API_KEY, STRIPE_PRICE_GROWTH, STRIPE_PRICE_UPDATE, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY, **TURNSTILE_SECRET_KEY** (added for the Gold Map).
