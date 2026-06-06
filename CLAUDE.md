@@ -182,6 +182,15 @@ Sapt contact: Ben Meyer (co-founder, personal friend of the founder).
 
 When working on Sapt integration code, see `packages/sapt-client/` (to be created) and docs at `docs.sapt.ai`.
 
+**Sapt REST API (confirmed from docs.sapt.ai, 2026-06-06):**
+- Base URL: `https://api.sapt.ai`
+- Auth header: `Authorization: ApiKey sapt_...` (NOT `Bearer` — Bearer is for the MCP servers at `mcp.sapt.ai`).
+- All bodies JSON. Endpoints are project-scoped: `https://api.sapt.ai/projects/{projectId}/...`. CMS endpoints live under the `Cms` reference group.
+- Amagna's `projectId` = `799ad3ab-fd21-4017-a45a-05b8e6f3cf75`.
+- 401 = missing/invalid key. Per Ben (Sapt co-founder), Sapt API keys display as "no scope / no permissions / expires never" by default — that is NORMAL and the key still works; scopes are not the blocker. If a CMS read 401s, suspect (a) the key not set on the Worker, (b) an env-var-name mismatch, or (c) a wrong endpoint path — NOT missing scope.
+- Blog content type slug: `blog-post`. Only items with `publishStatus: 'published'` render publicly.
+- Secrets: `SAPT_API_KEY` is a real secret (Worker secret + `.env.local`). `SAPT_PROJECT_ID` and the base URL are non-secret. NEVER paste the key into chat/transcripts — reference by env var name only.
+
 ---
 
 ## Referral and partner system
