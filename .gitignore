@@ -61,3 +61,7 @@ coverage/
 .swarm/
 .hive-mind/
 memory/
+
+# AI-generated blog drafts (working files; approve in Sapt, do not commit)
+apps/marketing/drafts/
+drafts/

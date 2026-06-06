@@ -1,0 +1,46 @@
+# Weekly AI blog-draft generator.
+#
+# Generates ONE new blog-post DRAFT in Amagna voice and files it in Sapt as
+# pending (status=draft / publishStatus=pending). It NEVER publishes — Andrew
+# approves in the Sapt dashboard (flip publishStatus → published, set publishedAt).
+#
+# ACTIVATION (Andrew): add these repository secrets and merge this file to the
+# default branch (scheduled workflows only run from the default branch):
+#   - ANTHROPIC_API_KEY
+#   - SAPT_API_KEY
+#   - SAPT_PROJECT_ID
+# (optional) SAPT_API_URL — defaults to https://api.sapt.ai
+# Until then the schedule is inert; you can also run it by hand from the Actions
+# tab (workflow_dispatch) with an optional keyword.
+name: Weekly blog draft
+
+on:
+  schedule:
+    - cron: '0 14 * * 1' # Mondays 14:00 UTC
+  workflow_dispatch:
+    inputs:
+      keyword:
+        description: 'Target keyword/topic for the draft'
+        required: false
+        type: string
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    # Skip the scheduled run if the key isn't configured (keeps logs clean).
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install marketing deps
+        working-directory: apps/marketing
+        run: npm install --no-audit --no-fund
+      - name: Generate draft → Sapt (pending)
+        working-directory: apps/marketing
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SAPT_API_KEY: ${{ secrets.SAPT_API_KEY }}
+          SAPT_PROJECT_ID: ${{ secrets.SAPT_PROJECT_ID }}
+          SAPT_API_URL: ${{ secrets.SAPT_API_URL }}
+        run: node scripts/generate-blog-draft.mjs "${{ inputs.keyword }}"
