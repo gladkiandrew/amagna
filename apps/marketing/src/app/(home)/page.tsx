@@ -7,12 +7,12 @@ import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { OG_IMAGE } from '@/lib/site';
 
 const HOME_DESCRIPTION =
-  'Amagna AI is an AI-native marketing agency for home-services and real-estate operators. We sell outcomes — more calls, more listings — not hours. Get a free 60-second audit.';
+  'Amagna AI builds autonomous marketing systems — the machine that runs your marketing and the content that fuels it — for any operator who wants growth that runs itself, with deep playbooks for home services and real estate. Get your free Gold Map.';
 
 export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
   openGraph: {
-    title: 'Amagna AI — More calls. More listings. Owned, not rented.',
+    title: 'Amagna AI — Marketing that runs itself',
     description: HOME_DESCRIPTION,
     type: 'website',
     url: '/',

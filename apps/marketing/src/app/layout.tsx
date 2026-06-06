@@ -5,7 +5,7 @@ import './globals.css';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
 import { MetaPixel } from '@/components/meta-pixel';
-import { SITE } from '@/lib/site';
+import { SITE, SOCIAL_LINKS } from '@/lib/site';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -31,7 +31,11 @@ const fraunces = Fraunces({
   axes: ['opsz'],
 });
 
-const TITLE = 'Amagna AI — AI growth systems for home services & real estate';
+const TITLE = 'Amagna AI — Autonomous Marketing Systems';
+
+// Google Search Console verification token (paste via NEXT_PUBLIC_GSC_VERIFICATION).
+// When set, Next renders <meta name="google-site-verification" …>. Empty = omitted.
+const GSC_VERIFICATION = process.env.NEXT_PUBLIC_GSC_VERIFICATION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -40,6 +44,7 @@ export const metadata: Metadata = {
     template: '%s · Amagna AI',
   },
   description: SITE.tagline,
+  ...(GSC_VERIFICATION ? { verification: { google: GSC_VERIFICATION } } : {}),
   // opengraph-image.tsx is auto-wired into openGraph.images / twitter.images.
   openGraph: {
     type: 'website',
@@ -64,10 +69,18 @@ const structuredData = {
       '@id': `${SITE.url}/#organization`,
       name: 'Amagna AI',
       url: SITE.url,
+      logo: `${SITE.url}/brand/amagna-logo-mark.svg`,
       email: SITE.email,
       description: SITE.tagline,
       areaServed: 'US',
-      knowsAbout: ['Home services marketing', 'Real estate marketing', 'AI marketing agency'],
+      knowsAbout: [
+        'Autonomous marketing systems',
+        'AI marketing agency',
+        'Marketing automation',
+        'Home services marketing',
+        'Real estate marketing',
+      ],
+      ...(SOCIAL_LINKS.length ? { sameAs: [...SOCIAL_LINKS] } : {}),
     },
     {
       '@type': 'WebSite',
