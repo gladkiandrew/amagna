@@ -105,12 +105,26 @@ Deploys: f284b8f3 (blog) → 0d6907df (SEO/pixel, current LIVE).
 
 ## Andrew action items
 
-1. **Make the blog read live Sapt** (until then it shows the 2 fallback posts):
-   - `cd apps/marketing && npx wrangler secret put SAPT_API_KEY` (paste `sapt_…`)
-   - Set `SAPT_PROJECT_ID` in wrangler.jsonc vars (your Sapt project id), redeploy.
-   - `SAPT_API_URL` already defaults to https://api.sapt.ai.
-   - Then reconcile/replace the two fallback posts — the live Sapt versions become
-     the source of truth automatically (fallback only shows when unkeyed/erroring).
+1. **Make the blog read live Sapt — BLOCKED on key scope (needs a CMS-capable key).**
+   Update follow-up (2026-06-06): reused the existing `.env.local` `SAPT_API_KEY` +
+   `SAPT_PROJECT_ID` (no rotation) and set them as Worker **secrets**; the adapter
+   already reads those exact names and hardcodes the REST base (no SAPT_API_URL).
+   **Verified the key/project are valid** — `SAPT_PROJECT_ID` = the Amagna AI
+   project UUID, `/projects` list + `/cms/config` both return 200 with this key
+   (ApiKey scheme). **But every `/cms/content/*` request returns 400 `Invalid
+   project resource: memory`** — across all content types AND all 3 projects. This
+   key is **memory-scoped** (created for the phase-1.5 audit-widget memory layer)
+   and has no CMS-content read permission. So `/blog` keeps serving the local
+   fallback (graceful — verified 200, page never breaks).
+   - **What's needed:** a Sapt API key with **CMS content read** scope (grant CMS
+     access to the existing key in the Sapt dashboard, or issue a CMS-scoped key).
+     Put it in `.env.local` under `SAPT_API_KEY` and run
+     `cd apps/marketing && printf '%s' "$SAPT_API_KEY" | npx wrangler secret put SAPT_API_KEY`
+     (after `set -a; . ./.env.local; set +a`). No code/var changes needed — the
+     blog flips to live Sapt automatically (and revalidates hourly). For an
+     immediate switch, rebuild+deploy so the static prerender pulls from Sapt.
+   - Then reconcile/replace the two fallback posts — live Sapt becomes the source
+     of truth automatically.
 2. **Meta Pixel:** set `NEXT_PUBLIC_META_PIXEL_ID` (wrangler.jsonc var + .env.local),
    redeploy. PageView + Lead + Contact + Subscribe then fire.
 3. **Google Search Console:** verify the property — paste the token into
