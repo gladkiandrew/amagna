@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { CtaBand } from '@/components/sections/cta-band';
-import { BOOK_A_CALL_HREF, AUDIT_HREF } from '@/lib/site';
+import { BOOK_A_CALL_HREF, AUDIT_HREF, SITE } from '@/lib/site';
 import type { NicheContent } from '@/lib/niches';
 
 type NicheFunnelProps = {
@@ -14,8 +14,22 @@ type NicheFunnelProps = {
  * NicheContent config so the two pages never mix assets.
  */
 export function NicheFunnel({ content }: NicheFunnelProps): JSX.Element {
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: content.metaTitle,
+    description: content.metaDescription,
+    serviceType: 'Marketing services',
+    provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+    areaServed: 'US',
+    url: `${SITE.url}/${content.slug}`,
+  };
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       {/* Hero */}
       <section className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-28">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
@@ -107,6 +121,22 @@ export function NicheFunnel({ content }: NicheFunnelProps): JSX.Element {
               </li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      {/* Testimonials — placeholder slot (real quotes only, added by Andrew). */}
+      <section className="border-t border-black/5">
+        <div className="mx-auto w-full max-w-[1100px] px-6 py-20 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
+            In their words
+          </p>
+          <h2 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+            Operator stories, coming soon.
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-ink-muted">
+            We&apos;re collecting results from the operators in this lane. Real quotes only —
+            we&apos;ll add them here as they come in.
+          </p>
         </div>
       </section>
 
