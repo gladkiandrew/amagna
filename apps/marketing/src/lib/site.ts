@@ -12,13 +12,13 @@ export const SITE = {
     'Autonomous marketing systems — we build the machine that runs your marketing, and the content that fuels it, for operators who want growth that runs itself.',
 } as const;
 
-/** Primary navigation — used by the header and the footer. */
+/** Primary navigation links — used by the header and footer. The Gold Map CTA
+ *  is a styled button rendered separately (see GOLD_MAP_CTA), not a plain link.
+ *  Field Notes lives in the footer only (removed from the top nav, run 7). */
 export const NAV_LINKS = [
   { href: '/who-we-serve', label: 'Who We Serve' },
   { href: '/about', label: 'Our Story' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/blog', label: 'Field Notes' },
-  { href: '/audit', label: 'Gold Map' },
 ] as const;
 
 /** Where every "Book a call" CTA points (Cal.com booking page). */
@@ -29,6 +29,12 @@ export const CALCOM_DIRECT_URL = 'https://cal.com/andrew-gladki-6glrmg/amagna-ai
 
 /** Where the primary "Get your free audit" CTA points. */
 export const AUDIT_HREF = '/audit';
+
+/** The #1 site-wide CTA (run 7 North Star): the Gold Map funnel at /audit. */
+export const GOLD_MAP_CTA = { href: '/audit', label: 'Get Your Gold Map' } as const;
+
+/** Blog / Field Notes index (footer link). */
+export const FIELD_NOTES_HREF = '/blog';
 
 /**
  * Public social profiles for the Amagna AI brand. Used for the Organization

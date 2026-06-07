@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Wordmark } from '@/components/wordmark';
-import { NAV_LINKS, BOOK_A_CALL_HREF } from '@/lib/site';
+import { NAV_LINKS, GOLD_MAP_CTA } from '@/lib/site';
 
 /**
- * Site header — wordmark home link, primary nav, and the Book a call CTA.
+ * Site header — wordmark home link, primary nav, and the Gold Map CTA.
  *
  * The mobile menu uses a native <details> disclosure so the header stays a
  * server component (no client-side JS needed for a five-link menu).
@@ -41,10 +41,10 @@ export function SiteHeader(): JSX.Element {
 
         <div className="hidden md:block">
           <Link
-            href={BOOK_A_CALL_HREF}
-            className="rounded-full bg-royal-purple px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-royal-purple/90"
+            href={GOLD_MAP_CTA.href}
+            className="rounded-full bg-royal-purple px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
           >
-            Book a call
+            {GOLD_MAP_CTA.label}
           </Link>
         </div>
 
@@ -70,10 +70,10 @@ export function SiteHeader(): JSX.Element {
                 </Link>
               ))}
               <Link
-                href={BOOK_A_CALL_HREF}
-                className="mt-1 rounded-md bg-royal-purple px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-royal-purple/90"
+                href={GOLD_MAP_CTA.href}
+                className="mt-1 rounded-md bg-royal-purple px-3 py-2 text-center text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
               >
-                Book a call
+                {GOLD_MAP_CTA.label}
               </Link>
             </nav>
           </div>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Wordmark } from '@/components/wordmark';
-import { NAV_LINKS, BOOK_A_CALL_HREF, SITE } from '@/lib/site';
+import { NAV_LINKS, GOLD_MAP_CTA, SITE } from '@/lib/site';
 
 /**
  * Site footer — wordmark, the two niches, primary nav, contact, and the legal row.
@@ -22,10 +22,10 @@ export function SiteFooter(): JSX.Element {
               {SITE.tagline}
             </p>
             <Link
-              href={BOOK_A_CALL_HREF}
-              className="mt-6 inline-block rounded-full bg-white px-5 py-2.5 text-sm font-medium text-royal-purple transition-colors hover:bg-white/90"
+              href={GOLD_MAP_CTA.href}
+              className="mt-6 inline-block rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
             >
-              Book a call
+              {GOLD_MAP_CTA.label}
             </Link>
           </div>
 
