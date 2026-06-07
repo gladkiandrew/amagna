@@ -25,10 +25,10 @@ export function CustomSolutionsPanel(): JSX.Element {
         </div>
         <div className="flex flex-col gap-3 md:items-end">
           <Link
-            href="/custom-quote"
+            href="/audit"
             className="inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get a custom quote
+            Get Your Gold Map
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           <Link

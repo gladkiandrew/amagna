@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BOOK_A_CALL_HREF, AUDIT_HREF } from '@/lib/site';
+import { AUDIT_HREF } from '@/lib/site';
 
 type CtaBandProps = {
   /** Headline override — defaults to the home-page closing CTA. */
@@ -12,12 +12,13 @@ type CtaBandProps = {
  * Royal-purple closing call-to-action band. Reused at the bottom of the home
  * page and the niche / pricing pages, so the copy is overridable.
  *
- * Primary CTA is the Gold Map (the qualified-lead funnel at /audit); secondary
- * is the 20-minute call (for visitors who already know what they want).
+ * The single CTA is the Gold Map (the qualified-lead funnel at /audit) — the
+ * site-wide #1 action. Booking is intentionally not promoted here (only the
+ * hero and /book offer a direct booking path).
  */
 export function CtaBand({
   heading = 'Ready for more calls and more listings?',
-  subheading = 'Get your Gold Map — a custom plan for where you stand and what to do next — or skip ahead and book a 20-minute call.',
+  subheading = 'Chart your Gold Map — a free, custom plan for where you stand and exactly what to do next.',
 }: CtaBandProps): JSX.Element {
   return (
     <section className="bg-royal-purple">
@@ -31,15 +32,9 @@ export function CtaBand({
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href={AUDIT_HREF}
-            className="rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
+            className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get your Gold Map
-          </Link>
-          <Link
-            href={BOOK_A_CALL_HREF}
-            className="rounded-full border border-white/40 bg-transparent px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
-          >
-            Book a 20-minute call
+            Get Your Gold Map
           </Link>
         </div>
       </div>

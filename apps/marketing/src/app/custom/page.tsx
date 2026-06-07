@@ -85,10 +85,10 @@ export default function CustomPage() {
         </p>
         <div className="mt-8">
           <Link
-            href="/custom-quote"
+            href="/audit"
             className="inline-flex items-center gap-1.5 rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
           >
-            Get a custom quote
+            Get Your Gold Map
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
         </div>
@@ -156,17 +156,17 @@ export default function CustomPage() {
       <section className="bg-royal-purple">
         <div className="mx-auto w-full max-w-[1100px] px-6 py-20 text-center">
           <h2 className="text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            Tell us what you are working with
+            Chart your Gold Map
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-balance text-base leading-relaxed text-white/75">
-            A few questions about your operation, and the founder gets back to you within one
-            business day with a scope and a number.
+            Tell us about your operation and get a free, custom plan back. We bring the scope and
+            the numbers to the call.
           </p>
           <Link
-            href="/custom-quote"
+            href="/audit"
             className="mt-8 inline-block rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get a custom quote
+            Get Your Gold Map
           </Link>
         </div>
       </section>

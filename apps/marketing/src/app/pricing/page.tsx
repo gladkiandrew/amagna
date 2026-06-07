@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/accordion';
 import { CustomSolutionsPanel } from '@/components/sections/custom-solutions-panel';
 import { CtaBand } from '@/components/sections/cta-band';
-import { BOOK_A_CALL_HREF, AUDIT_HREF, OG_IMAGE } from '@/lib/site';
+import { AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
   'Productized retainers starting at $997, $1,497, and $2,497/mo — final cost scales with your content credits and ad spend. A $500 one-time Update tier and custom solutions too. No long-term contracts.';
@@ -109,13 +109,7 @@ export default function PricingPage() {
                   href={AUDIT_HREF}
                   className="rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
                 >
-                  Get your Gold Map
-                </Link>
-                <Link
-                  href={BOOK_A_CALL_HREF}
-                  className="rounded-full border border-royal-purple bg-transparent px-6 py-3 text-sm font-medium text-royal-purple transition-colors hover:bg-royal-purple/5"
-                >
-                  Book a call
+                  Get Your Gold Map
                 </Link>
               </div>
             </div>
@@ -152,10 +146,10 @@ export default function PricingPage() {
               the full system.
             </p>
             <Link
-              href={BOOK_A_CALL_HREF}
+              href={AUDIT_HREF}
               className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-royal-purple"
             >
-              Book a call
+              Get Your Gold Map
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           </div>
@@ -198,10 +192,10 @@ export default function PricingPage() {
               For larger operators — premium creative, founder-led strategy, priority support.
             </p>
             <Link
-              href={BOOK_A_CALL_HREF}
+              href={AUDIT_HREF}
               className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-royal-purple"
             >
-              Book a call
+              Get Your Gold Map
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
             </Link>
           </div>
