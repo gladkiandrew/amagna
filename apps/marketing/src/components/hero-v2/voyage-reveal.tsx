@@ -327,7 +327,7 @@ export function VoyageReveal(): JSX.Element {
             return (
               <Link
                 key={member.slug}
-                href={`/crew#${member.slug}`}
+                href="/about#crew"
                 style={cardStyle}
                 className="group flex flex-col rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-[#03060e]"
               >

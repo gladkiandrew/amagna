@@ -17,7 +17,6 @@ const ROUTES = [
   '/custom',
   '/book',
   '/about',
-  '/crew',
 ] as const;
 
 // Re-generate hourly so newly-published blog posts enter the sitemap.
