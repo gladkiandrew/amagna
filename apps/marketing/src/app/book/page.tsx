@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Clock, MessageSquare, ClipboardList } from 'lucide-react';
+import Link from 'next/link';
+import { Clock, MessageSquare, ClipboardList, ArrowRight } from 'lucide-react';
 import { CalcomEmbed } from '@/components/calcom-embed';
 import { BookIntentTracker } from '@/components/book-intent-tracker';
 import { env } from '@/lib/env';
@@ -61,7 +62,37 @@ export default function BookPage() {
         ))}
       </div>
 
-      <div className="mt-10">
+      {/* Gold Map advisory — the recommended first step (run 7 North Star). */}
+      <div className="mt-10 rounded-2xl border border-royal-purple/20 bg-royal-purple/[0.04] p-6 sm:p-8">
+        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
+          Want a sharper call?
+        </p>
+        <h2 className="mt-2 text-balance text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+          Chart your Gold Map first — we&apos;ll come ready.
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          The Gold Map is a free, custom growth plan for your business. Chart it before we talk and
+          the crew shows up already briefed on your background and goals — so the call is all
+          strategy, no catch-up.
+        </p>
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Link
+            href="/audit"
+            className="inline-flex items-center gap-1.5 rounded-full bg-royal-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-royal-purple/90"
+          >
+            Get Your Gold Map
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+          <a
+            href="#book-calendar"
+            className="text-sm font-medium text-royal-purple underline decoration-1 underline-offset-4 transition-colors hover:text-royal-purple/80"
+          >
+            I&apos;d rather just book
+          </a>
+        </div>
+      </div>
+
+      <div id="book-calendar" className="mt-10 scroll-mt-24">
         <CalcomEmbed url={calcomUrl} />
       </div>
     </section>
