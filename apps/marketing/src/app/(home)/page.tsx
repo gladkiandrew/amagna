@@ -4,6 +4,8 @@ import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
 import { VideoExamples } from '@/components/hero-v2/video-examples';
 import { ServicesSection } from '@/components/hero-v2/services-section';
 import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
+import { FaqSection } from '@/components/sections/faq-section';
+import { FieldNotesSection } from '@/components/sections/field-notes-section';
 import { OG_IMAGE } from '@/lib/site';
 
 const HOME_DESCRIPTION =
@@ -34,6 +36,8 @@ export default function Home(): JSX.Element {
       <VideoExamples />
       <ServicesSection />
       <TestimonialsSection />
+      <FaqSection />
+      <FieldNotesSection />
     </>
   );
 }

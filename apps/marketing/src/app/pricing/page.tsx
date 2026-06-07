@@ -245,7 +245,7 @@ export default function PricingPage() {
 
       <CtaBand
         heading="Not sure if it is a fit?"
-        subheading="Get your Gold Map — a custom plan for where you stand — or book a 20-minute call. Either way you leave with a plan."
+        subheading="Chart your Gold Map — a free, custom plan for where you stand and what to do next. You leave with a plan either way."
       />
     </>
   );
