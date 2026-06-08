@@ -102,6 +102,11 @@ export default function RootLayout({
   // and dodges Anthropic SDK's node:fs paths in the edge build.
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
+  // Sapt first-party analytics — loads on every page. The project ID is public
+  // (non-secret); reuse NEXT_PUBLIC_SAPT_PROJECT_ID when set, else the constant.
+  const saptProjectId =
+    process.env.NEXT_PUBLIC_SAPT_PROJECT_ID || '799ad3ab-fd21-4017-a45a-05b8e6f3cf75';
+
   return (
     <html lang="en">
       <body
@@ -111,6 +116,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        {/* Sapt first-party analytics (site-wide). */}
+        <script src="https://ingest.sapt.ai/v1/track.js" data-project={saptProjectId} defer />
         <MetaPixel pixelId={metaPixelId} />
         <SiteHeader />
         <main className="flex-1">{children}</main>
