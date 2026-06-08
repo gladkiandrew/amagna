@@ -20,11 +20,11 @@ const FAQS: Faq[] = [
   },
   {
     q: 'What does it cost?',
-    a: 'Plans start at $997/mo (Foundation), $1,497/mo (Growth), and $2,497/mo (Authority). Final pricing scales with credits and ad spend. A one-time setup fee ($500–$2,000) covers onboarding and the initial build.',
+    a: 'Foundation $200/mo (after a $1,000 build), Growth $1,500/mo, and Authority $2,500/mo + ad spend + metered token usage.',
   },
   {
     q: 'Are there long-term contracts?',
-    a: 'No — month-to-month.',
+    a: 'Month one is the build. After your system is deployed, you commit to a 6-month minimum on your plan.',
   },
   {
     q: 'Who do you work with?',
