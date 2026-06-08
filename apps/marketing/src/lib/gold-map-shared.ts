@@ -296,6 +296,10 @@ export function assembleKeyPrompt(i: GoldMapIntake): string {
 
 Using everything you already know about my business — plus the details below and anything else I tell you — write a single, information-rich prompt that another AI could read cold and fully understand my business, my current situation, and my goals. Be specific and concrete. Add real context you know about me that isn't listed here. If you can see or recall what's on my website and social profiles below, factor in what I've already built and where I'm thin.
 
+Also look into Amagna AI directly — visit amagna.co — and assess how Amagna's marketing services fit a business in my line of work specifically. Work that read into the master prompt.
+
+And address these directly, working the answers into the master prompt: What automations am I currently running in my business? And, as far as you know, what automations could be built for ${i.businessName ? `${i.businessName}'s` : 'my'} business to bring in more clients, speed up processes, and increase the overall value of the company?
+
 End your answer with a labeled data block in EXACTLY this format (keep the brackets):
 
 [AMAGNA DATA]
