@@ -35,9 +35,9 @@ export type NicheContent = {
 export const HOME_SERVICES: NicheContent = {
   slug: 'home-services',
   eyebrow: 'For home services operators',
-  heroHeadline: 'More calls. Predictable leads. We end the feast-or-famine cycle.',
+  heroHeadline: 'Predictable, automated marketing for your service area.',
   heroSub:
-    'HVAC, plumbing, roofing, electrical, landscaping. We build the marketing system that keeps your phone ringing in the slow months — then we run it for you, in your voice.',
+    'HVAC, plumbing, roofing, electrical, landscaping. We build the marketing system designed to bring in work through the slow months — then we run it for you, in your voice.',
   pains: [
     {
       title: 'The phone is feast or famine',
@@ -69,8 +69,8 @@ export const HOME_SERVICES: NicheContent = {
       body: 'Google Business Profile management, local SEO, and review generation so you show up when someone searches "[your service] near me."',
     },
     {
-      title: 'Follow-up that never forgets',
-      body: 'Every lead gets worked — automated SMS and email sequences in your voice, so no job slips because nobody called back.',
+      title: 'Instant lead follow-up, run for you',
+      body: 'Every lead gets an automated SMS and email sequence in your voice, so follow-up happens without you chasing it.',
     },
     {
       title: 'A weekly report you actually read',
@@ -88,18 +88,18 @@ export const HOME_SERVICES: NicheContent = {
     'Leads route straight into the tools you already run your business on — no new software to learn.',
   ctaHeading: 'Let us look at your market',
   ctaSub:
-    'Chart your Gold Map — a free, custom plan for exactly what we would do to fill your calendar. No pitch deck, no jargon.',
+    'Chart your Gold Map — a free, custom plan for the marketing system we would build for you. No pitch deck, no jargon.',
   metaTitle: 'Home services marketing',
   metaDescription:
-    'Predictable, owned leads for HVAC, plumbing, roofing, and home services operators — built and run by AI. Book a call with Amagna AI.',
+    'Predictable, automated marketing for HVAC, plumbing, roofing, and home services operators — built and run by AI. Book a call with Amagna AI.',
 };
 
 export const REAL_ESTATE: NicheContent = {
   slug: 'real-estate',
-  eyebrow: 'For real estate agents & teams',
-  heroHeadline: 'More listings. AI that handles the work between them.',
+  eyebrow: 'For real estate agents, teams & owners',
+  heroHeadline: 'Automated marketing that keeps you top of mind.',
   heroSub:
-    'Solo agents, teams, and small brokerages. We keep your sphere warm and your listings coming — daily content, sphere nurture, and listing-focused funnels, all run for you in your voice.',
+    'Solo agents, teams, and owners. We keep your sphere warm and your pipeline active — daily content, sphere nurture, and listing-focused funnels, all run for you in your voice.',
   pains: [
     {
       title: 'Content matters — and you cannot stick with it',
@@ -128,11 +128,11 @@ export const REAL_ESTATE: NicheContent = {
     },
     {
       title: 'Sphere nurture on autopilot',
-      body: 'Your past clients and leads get consistent, personal-feeling touchpoints by email and SMS so you are the agent they think of first.',
+      body: 'Your past clients and leads get consistent, personal-feeling touchpoints by email and SMS, so you stay top of mind.',
     },
     {
       title: 'Listing-focused lead funnels',
-      body: 'Campaigns built to attract sellers in your target zip codes — home valuation funnels and listing-intent ads, not buyer noise.',
+      body: 'Campaigns built around sellers in your target zip codes — home valuation funnels and listing-focused ads.',
     },
     {
       title: 'A weekly report you actually read',
@@ -153,15 +153,15 @@ export const REAL_ESTATE: NicheContent = {
     'Chart your Gold Map — a free, custom plan for keeping your sphere warm and your listings coming. We bring it to the call.',
   metaTitle: 'Real estate marketing',
   metaDescription:
-    'Stay top of mind and win more listings — daily content and sphere nurture for real estate agents, teams, developers, and real-estate PE, built and run by AI.',
+    'Stay top of mind between listings — daily content and sphere nurture for real estate agents, teams, and owners, built and run by AI.',
 };
 
 export const MEDICAL_OFFICES: NicheContent = {
   slug: 'medical-offices',
   eyebrow: 'For medical & dental practices',
-  heroHeadline: 'A full schedule of the right patients — handled, and handled right.',
+  heroHeadline: 'Automated patient acquisition, handled compliantly.',
   heroSub:
-    'Private practices, dental, med-spa, specialty clinics. We build the marketing system that fills your chairs with the patients you want and runs it for you — reminders, reviews, and follow-up included.',
+    'Private practices, dental, med-spa, specialty clinics. We build the marketing system designed to bring in the patients you want and run it for you — reminders, reviews, and follow-up included.',
   pains: [
     {
       title: 'Empty slots you never see coming',
@@ -189,12 +189,12 @@ export const MEDICAL_OFFICES: NicheContent = {
       body: 'Meta and Google campaigns aimed at your highest-value services, with landing pages and intake built to turn a click into a booked appointment.',
     },
     {
-      title: 'Reviews & reputation on autopilot',
-      body: 'Happy patients get a gentle, well-timed nudge to leave a review, so your reputation finally matches your care.',
+      title: 'Automated review workflows',
+      body: 'Patients get a gentle, well-timed, automated nudge to leave a review after good visits.',
     },
     {
-      title: 'Reminders & recall that reduce no-shows',
-      body: 'Automated appointment reminders and recall sequences in your practice voice keep the schedule full without front-desk effort.',
+      title: 'Automated reminder & recall workflows',
+      body: 'Automated appointment reminders and recall sequences in your practice voice, run without front-desk effort.',
     },
     {
       title: 'A weekly report you actually read',
@@ -215,15 +215,15 @@ export const MEDICAL_OFFICES: NicheContent = {
     'Chart your Gold Map — a free, custom plan for filling your schedule with the right patients. We bring it to the call.',
   metaTitle: 'Medical office marketing',
   metaDescription:
-    'Fill your schedule with the right patients — targeted acquisition, reviews, reminders, and recall for medical, dental, and specialty practices, built and run by AI.',
+    'Automated patient acquisition — targeted campaigns, reviews, reminders, and recall for medical, dental, and specialty practices, built and run by AI.',
 };
 
 export const ECOMMERCE_BRANDS: NicheContent = {
   slug: 'ecommerce-brands',
   eyebrow: 'For ecommerce & DTC brands',
-  heroHeadline: 'Content and ads that turn scrollers into repeat buyers.',
+  heroHeadline: 'Automated content and ads for your store.',
   heroSub:
-    'DTC and ecommerce brands on Shopify and beyond. We build the content engine and paid-acquisition system that finds new customers and brings them back — run for you, in your brand voice.',
+    'DTC and ecommerce brands on Shopify and beyond. We build the content engine and paid-acquisition system designed to reach new customers and bring them back — run for you, in your brand voice.',
   pains: [
     {
       title: 'Ad costs climb, margins shrink',
@@ -251,12 +251,12 @@ export const ECOMMERCE_BRANDS: NicheContent = {
       body: 'A steady stream of scroll-stopping video, UGC-style content, and product posts for Meta, TikTok, and your feed — made for you, on brand.',
     },
     {
-      title: 'Paid acquisition, tuned',
-      body: 'Meta and TikTok ad campaigns built and optimized around your real margins and best-sellers, so spend finds profitable customers.',
+      title: 'Managed paid acquisition',
+      body: 'Meta and TikTok ad campaigns built and managed around your real margins and best-sellers.',
     },
     {
-      title: 'Email & SMS that drives repeat orders',
-      body: 'Welcome, abandoned-cart, and win-back flows in your voice that turn first-time buyers into a base that comes back.',
+      title: 'Automated email & SMS flows',
+      body: 'Welcome, abandoned-cart, and win-back flows in your voice, automated for first-time and returning customers.',
     },
     {
       title: 'A weekly report you actually read',
@@ -274,18 +274,18 @@ export const ECOMMERCE_BRANDS: NicheContent = {
     'Plugs into Shopify and the ad and email platforms you already sell on — your store and data stay where they are.',
   ctaHeading: 'Let us look at your brand',
   ctaSub:
-    'Chart your Gold Map — a free, custom plan for turning scrollers into repeat buyers. We bring it to the call.',
+    'Chart your Gold Map — a free, custom plan for your content and ad engine. We bring it to the call.',
   metaTitle: 'Ecommerce brand marketing',
   metaDescription:
-    'Content and ads that turn scrollers into repeat buyers — an always-on creative engine, tuned paid acquisition, and retention flows for DTC and ecommerce brands, built and run by AI.',
+    'Automated content and ads for ecommerce — an always-on creative engine, managed paid acquisition, and automated email & SMS flows for DTC and ecommerce brands, built and run by AI.',
 };
 
 export const MULTI_LOCATION: NicheContent = {
   slug: 'multi-location',
   eyebrow: 'For multi-location & franchise operators',
-  heroHeadline: 'Consistent marketing across every location — run from one brain.',
+  heroHeadline: 'Automated marketing across every location — run from one brain.',
   heroSub:
-    'Multi-location businesses, franchises, and groups. We build one system that keeps every location on-brand and full, with central control and local relevance — and we run it for you.',
+    'Multi-location businesses, franchises, and groups. We build one system that keeps every location on-brand, with central control and local relevance — and we run it for you.',
   pains: [
     {
       title: 'Every location markets differently',
@@ -314,7 +314,7 @@ export const MULTI_LOCATION: NicheContent = {
     },
     {
       title: 'Local presence at scale',
-      body: 'Google Business Profiles, local listings, and reviews managed across every location, so each one shows up for nearby searches.',
+      body: 'Google Business Profiles, local listings, and reviews managed across every location, so each profile stays accurate and active.',
     },
     {
       title: 'One memory across the group',
@@ -339,7 +339,7 @@ export const MULTI_LOCATION: NicheContent = {
     'Chart your Gold Map — a free, custom plan for consistent marketing across every location. We bring it to the call.',
   metaTitle: 'Multi-location marketing',
   metaDescription:
-    'Consistent marketing across every location, run from one brain — central brand control with local relevance for multi-location and franchise operators, built and run by AI.',
+    'Automated marketing across every location, run from one brain — central brand control with local relevance for multi-location and franchise operators, built and run by AI.',
 };
 
 /** All five funnel niches, keyed by slug (for sitemap, JSON-LD, etc.). */
