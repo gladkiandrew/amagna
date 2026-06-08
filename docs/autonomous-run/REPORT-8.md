@@ -53,5 +53,44 @@ Reframed outcome promises → system/process language. Changes logged:
 - DPR-3 mobile (390px, isMobile, deviceScaleFactor 3) via puppeteer-core emulation: `/pricing` and `/who-we-serve` both `documentScrollWidth == innerWidth == 390`, zero elements wider than viewport, visually clean. (Note: plain headless `--window-size` screenshots are misleading — they render the desktop layout and clip it; real device-metrics emulation is required to judge mobile.)
 - **Not pushed.** Awaiting Andrew's deploy.
 
-## Still open (separate from this task)
-- Homepage AI-generated video: Andrew provided `Vids for Amagna/roofinspectionad.mp4` to feature on the homepage — tracked as the next task.
+## Homepage video (done)
+- `roofinspectionad.mp4` (720×1280, 9:16, 8s) added as `public/brand/examples/example-1.mp4` — the documented slot for the homepage "See the output" deck. Autoplays/loops in the front card; slots 2–3 keep the placeholder until more videos arrive.
+
+---
+
+# PLAN-8 execution (2026-06-08, second session) — DEPLOYED LIVE
+
+CLAUDE.md was updated (new pricing model, Snapchat, onboarding flow, tool-connectivity, Political Candidates now an active non-partisan industry). Followed `PLAN-8.md` in order; **deployed to production and verified live after each priority.** No `git push` of the branch.
+
+## Commits (`git log 6adfeff..HEAD`)
+- Adjust Growth to $1,250 and reposition Authority at $2,000 (P1)
+- Add Snapchat to ad-platform listings site-wide (P2)
+- Add onboarding 'How it works' section to Who We Serve (P3)
+- Elevate tool-connectivity message (MCP/API) site-wide (P4)
+- Add Political Candidates as the 6th industry (P5)
+- Restructure all industry sub-pages (P6)
+- Update autonomous run 8 report (P7)
+
+## Deploy versions (Cloudflare, amagna.co)
+P1 `a47b06d1` · P2 `78985e0f` · P3 `58efc943` · P4 `392e7472` · P5 `feacb0a5` · P6 `3f9e9f4f`.
+
+## What changed
+- **P1 — Pricing:** Growth **$1,500 → $1,250/mo + Ad Spend**; Authority **$2,500 → $2,000/mo + Ad Spend + token usage**, repositioned as the full-business-automation tier ("Everything in Growth, plus — mainly focused on automating your whole business"; "2 managed ad campaigns" replaced "5–7 ad sets"). Updated across the /pricing cards, meta/og/twitter, and homepage FAQ. `lib/plans.ts` Stripe values left untouched (unreachable).
+- **P2 — Snapchat:** added to every ad-platform listing — homepage services pillar, Growth pricing bullet, Thales (crew page/about + the Who We Serve crew line), home-services/medical/ecommerce niche ad bullets, ecommerce hub card, Gold Map prompt, blog fallback, and the (unused) legacy services component for consistency.
+- **P3 — Onboarding:** new "How it works" section on /who-we-serve — Gold Map as the dominant Step 1, then book call → first payment → deployment call → delivered within 3 business days.
+- **P4 — Tool connectivity:** /who-we-serve tools section now leads with "If it has a key, we can wire it in." + the MCP/API promise; homepage integrations orbit gained a prominent connectivity caption.
+- **P5 — Political Candidates:** replaced the "Don't see your industry?" box with a real Political Candidates card + `/political-candidates` funnel (in sitemap). Non-partisan, system-focused copy per CLAUDE.md.
+- **P6 — Sub-page restructure (all 6):** removed the "Sound familiar?" pain frame; "What We Built" is now the first frame below the hero; added "How to get started" (Gold Map + onboarding flow) and a "Plug it into the AI you already use" differentiator block (Claude/ChatGPT/Gemini); added a related-posts section filtered by each niche's `category`. Niche pages now `revalidate = 3600`.
+
+## Related blog posts — wiring done, awaiting Cowork's posts
+- Each sub-page reads published posts and shows up to 2 whose `category` (case-insensitive contains) matches: Home Services / Real Estate / Medical Offices / Ecommerce / Multi-Location / Political. Section is **hidden until matches exist** (graceful).
+- As of this run, only the two fallback posts (`Foundations`, `Playbooks`) are live, so the section is hidden everywhere. **For Andrew/Cowork:** once posts are published in Sapt with those exact category values, they appear automatically within ~1 hour (hourly revalidate) — no redeploy needed. If they don't appear, check `SAPT_API_KEY` is set on the Worker and the posts' `category` field matches.
+
+## Verification (live on amagna.co)
+- Build green before every commit; all routes 200 live (incl. `/political-candidates`).
+- Redirects intact: `/checkout`→/audit (307), `/custom-quote`→/audit (308), `/hero-v2`→/ (308), `/crew`→/about#crew (308).
+- Grep: no user-facing `$1,500`/`$2,500` (only `lib/plans.ts` Stripe values remain, unreachable); Snapchat in every platform listing; onboarding + tool-connectivity + AI-connection blocks live; "Sound familiar?" gone from all 6 sub-pages.
+- DPR-3 mobile (real isMobile emulation) on live /pricing, /who-we-serve, /political-candidates: `scrollWidth == innerWidth == 390`, zero overflow.
+
+## Money path (unchanged, still needs Andrew)
+- Stripe stays OFF; all CTAs route to the Gold Map. `lib/plans.ts` holds OLD price IDs/labels — re-enabling direct purchase needs new Stripe prices for $200+$1,000 build / $1,250 / $2,000, an updated `plans.ts`, and removing the `/checkout` redirect.
