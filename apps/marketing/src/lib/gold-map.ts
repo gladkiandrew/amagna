@@ -32,6 +32,18 @@ HONESTY:
 - Speak in typical-operator terms ("most operators in your spot…") rather than fake precision.
 - NO exclusivity claims (never "one client per area" / "we won't work with competitors").
 
+TIMELINE — plan a ~30-day (one-month) rollout, NOT 90 days. Use exactly these phase timeframes: Phase 1 = "First week", Phase 2 = "Weeks 2–3", Phase 3 = "Weeks 4–5". The summary frames the payoff in ~30 days. Never say 90 days.
+
+RECOMMEND A PLAN — pick the ONE Amagna tier that fits this operator and say why, in their terms (no jargon):
+- If they have NO website / funnel / real foundation yet → recommend FOUNDATION. They need the base built before running ads or content; do not push them into Growth.
+- If they HAVE a foundation and want done-for-you ads + content → recommend GROWTH.
+- If they want full business automation / custom AI agents + workflows → recommend AUTHORITY.
+Tier facts (use plainly, don't dump them all):
+- Foundation: one-time $1,000 build (7 business days) + $50/mo infrastructure. The base only — no managed ads, no content generation.
+- Growth: $1,250/mo + ad spend. The full done-for-you machine run by the crew (ads, content, follow-up, reviews, reporting).
+- Authority: $2,000/mo + ad spend + token usage. Full business automation + custom AI agents & workflows, plus everything in Growth.
+The "why" is one or two tight sentences in the operator's terms.
+
 The plan must read as genuinely useful even if they never hire us — that's what earns the call. You MUST respond by calling the submit_plan tool. Do not output prose.`;
 
 const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
@@ -46,18 +58,18 @@ const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
       },
       summary: {
         type: 'string',
-        description: 'Max 2 short sentences: where they are now → where this takes them in ~90 days. No throat-clearing, no recap of their business.',
+        description: 'Max 2 short sentences: where they are now → where this takes them in ~30 days (one month). No throat-clearing, no recap of their business. Never say 90 days.',
       },
       phases: {
         type: 'array',
         minItems: 3,
         maxItems: 3,
-        description: 'Exactly 3 ordered phases of the plan.',
+        description: 'Exactly 3 ordered phases for a ~30-day rollout. Phase 1 timeframe "First week", Phase 2 "Weeks 2–3", Phase 3 "Weeks 4–5".',
         items: {
           type: 'object',
           properties: {
             title: { type: 'string', description: 'Short phase name (2-5 words), e.g. "Get found".' },
-            timeframe: { type: 'string', description: 'e.g. "First 2 weeks".' },
+            timeframe: { type: 'string', description: 'Exactly one of: "First week" (phase 1), "Weeks 2–3" (phase 2), "Weeks 4–5" (phase 3).' },
             steps: {
               type: 'array',
               items: {
@@ -82,12 +94,29 @@ const SUBMIT_PLAN_TOOL: Anthropic.Messages.Tool = {
         maxItems: 5,
         description: '3-5 things the Amagna crew/system runs for them day to day.',
       },
+      recommendedPlan: {
+        type: 'object',
+        description: 'The single Amagna tier that best fits this operator right now, with a short why in their terms.',
+        properties: {
+          tier: {
+            type: 'string',
+            enum: ['Foundation', 'Growth', 'Authority'],
+            description:
+              'Foundation if they have no website/funnel/foundation yet (build the base first). Growth if they have a base and want done-for-you ads + content. Authority if they want full business automation / custom AI agents + workflows.',
+          },
+          why: {
+            type: 'string',
+            description: 'One or two tight sentences, operator terms, why this tier fits them now. No jargon.',
+          },
+        },
+        required: ['tier', 'why'],
+      },
       firstMove: {
         type: 'string',
         description: 'The single most important first move this week. One or two tight sentences, action-first.',
       },
     },
-    required: ['headline', 'summary', 'phases', 'crewHandles', 'firstMove'],
+    required: ['headline', 'summary', 'phases', 'crewHandles', 'recommendedPlan', 'firstMove'],
   },
 };
 
@@ -99,7 +128,7 @@ function fallbackPlan(intake: GoldMapIntake): GoldMapPlan {
     phases: [
       {
         title: 'Get found',
-        timeframe: 'First 2 weeks',
+        timeframe: 'First week',
         steps: [
           'Rebuild your Google Business Profile and website so they convert the traffic you already get.',
           'Map your top service keywords and the gaps your competitors are leaving open.',
@@ -107,7 +136,7 @@ function fallbackPlan(intake: GoldMapIntake): GoldMapPlan {
       },
       {
         title: 'Turn on demand',
-        timeframe: 'Weeks 2–6',
+        timeframe: 'Weeks 2–3',
         steps: [
           'Launch a focused Meta/Google ad set aimed at your best service and area.',
           'Start a weekly short-form content rhythm in your voice.',
@@ -115,7 +144,7 @@ function fallbackPlan(intake: GoldMapIntake): GoldMapPlan {
       },
       {
         title: 'Keep them',
-        timeframe: 'Weeks 6–12',
+        timeframe: 'Weeks 4–5',
         steps: [
           'Automate review requests after every job and a follow-up sequence for every lead.',
           'Review the numbers weekly in plain English and double down on what works.',
@@ -127,7 +156,11 @@ function fallbackPlan(intake: GoldMapIntake): GoldMapPlan {
       'Follow-up and review requests, handled automatically',
       'A weekly plain-English report so you always know where things stand',
     ],
-    firstMove: 'Book a 20-minute call so we can confirm the plan and set the first two weeks in motion.',
+    recommendedPlan: {
+      tier: 'Growth',
+      why: 'Growth is the most common fit — the full done-for-you machine. We will confirm the exact tier with you on the call.',
+    },
+    firstMove: 'Book a 20-minute call so we can confirm the plan and set the first week in motion.',
   };
 }
 
@@ -201,6 +234,9 @@ export function planBodyText(plan: GoldMapPlan): string {
   });
   lines.push('What the crew handles for you:');
   for (const c of plan.crewHandles) lines.push(`  • ${c}`);
+  lines.push('');
+  lines.push(`Recommended plan: ${plan.recommendedPlan.tier}`);
+  lines.push(plan.recommendedPlan.why);
   lines.push('');
   lines.push(`First move: ${plan.firstMove}`);
   return lines.join('\n');

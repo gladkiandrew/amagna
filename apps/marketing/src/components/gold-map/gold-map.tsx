@@ -666,6 +666,18 @@ function PlanView({ plan }: { plan: GoldMapPlan }): JSX.Element {
         </ul>
       </div>
 
+      <div className="mt-9 rounded-xl border-2 border-brand-warmgold/60 bg-brand-warmgold/10 p-5">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-warmgold">
+          Recommended for you
+        </p>
+        <p className="mt-2 font-display text-2xl font-semibold text-brand-cream">
+          {plan.recommendedPlan.tier}
+        </p>
+        <p className="mt-2 max-w-[60ch] leading-[1.7] text-brand-cream/85">
+          {plan.recommendedPlan.why}
+        </p>
+      </div>
+
       <p className="mt-7 text-brand-cream/90">
         <span className="font-semibold text-brand-warmgold">First move:</span> {plan.firstMove}
       </p>

@@ -63,6 +63,8 @@ export type GoldMapPlan = {
   phases: { title: string; timeframe: string; steps: string[] }[];
   /** What the Amagna crew / system runs for them (plain English). */
   crewHandles: string[];
+  /** The Amagna tier we recommend for this operator, and why in their terms. */
+  recommendedPlan: { tier: 'Foundation' | 'Growth' | 'Authority'; why: string };
   /** The single first move to make. */
   firstMove: string;
 };
@@ -190,6 +192,25 @@ export function coercePlan(raw: unknown): GoldMapPlan | null {
   }
 
   const { headline, summary, phases, crewHandles, firstMove } = obj;
+
+  // recommendedPlan: accept a valid {tier, why}; default if missing/malformed so
+  // an otherwise-good plan is never discarded over this one field.
+  const TIERS = ['Foundation', 'Growth', 'Authority'] as const;
+  const rawRec = obj.recommendedPlan as { tier?: unknown; why?: unknown } | undefined;
+  const recValid =
+    !!rawRec &&
+    typeof rawRec === 'object' &&
+    typeof rawRec.tier === 'string' &&
+    (TIERS as readonly string[]).includes(rawRec.tier) &&
+    typeof rawRec.why === 'string' &&
+    rawRec.why.trim().length > 0;
+  const recommendedPlan: GoldMapPlan['recommendedPlan'] = recValid
+    ? { tier: rawRec!.tier as GoldMapPlan['recommendedPlan']['tier'], why: (rawRec!.why as string).trim() }
+    : {
+        tier: 'Growth',
+        why: 'Growth is the most common fit — the full done-for-you machine. We will confirm the exact tier with you on the call.',
+      };
+
   const phasesOk =
     Array.isArray(phases) &&
     phases.length > 0 &&
@@ -210,7 +231,7 @@ export function coercePlan(raw: unknown): GoldMapPlan | null {
     Array.isArray(crewHandles) && crewHandles.every((c) => typeof c === 'string') &&
     typeof firstMove === 'string'
   ) {
-    return { headline, summary, phases, crewHandles, firstMove } as GoldMapPlan;
+    return { headline, summary, phases, crewHandles, recommendedPlan, firstMove } as GoldMapPlan;
   }
   return null;
 }
