@@ -183,6 +183,67 @@ export default function WhoWeServePage(): JSX.Element {
         </div>
       </section>
 
+      {/* How getting started works — onboarding flow */}
+      <section className="border-t border-brand-gold/20 bg-brand-cream">
+        <div className="mx-auto w-full max-w-[1000px] px-6 py-20 sm:py-24">
+          <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+            <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
+            How it works
+          </p>
+          <h2 className="mt-5 text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">
+            From first click to a system that runs itself.
+          </h2>
+          <p className="mt-4 max-w-[58ch] text-lg leading-[1.6] text-brand-slate">
+            Five steps — and the first one matters most.
+          </p>
+
+          {/* Step 1 — Gold Map, the prominent step */}
+          <div className="mt-10 overflow-hidden rounded-2xl border-2 border-brand-gold bg-white p-8 shadow-[0_8px_40px_-16px_rgba(176,141,87,0.45)] sm:p-10">
+            <span className="inline-flex items-center gap-2 rounded-full bg-brand-gold/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-gold">
+              Step 1 · Start here
+            </span>
+            <h3 className="mt-4 font-display text-[1.9rem] font-semibold leading-[1.1] tracking-[-0.015em] text-brand-charcoal">
+              Chart your Gold Map
+            </h3>
+            <p className="mt-3 max-w-[60ch] text-base leading-[1.6] text-brand-slate">
+              This is the most important step. The Gold Map is a free, custom plan that preps
+              everything and makes the whole engagement sharper — the better your map, the better
+              the system we build on top of it.
+            </p>
+            <Link
+              href="/audit"
+              className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-brand-purple px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-purple/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-2"
+            >
+              Get Your Gold Map
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </div>
+
+          {/* Steps 2–5 */}
+          <ol className="mt-6 grid gap-4 sm:grid-cols-2">
+            {[
+              { n: '2', title: 'Book your call', body: 'We walk the map together and answer everything.' },
+              { n: '3', title: 'First monthly payment', body: 'Made after the call — it kicks off the build.' },
+              { n: '4', title: 'Deployment call', body: 'Once your first payment is in, we schedule it.' },
+              { n: '5', title: 'System delivered', body: 'Live within 3 business days of that first payment.' },
+            ].map((step) => (
+              <li
+                key={step.n}
+                className="flex gap-4 rounded-xl border border-brand-gold/25 bg-white px-5 py-4"
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-charcoal/5 font-display text-base font-semibold text-brand-charcoal">
+                  {step.n}
+                </span>
+                <span>
+                  <strong className="block font-semibold text-brand-charcoal">{step.title}</strong>
+                  <span className="mt-0.5 block text-sm leading-[1.5] text-brand-slate">{step.body}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
       {/* The crew adapts to each client */}
       <section className="border-t border-brand-gold/20">
         <div className="mx-auto w-full max-w-[900px] px-6 py-20 text-center">
