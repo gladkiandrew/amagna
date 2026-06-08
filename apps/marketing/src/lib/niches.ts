@@ -62,7 +62,7 @@ export const HOME_SERVICES: NicheContent = {
   systemPoints: [
     {
       title: 'Local lead funnels',
-      body: 'Meta and Google ad campaigns aimed at your most profitable services, with landing pages built to turn a click into a booked call.',
+      body: 'Meta, TikTok, Google, and Snapchat ad campaigns aimed at your most profitable services, with landing pages built to turn a click into a booked call.',
     },
     {
       title: 'Get found on Google',
@@ -186,7 +186,7 @@ export const MEDICAL_OFFICES: NicheContent = {
   systemPoints: [
     {
       title: 'Targeted patient acquisition',
-      body: 'Meta and Google campaigns aimed at your highest-value services, with landing pages and intake built to turn a click into a booked appointment.',
+      body: 'Meta, TikTok, Google, and Snapchat campaigns aimed at your highest-value services, with landing pages and intake built to turn a click into a booked appointment.',
     },
     {
       title: 'Automated review workflows',
@@ -252,7 +252,7 @@ export const ECOMMERCE_BRANDS: NicheContent = {
     },
     {
       title: 'Managed paid acquisition',
-      body: 'Meta and TikTok ad campaigns built and managed around your real margins and best-sellers.',
+      body: 'Meta, TikTok, and Snapchat ad campaigns built and managed around your real margins and best-sellers.',
     },
     {
       title: 'Automated email & SMS flows',

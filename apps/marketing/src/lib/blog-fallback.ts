@@ -38,7 +38,7 @@ An **autonomous marketing system** is the fix: a machine that runs your marketin
 A real autonomous system has four moving parts that work together:
 
 1. **Content that gets made for you.** Posts, short videos, and emails in your voice, on a schedule, without you writing a word.
-2. **Distribution that runs itself.** The content goes where your customers actually are — Meta, TikTok, Google, your inbox — and the ads get tuned without you babysitting a dashboard.
+2. **Distribution that runs itself.** The content goes where your customers actually are — Meta, TikTok, Google, Snapchat, your inbox — and the ads get tuned without you babysitting a dashboard.
 3. **Follow-up that never forgets.** New leads get answered, nurtured, and booked automatically, around the clock.
 4. **A memory layer underneath all of it.** One brain that remembers your brand, your customers, and what is working — so nothing repeats, goes off-message, or gets dropped.
 

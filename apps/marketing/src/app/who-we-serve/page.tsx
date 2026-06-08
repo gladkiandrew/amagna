@@ -77,7 +77,7 @@ const BOXES: ServeBox[] = [
     name: 'Ecommerce Brands',
     hook: 'Automated content and ads for your store.',
     points: [
-      'Always-on ad creative for Meta & TikTok',
+      'Always-on ad creative for Meta, TikTok & Snapchat',
       'Managed paid acquisition campaigns',
       'Automated email & SMS flows',
     ],
@@ -127,7 +127,7 @@ const CREW = [
   { name: 'Exodus', role: 'makes the content — video, posts, creative' },
   { name: 'Solon', role: 'runs outreach and keeps leads and clients warm' },
   { name: 'Hero', role: 'builds the automations that run it all' },
-  { name: 'Thales', role: 'runs the paid ads across Meta, TikTok, and Google' },
+  { name: 'Thales', role: 'runs the paid ads across Meta, TikTok, Google, and Snapchat' },
 ];
 
 export default function WhoWeServePage(): JSX.Element {

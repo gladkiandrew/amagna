@@ -4,7 +4,7 @@ const SERVICES = [
   {
     icon: Megaphone,
     title: 'Lead generation',
-    body: 'Meta and Google ad campaigns tuned per niche, landing pages tied to every ad set, and lead capture routed straight into your CRM.',
+    body: 'Meta, TikTok, Google, and Snapchat ad campaigns tuned per niche, landing pages tied to every ad set, and lead capture routed straight into your CRM.',
   },
   {
     icon: PenLine,

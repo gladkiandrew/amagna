@@ -69,7 +69,7 @@ const TIERS: Tier[] = [
     tagline: 'The full system, run by the crew.',
     features: [
       'Niche-tuned lead funnel',
-      'Meta + Google ad campaigns, managed weekly — 5 ad sets, 1 creative per ad set, rendered in every dimension to fit all Meta placements and ad types',
+      'Meta, TikTok, Google & Snapchat ad campaigns, managed weekly — 5 ad sets, 1 creative per ad set, rendered in every dimension to fit all placements and ad types',
       'AI video creation for ads / reels / shorts',
       'Google Business Profile + local SEO + AI search visibility (AEO)',
       'Automated review generation after every job',

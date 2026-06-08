@@ -76,9 +76,9 @@ export const CREW: readonly CrewMember[] = [
     slug: 'thales',
     name: 'Thales',
     title: 'Marketing Specialist',
-    blurb: 'Meta, TikTok, and Google — the ads and content that bring the wind.',
+    blurb: 'Meta, TikTok, Google, and Snapchat — the ads and content that bring the wind.',
     description:
-      'Thales runs the paid and organic engine across Meta, TikTok, and Google — the ads and content that fill the sails and keep the pipeline moving.',
+      'Thales runs the paid and organic engine across Meta, TikTok, Google, and Snapchat — the ads and content that fill the sails and keep the pipeline moving.',
     trust: 'Spend and creative are approved by a human before anything launches.',
     w: 1200,
     h: 675,

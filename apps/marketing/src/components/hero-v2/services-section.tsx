@@ -16,7 +16,7 @@ const PILLARS: readonly Pillar[] = [
   },
   {
     name: 'Ads Management',
-    eyebrow: 'Meta · TikTok · Google',
+    eyebrow: 'Meta · TikTok · Google · Snapchat',
     body: 'We run and tune your paid ads so the right local people see you and the phone rings.',
   },
   {
