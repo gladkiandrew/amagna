@@ -99,3 +99,35 @@ P1 `a47b06d1` · P2 `78985e0f` · P3 `58efc943` · P4 `392e7472` · P5 `feacb0a5
 
 ## Money path (unchanged, still needs Andrew)
 - Stripe stays OFF; all CTAs route to the Gold Map. `lib/plans.ts` holds OLD price IDs/labels — re-enabling direct purchase needs new Stripe prices for $200+$1,000 build / $1,250 / $2,000, an updated `plans.ts`, and removing the `/checkout` redirect.
+
+---
+
+# Blog seed run (2026-06-08) — BLOCKED on Sapt write API, posts staged
+
+Goal: 2 published posts per industry in Sapt. **Could not publish** — the Sapt
+REST API (`api.sapt.ai`) is **read-only for CMS content**: its OpenAPI spec
+exposes only `GET /projects/{id}/cms/content/{type}` and `…/{type}/{slug}` (59
+write endpoints exist, none for content/blog). All write-path probes 404'd; the
+MCP `saveContent` path is down. Per instruction, stopped, left the blog fallback
+untouched, and staged the posts.
+
+## Written & staged (`scripts/sapt-blog-seed/`, seed.mjs + out/*.json + README)
+10 posts, ~600–800 words, Amagna voice, system-framed, no guarantees/stats/
+exclusivity, Gold Map CTA. Exact category values set for the related-posts filter.
+Per industry (incl. existing live Sapt posts) → 2 each once published:
+- Home Services: 1 live + 1 staged (`google-business-profile-cheapest-lead-source`)
+- Real Estate: 1 live + 1 staged (`real-estate-follow-up-system-leads-into-listings`)
+- Medical Offices: 0 live + 2 staged
+- Ecommerce: 0 live + 2 staged
+- Multi-Location: 0 live + 2 staged
+- Political: 0 live + 2 staged
+
+## Andrew action items
+1. **Publish the 10 staged posts** when the Sapt MCP is back (`saveContent`, no id =
+   create, contentTypeSlug `blog-post`, use each file's `content` object) or via the
+   dashboard CMS. Steps in `scripts/sapt-blog-seed/README.md`.
+2. After publishing, sub-pages + `/blog` pick them up within ~1h (hourly revalidate)
+   or redeploy to surface now.
+3. SEO note: the named keyword tools (`/marketing:seo-audit`, searchfit-seo) aren't
+   installed here — keywords chosen via WebSearch validation + SEO judgment (long-tail,
+   high-intent). No fabricated stats used.
