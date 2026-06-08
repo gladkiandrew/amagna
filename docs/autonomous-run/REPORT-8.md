@@ -86,6 +86,11 @@ P1 `a47b06d1` · P2 `78985e0f` · P3 `58efc943` · P4 `392e7472` · P5 `feacb0a5
 - Each sub-page reads published posts and shows up to 2 whose `category` (case-insensitive contains) matches: Home Services / Real Estate / Medical Offices / Ecommerce / Multi-Location / Political. Section is **hidden until matches exist** (graceful).
 - As of this run, only the two fallback posts (`Foundations`, `Playbooks`) are live, so the section is hidden everywhere. **For Andrew/Cowork:** once posts are published in Sapt with those exact category values, they appear automatically within ~1 hour (hourly revalidate) — no redeploy needed. If they don't appear, check `SAPT_API_KEY` is set on the Worker and the posts' `category` field matches.
 
+### Update — Sapt key set, live posts flowing (deploy `9f5d0396`)
+- `SAPT_API_KEY` set as a Worker secret (`wrangler secret put`, value from `.env.local`, never printed). Redeployed so `/blog` regenerated against live Sapt.
+- `/blog` now serves live Sapt posts (fallback Foundations/Playbooks gone). Related-posts sections populate live: `/home-services` and `/real-estate` each show their matching post; `/medical-offices` and `/political-candidates` still hidden (no posts in those categories yet — graceful).
+- **Minor for Cowork:** one live post has an auto-generated slug `page-a8631b7daf62bdf6` (missing a proper slug field in Sapt) — worth fixing the slug in the CMS so its URL is clean.
+
 ## Verification (live on amagna.co)
 - Build green before every commit; all routes 200 live (incl. `/political-candidates`).
 - Redirects intact: `/checkout`→/audit (307), `/custom-quote`→/audit (308), `/hero-v2`→/ (308), `/crew`→/about#crew (308).
