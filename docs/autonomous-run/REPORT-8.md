@@ -131,3 +131,35 @@ Per industry (incl. existing live Sapt posts) → 2 each once published:
 3. SEO note: the named keyword tools (`/marketing:seo-audit`, searchfit-seo) aren't
    installed here — keywords chosen via WebSearch validation + SEO judgment (long-tail,
    high-intent). No fabricated stats used.
+
+---
+
+# Gold Map funnel + Foundation pricing changes (2026-06-08) — DEPLOYED LIVE (`eaa70e0a`)
+
+Four changes, committed per concern, build green each, one deploy + live verify. No git push.
+
+## Commits
+- `92b9d74` Add amagna.co fit read + automation questions to the Forge Your Key prompt (A)
+- `ea13f13` Add recommended-tier to Gold Map plan; retarget timeline to ~30 days (B)
+- `4d02926` Reframe Foundation as a one-time $1,000 build + $50/mo infrastructure (C)
+
+## A — "Forge Your Key" prompt (`gold-map-shared.ts` `assembleKeyPrompt`)
+Step-2 prompt now also tells the operator's AI to (1) look into amagna.co and assess how Amagna's services fit their line of work, and (2) answer what automations they run today and what could be built for `[businessName]`'s business to win clients / speed processes / raise company value. Business name interpolates from intake.
+
+## B — Gold Map plan generator (schema change)
+New field `recommendedPlan { tier: 'Foundation'|'Growth'|'Authority', why }` on `GoldMapPlan`:
+- Type + `coercePlan` validation (safe default if model omits it) in `gold-map-shared.ts`.
+- Generator system prompt has the tier decision-logic + tier facts; `submit_plan` tool schema gains `recommendedPlan` (enum tier + why) and it's `required`; `fallbackPlan` sets a default.
+- Rendered prominently on-screen (`PlanView` "Recommended for you" block) and in the emailed/notification plan text (`planBodyText`).
+- **Timeline 90→30 days:** phases now First week / Weeks 2–3 / Weeks 4–5; summary frames ~30 days; system prompt + tool schema + fallback all updated. Generator model unchanged.
+
+## C — Foundation pricing (sitewide)
+Foundation is no longer $200/mo. Now: **one-time $1,000 build (7 business days), then $50/mo for infrastructure** — the base only, **no managed ads or content generation**. Added white-glove bullets justifying the 7-day build: **"2 free revisions"** and **"a live build session (FaceTime / Google Meet) with the founder while we build it."** Updated the /pricing card, homepage FAQ "What does it cost?", and /pricing meta/og/twitter (shared description const). Growth $1,250 and Authority $2,000 unchanged.
+
+## Verification (live)
+- Build green per commit. `/pricing` 200, `/audit` 200.
+- `/pricing`: $1,000 / 7-business-day build / then $50/mo for infrastructure / 2 free revisions / live build session / "Infrastructure base only"; Growth $1,250 + Authority $2,000 intact; no `$200`.
+- Homepage FAQ + /pricing meta/og/twitter updated.
+- Live `/audit` chunk (`app/audit/page-4b39dbb2f7262cf7.js`) contains the prompt additions ("visit amagna.co", automation question) and the "Recommended for you" render.
+- Grep: no `$200/mo` Foundation and no `90 days` output framing survive (only the new "never say 90 days" guardrails remain in the prompt).
+- No live Anthropic generation triggered (cost constraint) — verified via build + served bundle, not by submitting the funnel.
