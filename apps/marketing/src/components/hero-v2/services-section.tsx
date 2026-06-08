@@ -64,6 +64,15 @@ export function ServicesSection(): JSX.Element {
           <IntegrationsHub />
         </div>
 
+        {/* Tool-connectivity message — a key differentiator, stated plainly. */}
+        <p className="mx-auto mt-10 max-w-[60ch] text-balance text-center font-display text-xl font-semibold leading-snug tracking-[-0.01em] text-brand-charcoal sm:text-2xl">
+          If the tools you already use have an MCP or an API, we connect to them, use them, and
+          automate them.
+        </p>
+        <p className="mx-auto mt-3 max-w-[48ch] text-center leading-[1.6] text-brand-slate">
+          If it has a key, we can wire it in.
+        </p>
+
         <ol className="mt-8 grid gap-x-12 gap-y-px sm:grid-cols-2">
           {PILLARS.map((pillar, i) => (
             <li

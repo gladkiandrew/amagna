@@ -274,13 +274,17 @@ export default function WhoWeServePage(): JSX.Element {
 
       {/* Works with the tools you already run */}
       <section className="border-t border-brand-gold/20 bg-white">
-        <div className="mx-auto w-full max-w-[1000px] px-6 py-16 text-center">
-          <h2 className="text-balance text-2xl font-semibold tracking-tight text-brand-charcoal sm:text-3xl">
+        <div className="mx-auto w-full max-w-[1000px] px-6 py-20 text-center">
+          <p className="flex items-center justify-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+            <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
             Works with the tools you already run
+          </p>
+          <h2 className="mx-auto mt-5 max-w-[22ch] text-balance font-display text-[clamp(1.9rem,4vw,2.8rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-brand-charcoal">
+            If it has a key, we can wire it in.
           </h2>
-          <p className="mx-auto mt-3 max-w-[56ch] text-sm leading-relaxed text-brand-slate">
-            The system plugs into the platforms your business already runs on — no new software to
-            learn, your data stays where it is.
+          <p className="mx-auto mt-4 max-w-[62ch] text-lg leading-[1.6] text-brand-slate">
+            If the tools you already use have an MCP or an API, we connect to them, use them, and
+            automate them — no new software to learn, your data stays where it is.
           </p>
           <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
             {TOOL_LOGOS.map((logo) => (
