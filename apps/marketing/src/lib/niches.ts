@@ -17,6 +17,8 @@ export type NicheContent = {
     | 'ecommerce-brands'
     | 'multi-location'
     | 'political-candidates';
+  /** Blog category to pull related posts from (case-insensitive contains). */
+  category: string;
   eyebrow: string;
   heroHeadline: string;
   heroSub: string;
@@ -35,6 +37,7 @@ export type NicheContent = {
 
 export const HOME_SERVICES: NicheContent = {
   slug: 'home-services',
+  category: 'Home Services',
   eyebrow: 'For home services operators',
   heroHeadline: 'Predictable, automated marketing for your service area.',
   heroSub:
@@ -97,6 +100,7 @@ export const HOME_SERVICES: NicheContent = {
 
 export const REAL_ESTATE: NicheContent = {
   slug: 'real-estate',
+  category: 'Real Estate',
   eyebrow: 'For real estate agents, teams & owners',
   heroHeadline: 'Automated marketing that keeps you top of mind.',
   heroSub:
@@ -159,6 +163,7 @@ export const REAL_ESTATE: NicheContent = {
 
 export const MEDICAL_OFFICES: NicheContent = {
   slug: 'medical-offices',
+  category: 'Medical Offices',
   eyebrow: 'For medical & dental practices',
   heroHeadline: 'Automated patient acquisition, handled compliantly.',
   heroSub:
@@ -221,6 +226,7 @@ export const MEDICAL_OFFICES: NicheContent = {
 
 export const ECOMMERCE_BRANDS: NicheContent = {
   slug: 'ecommerce-brands',
+  category: 'Ecommerce',
   eyebrow: 'For ecommerce & DTC brands',
   heroHeadline: 'Automated content and ads for your store.',
   heroSub:
@@ -283,6 +289,7 @@ export const ECOMMERCE_BRANDS: NicheContent = {
 
 export const MULTI_LOCATION: NicheContent = {
   slug: 'multi-location',
+  category: 'Multi-Location',
   eyebrow: 'For multi-location & franchise operators',
   heroHeadline: 'Automated marketing across every location — run from one brain.',
   heroSub:
@@ -345,6 +352,7 @@ export const MULTI_LOCATION: NicheContent = {
 
 export const POLITICAL_CANDIDATES: NicheContent = {
   slug: 'political-candidates',
+  category: 'Political',
   eyebrow: 'For political candidates & campaigns',
   heroHeadline: 'Automated campaign marketing that keeps your name everywhere.',
   heroSub:

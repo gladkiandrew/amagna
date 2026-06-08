@@ -3,9 +3,12 @@ import { NicheFunnel } from '@/components/niche-funnel';
 import { POLITICAL_CANDIDATES } from '@/lib/niches';
 import { OG_IMAGE } from '@/lib/site';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: POLITICAL_CANDIDATES.metaTitle,
   description: POLITICAL_CANDIDATES.metaDescription,
+  alternates: { canonical: '/political-candidates' },
   openGraph: {
     title: POLITICAL_CANDIDATES.metaTitle,
     description: POLITICAL_CANDIDATES.metaDescription,

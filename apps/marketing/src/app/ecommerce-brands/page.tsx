@@ -3,6 +3,8 @@ import { NicheFunnel } from '@/components/niche-funnel';
 import { ECOMMERCE_BRANDS } from '@/lib/niches';
 import { OG_IMAGE } from '@/lib/site';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: ECOMMERCE_BRANDS.metaTitle,
   description: ECOMMERCE_BRANDS.metaDescription,

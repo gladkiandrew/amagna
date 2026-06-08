@@ -3,6 +3,8 @@ import { NicheFunnel } from '@/components/niche-funnel';
 import { MEDICAL_OFFICES } from '@/lib/niches';
 import { OG_IMAGE } from '@/lib/site';
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: MEDICAL_OFFICES.metaTitle,
   description: MEDICAL_OFFICES.metaDescription,
