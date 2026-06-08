@@ -199,7 +199,7 @@ export default function PricingPage() {
 
         {/* Ad spend / token explainer — visible, not fine print */}
         <p className="mx-auto mt-6 max-w-[64ch] text-center text-sm leading-relaxed text-ink-muted">
-          Ad spend is paid directly to the platforms — plan for roughly $5/day minimum to run
+          Ad spend is paid directly to the platforms — plan for roughly $25/day minimum to run
           campaigns. Authority adds metered token usage, billed monthly and visible anytime in
           your admin profile.
         </p>
