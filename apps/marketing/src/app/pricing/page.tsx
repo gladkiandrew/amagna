@@ -12,7 +12,7 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
-  'Three plans: Foundation $200/mo after a one-time $1,000 build, Growth $1,500/mo + ad spend, and Authority $2,500/mo + ad spend + metered token usage. Month one is the build; a 6-month minimum once your system is live.';
+  'Three plans: Foundation $200/mo after a one-time $1,000 build, Growth $1,250/mo + ad spend, and Authority $2,000/mo + ad spend + metered token usage. Month one is the build; a 6-month minimum once your system is live.';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -63,7 +63,7 @@ const TIERS: Tier[] = [
   },
   {
     name: 'Growth',
-    price: '$1,500',
+    price: '$1,250',
     cadence: '/mo',
     subLines: ['+ Ad Spend'],
     tagline: 'The full system, run by the crew.',
@@ -79,15 +79,15 @@ const TIERS: Tier[] = [
   },
   {
     name: 'Authority',
-    price: '$2,500',
+    price: '$2,000',
     cadence: '/mo',
     subLines: ['+ Ad Spend', '+ token usage'],
-    tagline: 'Everything in Growth, plus:',
+    tagline: 'Everything in Growth, plus — mainly focused on automating your whole business.',
     features: [
-      '5–7 ad sets',
-      'Custom AI Agents + Workflows built for your business',
+      'Custom AI Agents + Workflows built for your business (the core focus)',
+      '2 managed ad campaigns',
       'Founder-led strategy + priority support',
-      'Metered token usage, billed monthly — visible anytime in your admin profile',
+      'Metered token usage, billed monthly — visible in your admin profile',
     ],
   },
 ];

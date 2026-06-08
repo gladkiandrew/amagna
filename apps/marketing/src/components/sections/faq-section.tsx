@@ -20,7 +20,7 @@ const FAQS: Faq[] = [
   },
   {
     q: 'What does it cost?',
-    a: 'Foundation $200/mo (after a $1,000 build), Growth $1,500/mo, and Authority $2,500/mo + ad spend + metered token usage.',
+    a: 'Foundation $200/mo (after a $1,000 build), Growth $1,250/mo, and Authority $2,000/mo + ad spend + metered token usage.',
   },
   {
     q: 'Are there long-term contracts?',
