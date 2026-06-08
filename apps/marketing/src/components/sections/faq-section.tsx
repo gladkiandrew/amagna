@@ -20,7 +20,7 @@ const FAQS: Faq[] = [
   },
   {
     q: 'What does it cost?',
-    a: 'Foundation $200/mo (after a $1,000 build), Growth $1,250/mo, and Authority $2,000/mo + ad spend + metered token usage.',
+    a: 'Foundation is a one-time $1,000 build (7 business days) then $50/mo for infrastructure — the base, with no managed ads or content. Growth is $1,250/mo and Authority $2,000/mo, both plus ad spend (Authority also has metered token usage).',
   },
   {
     q: 'Are there long-term contracts?',

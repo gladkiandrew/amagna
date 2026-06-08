@@ -12,7 +12,7 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
-  'Three plans: Foundation $200/mo after a one-time $1,000 build, Growth $1,250/mo + ad spend, and Authority $2,000/mo + ad spend + metered token usage. Month one is the build; a 6-month minimum once your system is live.';
+  'Three plans: Foundation — a one-time $1,000 build (7 business days) then $50/mo for infrastructure (the base, no managed ads or content); Growth $1,250/mo + ad spend; and Authority $2,000/mo + ad spend + metered token usage.';
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -49,17 +49,19 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     name: 'Foundation',
-    price: '$200',
-    cadence: '/mo',
-    subLines: ['after a one-time $1,000 build'],
-    tagline: 'The system without the AI crew.',
+    price: '$1,000',
+    cadence: 'one-time',
+    subLines: ['7-business-day build', 'then $50/mo for infrastructure'],
+    tagline: 'The infrastructure base, built for you.',
     features: [
       'Complete branding kit',
       'Conversion-ready website (modern, on-brand)',
       'Google Business Profile setup + base local SEO',
       'Access to the Amagna system / dashboard',
+      '2 free revisions',
+      'A live build session (FaceTime / Google Meet) with the founder while we build it',
     ],
-    excludes: 'No AI agents, no video creation, no managed ad campaigns.',
+    excludes: 'Infrastructure base only — no managed ads, no content generation, no AI agents.',
   },
   {
     name: 'Growth',
