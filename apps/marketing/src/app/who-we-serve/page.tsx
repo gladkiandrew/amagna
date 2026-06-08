@@ -97,15 +97,15 @@ const BOXES: ServeBox[] = [
     accent: 'border-brand-gold/40',
   },
   {
-    href: '/audit',
-    name: "Don't see your industry?",
-    hook: 'The system adapts to almost any operator — chart a Gold Map and we’ll show you.',
+    href: '/political-candidates',
+    name: 'Political Candidates',
+    hook: 'Automated campaign marketing that keeps your name everywhere.',
     points: [
-      'Built around your business, not a template',
-      'Same crew, tuned to your goals',
-      'A free, specific plan before you commit',
+      'Automated content + rapid-response across social',
+      'Managed ad campaigns (Meta, TikTok, Google, Snapchat)',
+      'Voter-outreach funnels and follow-up, run for you',
     ],
-    cta: 'Chart a Gold Map',
+    cta: 'Chart this course',
     accent: 'border-brand-charcoal/15',
   },
 ];
