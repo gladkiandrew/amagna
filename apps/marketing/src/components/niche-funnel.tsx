@@ -14,9 +14,9 @@ type NicheFunnelProps = {
 /** The onboarding flow, restated on every funnel page (Gold Map → delivered). */
 const GET_STARTED_STEPS = [
   { n: '2', title: 'Book your call', body: 'We walk the map together and answer everything.' },
-  { n: '3', title: 'First monthly payment', body: 'Made after the call — it kicks off the build.' },
-  { n: '4', title: 'Deployment call', body: 'Once your first payment is in, we schedule it.' },
-  { n: '5', title: 'System delivered', body: 'Live within 3 business days of that first payment.' },
+  { n: '3', title: 'First monthly payment', body: 'Initial payment kicks off the demo build.' },
+  { n: '4', title: 'First revision call', body: 'First demo delivered within 3 business days.' },
+  { n: '5', title: 'System delivered', body: 'Autonomous system live within 5 business days.' },
 ] as const;
 
 /**
