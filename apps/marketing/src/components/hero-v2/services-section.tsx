@@ -11,8 +11,8 @@ type Pillar = { name: string; body: string; eyebrow?: string };
 
 const PILLARS: readonly Pillar[] = [
   {
-    name: 'AI-Generated Content',
-    body: 'Fresh posts, videos, and emails every week — in your voice, without you writing a word.',
+    name: 'Full-Stack Automations',
+    body: 'Follow-ups, bookings, and busywork handled automatically, around the clock.',
   },
   {
     name: 'Ads Management',
@@ -24,8 +24,8 @@ const PILLARS: readonly Pillar[] = [
     body: 'One brain remembers your brand, your customers, and what’s working — so nothing repeats or goes off-message.',
   },
   {
-    name: 'Full-Stack Automations',
-    body: 'Follow-ups, bookings, and busywork handled automatically, around the clock.',
+    name: 'AI-Generated Content',
+    body: 'Fresh posts, videos, and emails every week — in your voice, without you writing a word.',
   },
   {
     name: 'SEO',
