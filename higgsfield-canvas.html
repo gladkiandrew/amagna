@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Higgsfield Canvas — Amagna Creative Ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A0E36; --navy2:#241546; --gold:#C9A961; --gold2:#D4B873;
+    --purple:#5D2E8C; --cream:#F5EFE1; --ink:#1A1A2E; --line:rgba(201,169,97,.25);
+    --good:#3FB37F; --warn:#E0A23B; --bad:#D9534F;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#2a1850,var(--navy));
+    color:var(--cream);font-family:Inter,system-ui,sans-serif;line-height:1.55;padding:0 0 80px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  header{padding:46px 0 18px;text-align:center}
+  h1{font-family:Fraunces,serif;font-weight:700;font-size:clamp(28px,5vw,46px);margin:0;color:#fff;letter-spacing:-.5px}
+  h1 .ai{color:var(--gold)}
+  .sub{color:#c9bfe0;margin:8px 0 0;font-size:15px}
+  .tag{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--line);border-radius:30px;padding:6px 14px}
+  h2{font-family:Fraunces,serif;font-weight:600;font-size:24px;color:#fff;margin:42px 0 6px}
+  h2 .n{color:var(--gold);font-size:15px;vertical-align:middle;margin-right:8px}
+  .lead{color:#bcb2d6;margin:0 0 18px;font-size:14px}
+  .card{background:linear-gradient(180deg,var(--navy2),rgba(36,21,70,.6));border:1px solid var(--line);
+    border-radius:16px;padding:20px;margin:14px 0}
+  /* pipeline */
+  .pipe{display:flex;flex-wrap:wrap;gap:10px}
+  .step{flex:1 1 150px;background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .step .si{font-size:11px;color:var(--gold);letter-spacing:.12em}
+  .step b{display:block;font-family:Fraunces,serif;font-size:16px;color:#fff;margin:4px 0 4px}
+  .step p{margin:0;font-size:12.5px;color:#bcb2d6}
+  /* builder */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  label{display:block;font-size:12px;letter-spacing:.04em;color:var(--gold2);margin:12px 0 5px;text-transform:uppercase}
+  input,select,textarea{width:100%;background:rgba(0,0,0,.3);border:1px solid var(--line);color:var(--cream);
+    border-radius:9px;padding:10px 12px;font-family:inherit;font-size:14px}
+  textarea{min-height:60px;resize:vertical}
+  button{cursor:pointer;font-family:inherit}
+  .gen{margin-top:18px;background:var(--gold);color:var(--navy);border:none;border-radius:30px;
+    padding:13px 26px;font-weight:600;font-size:14px;letter-spacing:.02em}
+  .gen:hover{background:var(--gold2)}
+  .out{white-space:pre-wrap;background:#0e0722;border:1px solid var(--line);border-radius:12px;padding:16px;
+    margin-top:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#e9e2d2;display:none}
+  .reco{margin-top:12px;font-size:13px;color:#bcb2d6;display:none}
+  .reco b{color:var(--gold2)}
+  .copy{margin-top:10px;background:transparent;border:1px solid var(--line);color:var(--gold);
+    border-radius:8px;padding:7px 14px;font-size:12px;display:none}
+  /* matrix */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px 10px;border-bottom:1px solid rgba(201,169,97,.15);vertical-align:top}
+  th{color:var(--gold);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+  td b{color:#fff}
+  .pill{font-size:10.5px;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .p-bad{background:rgba(217,83,79,.18);color:#f1a5a2}
+  .p-fix{background:rgba(63,179,127,.16);color:#8fe0bb}
+  ul.tool{list-style:none;padding:0;margin:0}
+  ul.tool li{padding:10px 0;border-bottom:1px solid rgba(201,169,97,.13);font-size:13.5px;color:#d6cdea}
+  ul.tool li b{color:var(--gold2)}
+  .foot{text-align:center;color:#7d72a0;font-size:12px;margin-top:40px}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <h1>Higgsfield <span class="ai">Canvas</span></h1>
+  <p class="sub">Amagna creative ops — turn a concept into a hardened, one-shot-ready video prompt.</p>
+  <span class="tag">Driven by higgsfield-playbook.md</span>
+</header>
+
+<div class="wrap">
+
+  <h2><span class="n">01</span>The pipeline</h2>
+  <p class="lead">Never skip a stage. Each one removes a failure mode before it costs credits.</p>
+  <div class="pipe">
+    <div class="step"><span class="si">01</span><b>Concept</b><p>Idea + the real-world process from the operator. Get the truth of how the job works.</p></div>
+    <div class="step"><span class="si">02</span><b>Harden prompt</b><p>Run the builder below. Apply every relevant playbook rule.</p></div>
+    <div class="step"><span class="si">03</span><b>Reference still</b><p>Generate/approve a perfect frame. Image-first beats text-to-video.</p></div>
+    <div class="step"><span class="si">04</span><b>Cheap test</b><p>480p, same duration. Validate motion + geometry for a few credits.</p></div>
+    <div class="step"><span class="si">05</span><b>Full render</b><p>1080p, preview/high tier. Only after the test holds.</p></div>
+    <div class="step"><span class="si">06</span><b>Upscale</b><p>AI-upscale toward 4K to kill the soft "AI-cheap" look.</p></div>
+    <div class="step"><span class="si">07</span><b>Edit</b><p>Grade + music + burned captions + best 2–3s cut. Raw ≠ final.</p></div>
+    <div class="step"><span class="si">08</span><b>Publish</b><p>House look applied. Ship to the deck or Meta.</p></div>
+  </div>
+
+  <h2><span class="n">02</span>Prompt builder</h2>
+  <p class="lead">Pick the shot type — the builder applies the matching playbook rules, picks the model, and flags the reference frames.</p>
+  <div class="card">
+    <div class="grid2">
+      <div>
+        <label>Shot type</label>
+        <select id="shot">
+          <option value="product">Product macro (watch, bottle, gadget)</option>
+          <option value="portrait">Portrait / beauty (one person, glowing)</option>
+          <option value="transition">Transition / reveal (mirror, before→after)</option>
+          <option value="scene">Scene with person (office, clinic, lifestyle)</option>
+          <option value="broll">B-roll / atmosphere (no people)</option>
+        </select>
+        <label>Subject (one line)</label>
+        <input id="subject" placeholder="e.g. men's brushed-steel luxury watch">
+      </div>
+      <div>
+        <label>Environment / vibe</label>
+        <input id="env" placeholder="e.g. dark matte background, one dramatic key light">
+        <label>Key action / camera (ONE move)</label>
+        <input id="action" placeholder="e.g. slow push-in as light rakes the dial">
+        <label>Duration (s)</label>
+        <input id="dur" type="number" value="8" min="4" max="15">
+      </div>
+    </div>
+    <button class="gen" onclick="build()">Harden it →</button>
+    <div class="reco" id="reco"></div>
+    <pre class="out" id="out"></pre>
+    <button class="copy" id="copybtn" onclick="copyOut()">Copy prompt</button>
+  </div>
+
+  <h2><span class="n">03</span>Failure → fix matrix</h2>
+  <p class="lead">The hard-won rules. Every one cost a wasted generation to learn.</p>
+  <div class="card" style="padding:6px 16px">
+    <table id="matrix"></table>
+  </div>
+
+  <h2><span class="n">04</span>Model &amp; settings cheat-sheet</h2>
+  <div class="card">
+    <table>
+      <tr><th>Job</th><th>Model</th><th>Why</th></tr>
+      <tr><td><b>Photoreal human</b></td><td>Veo 3.1 (preview/high)</td><td>Best skin realism. 8s cap.</td></tr>
+      <tr><td><b>Product / identity-lock</b></td><td>Seedance 2.0</td><td>Reference-driven, consistent. Up to 15s.</td></tr>
+      <tr><td><b>Transition (start→end)</b></td><td>Seedance 2.0 / Kling 3.0</td><td>Accept start_image + end_image. Up to 15s.</td></tr>
+      <tr><td><b>Product ad / UGC</b></td><td>Marketing Studio</td><td>TikTok/Reels-ready, product presets.</td></tr>
+      <tr><td><b>Cheap test pass</b></td><td>Seedance 2.0 fast · 480p</td><td>Validate motion for a few credits first.</td></tr>
+    </table>
+    <p class="lead" style="margin:14px 0 0">Always: <b style="color:var(--gold2)">preview/high tier + 1080p</b> for the real render (fast/basic is the "AI-cheap" look). Aspect is set by the tool param + source-image shape — crop the source vertical 9:16 first, never trust prompt words for it.</p>
+  </div>
+
+  <h2><span class="n">05</span>Enhancement toolkit — closing the gap to "barely AI"</h2>
+  <div class="card">
+    <ul class="tool">
+      <li><b>Image-first</b> — generate/approve a perfect still, then animate it. Biggest single quality lever; fixes most teeth/identity/geometry breaks.</li>
+      <li><b>Upscale</b> — render 720/1080p, then AI-upscale toward 4K. Removes softness, cheaper than rendering huge.</li>
+      <li><b>Post-production = 50% of the wow</b> — color grade (one house LUT), music (carries emotion), burned captions, sound design, cut the best 2–3s.</li>
+      <li><b>Volume → cherry-pick</b> — ~1 in 3–5 generations is usable. Generate several, keep the best beats.</li>
+      <li><b>Stitch short beats</b> — 2–3 clean short clips edited together beat one risky 15s shot.</li>
+      <li><b>Reference / Soul consistency</b> — reuse a reference image or trained Soul so the same look recurs across a campaign.</li>
+      <li><b>Compositing tools</b> — remove-background (product on a clean branded backdrop), outpaint (extend to 9:16), motion-control (directed camera), upscale-image (sharpen a hero still before animating).</li>
+      <li><b>House look</b> — one grade + caption style across all Amagna content so it reads like an agency, not a hobby.</li>
+    </ul>
+  </div>
+
+  <p class="foot">Higgsfield Canvas · source of truth: higgsfield-playbook.md · generative video is stochastic — hardening cuts re-rolls, never to zero.</p>
+</div>
+
+<script>
+const RULES = [
+  ["Text / CTA", "On-screen text garbles into gibberish", "Never in the prompt — burn captions after via Claude/editor"],
+  ["Aspect ratio", "Renders horizontal when you wanted vertical", "Set by tool param + source shape — crop source 9:16 first"],
+  ["Mirrors / reflections", "Reflected face fades in / materializes as a blob", "Complete reflection from the instant it appears; resolve soft→sharp by FOCUS PULL, never fade/morph; lock with an end-frame"],
+  ["Teeth", "Melt, multiply, wrong count — worst macro + moving", "Medium framing; smile forms ONCE then HOLDS; lock the smile as an end-frame still"],
+  ["Hands / small clear objects", "Warp, extra fingers, bent geometry", "Avoid or keep minimal / partly out of frame"],
+  ["Multi-step sequence", "Model botches multi-beat shots", "Favor ONE continuous action; if multi-beat, lock both ends with start+end frames"],
+  ["Framing / zoom", "People-shots default too tight & claustrophobic", "Specify MEDIUM + visible environment, 'not extreme close-up'"],
+  ["Pacing", "Renders dreamy / slow-mo", "Specify natural real-time speed, 'no slow motion' unless asked"],
+  ["Big lighting change", "Under-delivers clear→storm", "Start from a source already partway (overcast)"],
+  ["Camera", "Orbits / speed-ramps wreck identity & detail", "Slow, stabilized; final beat near-static when faces/teeth/detail on screen"],
+  ["Real trade process", "Model guesses the job wrong", "Encode how the work ACTUALLY happens, from the operator"],
+];
+const mt = document.getElementById('matrix');
+mt.innerHTML = "<tr><th>Element</th><th>Symptom</th><th>Fix</th></tr>" + RULES.map(r=>
+  `<tr><td><b>${r[0]}</b></td><td><span class="pill p-bad">${r[1]}</span></td><td><span class="pill p-fix">${r[2]}</span></td></tr>`).join("");
+
+const CFG = {
+  product:{frame:"TIGHT macro is intentional here.",model:"Seedance 2.0 (image-to-video from a real product photo) · 1080p",
+    crit:["WATCH/PRODUCT GEOMETRY: case & parts stay rigid and physically correct — no morphing, melting, bending, or duplicated parts.","SURFACE: clean — no invented text, logos, or brand names. Crisp realistic metal/glass reflections, not blown-out."],
+    ref:"START frame = a real product photo, cropped vertical 9:16. Text-to-video is the fallback.",
+    neg:"no warping/melting/bending of the product; no extra/duplicated parts; no text, logos, or brand names; no captions; no slow-mo; no jitter; no clutter"},
+  portrait:{frame:"MEDIUM framing — show the person AND some environment. NOT extreme close-up.",model:"Veo 3.1 (preview/high) · 1080p · 8s",
+    crit:["SKIN: real pores and texture, believable not plastic; no warping of facial features.","IDENTITY: the same person throughout — no morphing or face-swap mid-shot."],
+    ref:"Optional but recommended: approve a still first, then animate (image-to-video) to lock the face.",
+    neg:"no warping of the face; no plastic skin; no identity change; no text or logos; no slow-mo"},
+  transition:{frame:"Roomy enough to read both states; not macro on the payoff.",model:"Seedance 2.0 / Kling 3.0 (start_image + end_image) · up to 15s",
+    crit:["PAYOFF: lock the END state (smile / clean result) as an approved end-frame so it cannot be hallucinated.","NO morph/dissolve/materialize — the change is a focus pull or a defined start→end interpolation, never a blob forming."],
+    ref:"START frame = opening state. END frame = the exact payoff. The model interpolates between them — this is what makes endings land clean.",
+    neg:"no fade, dissolve, morph, or materializing face/object; no warping of face, hands, or mirror; no text/logos"},
+  scene:{frame:"MEDIUM-WIDE — person within the space; show the environment detail. NOT extreme close-up.",model:"Veo 3.1 (preview/high) · 1080p · 8s",
+    crit:["IDENTITY: person stays consistent; natural realistic features, no warping.","ENVIRONMENT: detailed, believable space; props don't morph."],
+    ref:"Recommended: approve a still of the framing/person first, then animate.",
+    neg:"no warping of faces or hands; no morphing props; no text or logos; no slow-mo; no jitter"},
+  broll:{frame:"Whatever serves the shot — atmosphere over subject.",model:"Veo 3.1 / Seedance 2.0 · 1080p",
+    crit:["MOTION: physically believable — water, light, fabric, particles read naturally.","STABILITY: no jitter; smooth stabilized camera."],
+    ref:"Optional start frame for a specific look; text-to-video works well for atmosphere.",
+    neg:"no warping; no text or logos; no jitter; no slow-mo unless intended"}
+};
+
+function build(){
+  const t = document.getElementById('shot').value;
+  const subj = (document.getElementById('subject').value||"[subject]").trim();
+  const env = (document.getElementById('env').value||"[environment / vibe]").trim();
+  const act = (document.getElementById('action').value||"[one camera/action move]").trim();
+  let dur = parseInt(document.getElementById('dur').value)||8;
+  const c = CFG[t];
+  if((t==="portrait"||t==="scene") && dur>8) dur=8; // Veo cap note
+  let p = `Photorealistic cinematic 9:16 vertical video, ~${dur}s, ONE continuous take, no cuts, no on-screen text, no logos.\n\n`;
+  p += `SUBJECT: ${subj}.\n\n`;
+  p += `0.0–${dur.toFixed(1)}s — ${act}. Setting: ${env}. ${c.frame} Natural real-time pacing, steady stabilized motion.\n\n`;
+  c.crit.forEach((x,i)=> p += `CRITICAL ${i+1} — ${x}\n`);
+  p += `\nCAMERA & MOTION: slow, smooth, stabilized; one move only; final beat near-static if a face/detail is on screen; no slow motion; no jitter.\n\n`;
+  p += `NEGATIVES: ${c.neg}.\n\n`;
+  p += `Keep the lower third clean for captions added after.\n\n`;
+  p += `REFERENCE FRAMES: ${c.ref}`;
+  document.getElementById('out').textContent = p;
+  document.getElementById('out').style.display='block';
+  document.getElementById('copybtn')?.style && (document.getElementById('copyBtnUnused')=null);
+  const reco = document.getElementById('reco');
+  reco.innerHTML = `<b>Model + settings:</b> ${c.model}. &nbsp; <b>Test first:</b> Seedance 2.0 fast · 480p · ${dur}s before the full render.`;
+  reco.style.display='block';
+  document.getElementById('copyBtn') ;
+  const cb=document.getElementById('copyBtnReal');
+  document.getElementById('copybtn').style.display='inline-block';
+}
+function copyOut(){
+  const txt=document.getElementById('out').textContent;
+  navigator.clipboard?.writeText(txt);
+  const b=document.getElementById('copybtn'); const o=b.textContent; b.textContent='Copied ✓';
+  setTimeout(()=>b.textContent=o,1400);
+}
+</script>
+</body>
+</html>
