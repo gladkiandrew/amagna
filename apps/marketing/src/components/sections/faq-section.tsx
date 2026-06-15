@@ -40,7 +40,7 @@ const FAQS: Faq[] = [
   },
   {
     q: "What's the crew / Sapt?",
-    a: 'Your marketing is run by a crew of AI agents (Zeno, Exodus, Solon, Hero, Thales) built on the Sapt platform, with us at the helm.',
+    a: 'Your marketing is run by a crew of AI agents (Zeno, Exodus, Solon, Mansa, Vela) built on the Sapt platform, with us at the helm.',
   },
 ];
 

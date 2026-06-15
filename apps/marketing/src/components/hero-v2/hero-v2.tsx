@@ -64,10 +64,10 @@ export function HeroV2(): JSX.Element {
           />
 
           <p
-            className="hero-rise mx-auto mt-8 max-w-[42ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-normal leading-[1.5] text-brand-cream/90 [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)] md:max-w-none md:whitespace-nowrap"
+            className="hero-rise mx-auto mt-8 max-w-[46ch] text-[clamp(1.1rem,1.5vw,1.45rem)] font-normal leading-[1.5] text-brand-cream/90 [text-shadow:0_2px_18px_rgba(4,7,13,0.96),0_1px_3px_rgba(4,7,13,0.85)]"
             style={{ '--i': 2 } as CSSProperties}
           >
-            We Build Your Marketing Machine — and The Content That Fuels&nbsp;It
+            From autonomous marketing to full-stack AI — engineered for your business, installed in&nbsp;person.
           </p>
 
           <div

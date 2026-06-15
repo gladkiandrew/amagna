@@ -4,12 +4,12 @@
  * anchors never drift. Andrew (the founder) is the human at the helm of the
  * company; Zeno captains the AI fleet — they are distinct.
  *
- * Portraits live at `public/brand/crew/<slug>.webp`. Most are 16:9 landscape;
- * Solon is portrait. Rendered with object-cover, centered.
+ * Portraits live at `public/brand/crew/<slug>.webp`. Zeno/Exodus are 16:9
+ * landscape; Solon/Mansa/Vela are portrait. Rendered with object-cover, centered.
  */
 export type CrewMember = {
   /** URL slug + anchor id on /crew (e.g. /crew#zeno). */
-  slug: 'zeno' | 'exodus' | 'solon' | 'hero' | 'thales';
+  slug: 'zeno' | 'exodus' | 'solon' | 'mansa' | 'vela';
   name: string;
   /** Role title (canon). */
   title: string;
@@ -30,10 +30,10 @@ export const CREW: readonly CrewMember[] = [
   {
     slug: 'zeno',
     name: 'Zeno',
-    title: 'Captain · The Brain',
-    blurb: 'Orchestrates the whole fleet — every agent answers to him.',
+    title: 'Captain · Automation Specialist',
+    blurb: 'Sets the course and keeps the whole system running.',
     description:
-      'The orchestrator. Zeno reads the goal, assigns the work, and keeps every other agent rowing in the same direction — the brain that turns a plan into coordinated motion.',
+      'The brain of the fleet. Zeno sets the course and keeps the system running — orchestrates every agent, routes the work, holds the gates, and turns strategy into automated motion that runs around the clock.',
     trust: 'Zeno proposes the course; a human approves it before the fleet sails.',
     captain: true,
     w: 1200,
@@ -42,10 +42,10 @@ export const CREW: readonly CrewMember[] = [
   {
     slug: 'exodus',
     name: 'Exodus',
-    title: 'Creative Specialist',
-    blurb: 'Generates the videos, content, and blogs that fill your channels.',
+    title: 'Creative & Content Specialist',
+    blurb: 'Turns your brand into a daily presence across every channel.',
     description:
-      'Exodus is the maker — it produces the short-form videos, writes the posts and blogs, and turns your brand into a steady stream of creative that still sounds like you.',
+      'Exodus is the maker — it turns your brand into a daily presence, generating the images, video, and copy and shipping them across your channels in a voice that still sounds like you.',
     trust: 'You see and can edit every piece before it publishes.',
     w: 1200,
     h: 675,
@@ -53,34 +53,34 @@ export const CREW: readonly CrewMember[] = [
   {
     slug: 'solon',
     name: 'Solon',
-    title: 'Outreach & Retention',
-    blurb: 'Keeps clients and leads in the boat — outreach that lands, follow-up that holds.',
+    title: 'Outreach & Retention Specialist',
+    blurb: 'Opens doors and keeps them open — outreach plus retention.',
     description:
-      'Solon keeps the relationships warm: outreach that actually lands, and follow-up that keeps clients and leads from drifting away between touches.',
+      'Solon opens doors and keeps them open — running personalized outreach and the retention motion that turns first contact into long-term clients, so leads and customers never drift away between touches.',
     trust: 'Every message is approved before it reaches a real person.',
     w: 1000,
     h: 1200,
   },
   {
-    slug: 'hero',
-    name: 'Hero',
-    title: 'Automation Specialist',
-    blurb: 'Builds the systems that keep running while you sleep.',
+    slug: 'mansa',
+    name: 'Mansa',
+    title: 'Memory & Security Specialist',
+    blurb: 'Guards your data and gives your AI a memory of your business.',
     description:
-      'Hero builds and wires the automations — the systems that move the work forward around the clock without anyone touching a keyboard.',
-    trust: 'New automations are tested and signed off before they go live.',
-    w: 1200,
-    h: 675,
+      'Guardian of the vault. Mansa protects your data and IP and gives your AI a true memory of your business — the security and memory layer that makes a bespoke, full-stack install trustworthy.',
+    trust: 'Your data and IP stay yours — access is scoped, logged, and human-approved.',
+    w: 896,
+    h: 1200,
   },
   {
-    slug: 'thales',
-    name: 'Thales',
-    title: 'Marketing Specialist',
-    blurb: 'Meta, TikTok, Google, and Snapchat — the ads and content that bring the wind.',
+    slug: 'vela',
+    name: 'Vela',
+    title: 'Demand & Narrative Specialist',
+    blurb: 'Catches the wind — paid demand and the story that pulls customers in.',
     description:
-      'Thales runs the paid and organic engine across Meta, TikTok, Google, and Snapchat — the ads and content that fill the sails and keep the pipeline moving.',
+      'Vela catches the wind — running paid demand across Meta, TikTok, and Google and shaping the narrative that pulls the right customers toward you. The marketing engine and the story behind it.',
     trust: 'Spend and creative are approved by a human before anything launches.',
-    w: 1200,
-    h: 675,
+    w: 896,
+    h: 1200,
   },
 ] as const;

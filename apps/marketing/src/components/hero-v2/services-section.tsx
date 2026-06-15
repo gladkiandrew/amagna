@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import { IntegrationsHub } from './integrations-hub';
 
 /**
@@ -7,7 +9,14 @@ import { IntegrationsHub } from './integrations-hub';
  * deliberate break from the dark water frames), NOT a generic icon grid.
  * Pillars sourced from CLAUDE.md.
  */
-type Pillar = { name: string; body: string; eyebrow?: string };
+type Pillar = {
+  name: string;
+  body: string;
+  eyebrow?: string;
+  /** Optional inline CTA (e.g. the custom-install quote request). */
+  href?: string;
+  cta?: string;
+};
 
 const PILLARS: readonly Pillar[] = [
   {
@@ -35,6 +44,13 @@ const PILLARS: readonly Pillar[] = [
     name: 'AEO',
     eyebrow: 'Answer-engine optimization',
     body: 'Get recommended by AI assistants like ChatGPT when people ask them who to hire.',
+  },
+  {
+    name: 'Custom AI Installs',
+    eyebrow: 'Full-stack automation · installed in person',
+    body: 'Beyond marketing — bespoke AI built and installed across your whole business, on-site and tailored to how you work.',
+    href: '/audit',
+    cta: 'Request a Custom Quote',
   },
 ] as const;
 
@@ -92,6 +108,15 @@ export function ServicesSection(): JSX.Element {
                   {pillar.name}
                 </h3>
                 <p className="mt-2 max-w-[42ch] leading-[1.6] text-brand-slate">{pillar.body}</p>
+                {pillar.href && pillar.cta && (
+                  <Link
+                    href={pillar.href}
+                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-[0.14em] text-brand-purple transition-colors hover:text-brand-purple/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-2"
+                  >
+                    {pillar.cta}
+                    <ArrowRight className="h-4 w-4" aria-hidden />
+                  </Link>
+                )}
               </div>
             </li>
           ))}

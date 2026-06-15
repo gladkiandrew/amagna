@@ -2,6 +2,8 @@
 
 > This file is read by Claude Code at the start of every session. It is the operating manual for working in this repo. Keep it accurate. Update it when major decisions change.
 
+> **Brain sync:** On `sync amagna` or session start, `getMemory` key `amagna-brain`; mirror updates back via `saveMemory` at session end.
+
 ---
 
 ## Who you are working with
@@ -24,7 +26,9 @@ The operational backbone of Amagna AI Agency. See `README.md` for the full strat
 
 In short: a productized AI marketing agency whose core offering is **Autonomous Marketing Systems** — we build the client's marketing machine and the content that fuels it. Who we serve is **broad**: any operator who wants marketing that runs itself. **Home services** and **real estate** remain the two lead niches with dedicated funnels and ad landing pages, but positioning, the homepage, and the Who We Serve page should NOT read as "we only do home services and real estate." Fulfillment is partnered through Sapt (`sapt.ai`) with a fleet of custom AI agents wrapped around it.
 
-**Note:** Politics is on the long-term roadmap but is NOT part of the current go-to-market. Do not generate political-niche assets unless explicitly asked.
+**Note:** **Political Candidates is RETIRED as a serviced industry** (Andrew's call, 2026-06-15). Its Who-We-Serve box and sub-page are **replaced by Custom AI Installs / Full-Stack Automation** (see below). The `/political-candidates` route now 308-redirects to `/custom-ai-installs`. (Historical: politics was briefly active 2026-06-06.)
+
+**Custom AI Installs / Full-Stack Automation** (Andrew's call, 2026-06-15) — Amagna's expansion beyond marketing: bespoke, full-stack AI **installed in person**. It is (a) a core-services pillar on the homepage's services frame and (b) the Who-We-Serve sub-page at `/custom-ai-installs` (replacing Politics). NOT a new homepage section, NOT a new intake form — the "Request a Custom Quote" CTA routes into the existing Gold Map at `/audit`. **Pricing model:** a large one-time build fee up front, then a low monthly retainer **$250–$500/mo**, plus pass-through expenses (ad spend, API/token usage, third-party tools); scoped per business, no fixed tier.
 
 ---
 
@@ -113,15 +117,21 @@ The repo currently has only the root `README.md` and this `CLAUDE.md`. The struc
 
 ## Service offerings — what we sell
 
-Productized agency, three tiers. **Pricing is displayed as "Starting at..." on the site — never as a flat price** (actual cost scales with credits and ad spend):
+Productized agency, three tiers (pricing model updated 2026-06-06). **No separate setup fee; month one is the build; 6-month minimum on the plan after the system is deployed; ad spend is separate, paid directly to platforms, $25/day minimum:**
 
-- **Foundation** (starting at $997/mo) — Sapt Growth + 1 niche funnel + base outreach
-- **Growth** (starting at $1,497/mo) — Multi-channel content + dedicated agents + weekly reports
-- **Authority** (starting at $2,497/mo) — Custom builds + reputation + premium creative + strategy calls
+- **Foundation** — one-time **$1,000 build (delivered in 7 business days)**, then **$50/mo for infrastructure use**. The system without the AI crew: branding kit, conversion-ready website, Google Business Profile + base local SEO, dashboard access. On Foundation we do NOT take over ads or content generation — it's the infrastructure base only. NO AI agents, NO video, NO managed ads, NO ad creative. **Includes 2 free revisions and a live build session (FaceTime / Google Meet) with the founder while it's built** — this is why the build runs 7 business days. (Foundation is what we recommend for operators with no website/funnel yet — build the base before moving up to Growth.)
+- **Growth** — $1,250/mo + ad spend. The full done-for-you machine run by the crew: niche funnel, managed Meta/TikTok/Google/Snapchat ad campaigns (5 ad sets, 1 creative each, all placements), AI video creation, GBP + local SEO + AEO, automated review generation, weekly report. (Weekly social posting intentionally NOT included.)
+- **Authority** — $2,000/mo + ad spend + metered token usage. Everything in Growth, plus mainly focused on full business automation — Custom AI Agents + Workflows built for the business — plus 2 managed ad campaigns and founder-led strategy + priority support.
 
 Custom services priced separately ($2K-$15K project work).
 
-Service pillars to feature on the site: AI-generated content, ads management (Meta / TikTok / Google), central memory layer, full-stack automations, SEO, and AEO (answer-engine optimization).
+Direct-purchase Stripe checkout is currently OFF (all pricing CTAs route to the Gold Map / `/audit`; `/checkout` redirects there). `lib/plans.ts` still holds OLD price IDs — re-enabling purchase needs new Stripe prices.
+
+Service pillars to feature on the site: AI-generated content, ads management (**Meta / TikTok / Google / Snapchat**), central memory layer, full-stack automations, SEO, and AEO (answer-engine optimization).
+
+**Tool connectivity (high-traffic message):** if a tool the client already uses has an MCP or an API available, we can connect to it, use it, and automate it. Feature this prominently in the "works with the tools you already run" section.
+
+**Onboarding flow (public):** Gold Map (highly important — it preps everything) → book a call → first monthly payment → schedule a deployment call → system delivered within 3 business days of that first payment.
 
 ---
 
@@ -159,12 +169,12 @@ Agents run on Cloudflare Workers (or n8n — TBD) with Claude as the reasoning e
 - A logging table for observability
 - A "human in the loop" approval step for anything sent to real people
 
-**The crew — canon roster (Andrew's characters; use these names everywhere, on the site and in code):**
-- **Zeno — Captain / The Brain** — orchestrator; runs the whole operation, every agent answers to him
-- **Exodus — Creative Specialist** — generates the videos, creates the content, blogs, etc.
-- **Solon — Outreach / Retention Specialist** — keeps clients and leads in the fold
-- **Hero — Automation Specialist** — builds the systems that run themselves
-- **Thales — Marketing Specialist** — Meta / TikTok / Google ads
+**The crew — canon roster of 5 (Andrew's characters; use these names everywhere, on the site and in code). Locked 2026-06-15; full canon in `docs/brand/crew-bible.md`. Hero + Thales are RETIRED — replaced by Mansa + Vela; automation folded into Zeno:**
+- **Zeno — Captain & Automation Specialist (The Brain)** — orchestrator; sets the course, runs the automations, every agent answers to him
+- **Exodus — Creative & Content Specialist** — generates the videos, content, blogs, etc.
+- **Solon — Outreach & Retention Specialist** — keeps clients and leads in the fold
+- **Mansa — Memory & Security Specialist** *(replaces Hero)* — guards the central memory layer + security; protects client data/IP and gives their AI a memory of their business
+- **Vela — Demand & Narrative Specialist** *(replaces Thales)* — paid demand (Meta / TikTok / Google) + the brand narrative
 
 Crew portraits live at `apps/marketing/public/brand/crew/<slug>.webp`. Ship renders: `public/brand/ship-crew-full.webp` (crew aboard) and `public/brand/ship-empty-transparent.webp`. Andrew (the founder) is the human at the helm of the company — distinct from Zeno, who captains the AI fleet.
 

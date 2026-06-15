@@ -13,7 +13,7 @@ const ROUTES = [
   '/medical-offices',
   '/ecommerce-brands',
   '/multi-location',
-  '/political-candidates',
+  '/custom-ai-installs',
   '/pricing',
   '/custom',
   '/book',

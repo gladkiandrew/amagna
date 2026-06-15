@@ -97,15 +97,15 @@ const BOXES: ServeBox[] = [
     accent: 'border-brand-gold/40',
   },
   {
-    href: '/political-candidates',
-    name: 'Political Candidates',
-    hook: 'Automated campaign marketing that keeps your name everywhere.',
+    href: '/custom-ai-installs',
+    name: 'Custom AI Installs',
+    hook: 'Full-stack AI, built for your business and installed in person.',
     points: [
-      'Automated content + rapid-response across social',
-      'Managed ad campaigns (Meta, TikTok, Google, Snapchat)',
-      'Voter-outreach funnels and follow-up, run for you',
+      'On-site discovery — we map exactly how you work',
+      'Bespoke AI across marketing, outreach, retention & operations',
+      'Security + memory layer so your data and IP stay yours',
     ],
-    cta: 'Chart this course',
+    cta: 'Explore custom installs',
     accent: 'border-brand-charcoal/15',
   },
 ];
@@ -123,11 +123,11 @@ const TOOL_LOGOS = [
 ];
 
 const CREW = [
-  { name: 'Zeno', role: 'orchestrates the whole operation and keeps every agent on-strategy' },
+  { name: 'Zeno', role: 'sets the course, runs the automations, and keeps every agent on-strategy' },
   { name: 'Exodus', role: 'makes the content — video, posts, creative' },
   { name: 'Solon', role: 'runs outreach and keeps leads and clients warm' },
-  { name: 'Hero', role: 'builds the automations that run it all' },
-  { name: 'Thales', role: 'runs the paid ads across Meta, TikTok, Google, and Snapchat' },
+  { name: 'Mansa', role: 'guards your data and gives your AI a memory of your business' },
+  { name: 'Vela', role: 'runs the paid demand and narrative across Meta, TikTok, and Google' },
 ];
 
 export default function WhoWeServePage(): JSX.Element {

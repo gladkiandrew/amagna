@@ -99,6 +99,43 @@ export default function AboutPage(): JSX.Element {
         </div>
       </section>
 
+      {/* The expansion — autonomous marketing → full-stack custom installs */}
+      <section className="border-t border-brand-gold/20 bg-white">
+        <div className="mx-auto w-full max-w-[820px] px-6 py-20">
+          <Eyebrow>The expansion</Eyebrow>
+          <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-[-0.015em] text-brand-charcoal sm:text-[2.6rem]">
+            From marketing that runs itself to a whole business that does.
+          </h2>
+          <div className="mt-6 max-w-[62ch] space-y-4 text-lg leading-[1.7] text-brand-slate">
+            <p>
+              Amagna started by building{' '}
+              <strong className="font-semibold text-brand-charcoal">autonomous marketing systems</strong>{' '}
+              — one crew of specialized AI agents, run from a single command center, each owning a
+              lane of the voyage.
+            </p>
+            <p>
+              That same engine reaches further now. We build{' '}
+              <strong className="font-semibold text-brand-charcoal">full-stack automation</strong> —
+              custom AI installed <em>in person</em>, mapped to one business and wired across
+              marketing, outreach, retention, content, and operations. Not a template; a system
+              shaped around exactly how you work.
+            </p>
+            <p>
+              What makes a bespoke install safe is{' '}
+              <strong className="font-semibold text-brand-purple">Mansa</strong>, our Memory &amp;
+              Security specialist — the dedicated layer that protects each client&apos;s data and IP
+              and gives their AI a true memory of their business. Your operation&apos;s knowledge
+              stays yours, and the system gets smarter without ever leaking what it learns.
+            </p>
+            <p>
+              Through all of it, the human stays in command. Andrew captains the company; the crew
+              does the work; and the client always steers — nothing of consequence ships without a
+              person&apos;s say-so.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Meet the crew */}
       <section id="crew" className="scroll-mt-24 border-t border-brand-gold/20 bg-brand-cream">
         <div className="mx-auto w-full max-w-[1040px] px-6 py-20 sm:py-24">

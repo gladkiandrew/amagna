@@ -6,6 +6,8 @@ type CtaBandProps = {
   heading?: string;
   /** Supporting line under the headline. */
   subheading?: string;
+  /** Button label override — still points at the Gold Map funnel (/audit). */
+  ctaLabel?: string;
 };
 
 /**
@@ -19,6 +21,7 @@ type CtaBandProps = {
 export function CtaBand({
   heading = 'Ready for more calls and more listings?',
   subheading = 'Chart your Gold Map — a free, custom plan for where you stand and exactly what to do next.',
+  ctaLabel = 'Get Your Gold Map',
 }: CtaBandProps): JSX.Element {
   return (
     <section className="bg-royal-purple">
@@ -34,7 +37,7 @@ export function CtaBand({
             href={AUDIT_HREF}
             className="rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get Your Gold Map
+            {ctaLabel}
           </Link>
         </div>
       </div>
