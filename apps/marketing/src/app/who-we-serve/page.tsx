@@ -125,9 +125,9 @@ const TOOL_LOGOS = [
 const CREW = [
   { name: 'Zeno', role: 'sets the course, runs the automations, and keeps every agent on-strategy' },
   { name: 'Exodus', role: 'makes the content — video, posts, creative' },
-  { name: 'Solon', role: 'runs outreach and keeps leads and clients warm' },
   { name: 'Mansa', role: 'guards your data and gives your AI a memory of your business' },
   { name: 'Vela', role: 'runs the paid demand and narrative across Meta, TikTok, and Google' },
+  { name: 'Solon', role: 'runs outreach and keeps leads and clients warm' },
 ];
 
 export default function WhoWeServePage(): JSX.Element {

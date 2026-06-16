@@ -51,17 +51,6 @@ export const CREW: readonly CrewMember[] = [
     h: 675,
   },
   {
-    slug: 'solon',
-    name: 'Solon',
-    title: 'Outreach & Retention Specialist',
-    blurb: 'Opens doors and keeps them open — outreach plus retention.',
-    description:
-      'Solon opens doors and keeps them open — running personalized outreach and the retention motion that turns first contact into long-term clients, so leads and customers never drift away between touches.',
-    trust: 'Every message is approved before it reaches a real person.',
-    w: 1000,
-    h: 1200,
-  },
-  {
     slug: 'mansa',
     name: 'Mansa',
     title: 'Memory & Security Specialist',
@@ -81,6 +70,17 @@ export const CREW: readonly CrewMember[] = [
       'Vela catches the wind — running paid demand across Meta, TikTok, and Google and shaping the narrative that pulls the right customers toward you. The marketing engine and the story behind it.',
     trust: 'Spend and creative are approved by a human before anything launches.',
     w: 896,
+    h: 1200,
+  },
+  {
+    slug: 'solon',
+    name: 'Solon',
+    title: 'Outreach & Retention Specialist',
+    blurb: 'Opens doors and keeps them open — outreach plus retention.',
+    description:
+      'Solon opens doors and keeps them open — running personalized outreach and the retention motion that turns first contact into long-term clients, so leads and customers never drift away between touches.',
+    trust: 'Every message is approved before it reaches a real person.',
+    w: 1000,
     h: 1200,
   },
 ] as const;
