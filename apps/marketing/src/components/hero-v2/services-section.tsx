@@ -49,8 +49,8 @@ const PILLARS: readonly Pillar[] = [
     name: 'Custom AI Installs',
     eyebrow: 'Full-stack automation · installed in person',
     body: 'Beyond marketing — bespoke AI built and installed across your whole business, on-site and tailored to how you work.',
-    href: '/audit',
-    cta: 'Request a Custom Quote',
+    href: '/custom-ai-installs',
+    cta: 'Check Out How We Build',
   },
 ] as const;
 
