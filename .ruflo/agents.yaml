@@ -1,0 +1,63 @@
+# .ruflo/agents.yaml
+# ─────────────────────────────────────────────────────────────────────────────
+# REFERENCE ONLY. This file is NOT read by ruflo, ruv-swarm, or Claude Code.
+# It is a human-readable roster of the Amagna fleet. The SOURCE OF TRUTH for
+# each agent (and the only thing the session actually dispatches) lives in:
+#     .claude/agents/amagna/<id>.md
+# Keep this file in sync with those by hand. Editing it changes nothing at runtime.
+# ─────────────────────────────────────────────────────────────────────────────
+
+project: amagna
+version: "1.0"
+memory_path: docs/memory/
+spawn_on_demand: true        # all agents are inert until dispatched
+
+council:
+  trigger: "/zeno"
+  convener: zeno
+  andrew_present: true
+  outputs:
+    - docs/memory/fleet-status.md
+    - docs/memory/active-tasks.md
+
+agents:
+  - id: zeno
+    name: Zeno
+    role: Captain & Automation Specialist
+    def: .claude/agents/amagna/zeno.md
+    summary: Fleet orchestrator. Convenes the /zeno council, synthesizes agent reports into one operator brief, routes work to agents AND to Andrew. Nothing acts without Zeno's direction.
+    memory_writes: [docs/memory/fleet-status.md, docs/memory/active-tasks.md]
+
+  - id: exodus
+    name: Exodus
+    role: Creative & Content Specialist
+    def: .claude/agents/amagna/exodus.md
+    summary: Videos, content, blogs, deliverables. Reports content pipeline status to Zeno.
+    memory_writes: [docs/memory/content-pipeline.md]
+
+  - id: mansa
+    name: Mansa
+    role: Memory & Security Specialist
+    def: .claude/agents/amagna/mansa.md
+    summary: Audits docs/memory/, syncs canonical files to Sapt, runs health checks, flags drift and security issues.
+    memory_writes: [docs/memory/memory-health.md]
+    memory_sync:
+      provider: sapt_mcp
+      files: [docs/memory/fleet-status.md, docs/memory/active-tasks.md, docs/memory/niche-context.md]
+
+  - id: vela
+    name: Vela
+    role: Social Media & Ads Specialist
+    def: .claude/agents/amagna/vela.md
+    summary: Meta ads, content distribution, Buffer scheduling. Reports channel status to Zeno.
+    memory_writes: [docs/memory/content-pipeline.md]
+
+  - id: solon
+    name: Solon
+    role: Outreach & Retention Specialist
+    def: .claude/agents/amagna/solon.md
+    summary: Outreach sequences, client retention, pipeline tracking. Reports pipeline and lead status to Zeno.
+    memory_writes: [docs/memory/outreach-log.md, docs/memory/client-roster.md]
+
+# NOTE: No `model` field on any agent — all inherit the current Claude Code
+# session (Claude Max). Do NOT add API model strings or call api.anthropic.com.

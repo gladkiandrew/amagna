@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Wordmark } from '@/components/wordmark';
 import {
   NAV_LINKS,
   GOLD_MAP_CTA,
@@ -48,14 +47,12 @@ export function SiteFooter(): JSX.Element {
               className="flex items-center gap-2.5"
             >
               <Image
-                src="/brand/amagna-logo-mark.svg"
-                alt=""
-                aria-hidden
-                width={360}
-                height={300}
-                className="h-8 w-auto brightness-0 invert"
+                src="/brand/amagna-logo-gold.png"
+                alt="Amagna AI"
+                width={2276}
+                height={492}
+                className="h-6 w-auto opacity-[0.85]"
               />
-              <Wordmark variant="onDark" className="h-7" />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/70">{SITE.tagline}</p>
             <Link

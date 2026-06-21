@@ -44,12 +44,6 @@
       },
       "optional": true,
       "requiresAuth": true
-    },
-    "stitch": {
-      "url": "https://stitch.googleapis.com/mcp",
-      "headers": {
-        "X-Goog-Api-Key": "${STITCH_API_KEY}"
-      }
     }
   }
 }

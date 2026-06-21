@@ -16,9 +16,10 @@
 never hypey or cringe. The feeling: *a quiet machine that runs your marketing while you
 sleep.*
 
-- **Palette:** deep navy/aubergine `#1A0E36`–`#241546`, **antique gold** `#C9A961`–`#D4B873`
-  (the hero accent), royal purple `#5D2E8C`, warm cream `#F5EFE1`. Dark, rich,
-  gold-lit — *not* neon, *not* flat corporate blue.
+- **Palette (locked, master brief 2026-06-15):** Royal Purple `#5D2E8C` · Antique Gold `#C9A961` ·
+  Cream `#FAF8F3` · Deep Purple `#1A0E36` · Warm Gold (on dark) `#D4B873` · Charcoal `#1A1A1A`.
+  Dark, rich, gold-lit — *not* neon, *not* flat corporate blue. **Describe palette in prompts with
+  WORDS, never hex** (hex renders as text in the image).
 - **Type (for burned captions/overlays added in post, NEVER in the prompt):** Fraunces
   (serif, headlines) + Inter (sans, body).
 - **House look / LUT:** cinematic, cool navy shadows + warm gold highlights, gentle film
@@ -29,6 +30,12 @@ sleep.*
   (Automation), Thales (Marketing).
 - **Non-negotiables, every generation:** no on-screen text / captions / logos / watermarks
   (burn captions after); keep the lower third clean; photoreal and believable over flashy.
+- **World & motif:** **water / ocean / voyage** feel — calm dark seas, gold horizons, dawn light
+  on and under the water, mist, brass nautical instruments. **NEVER outer-space, cosmic, orbiting
+  planets/globes, satellites, or galaxy imagery.** A literal ship is optional, not required.
+- **Palette in prompts = WORDS ONLY, never hex codes.** Models burn hex strings (e.g. `#1A0E36`)
+  into the image as visible text. Describe colors by name (deep navy-to-aubergine, antique gold,
+  royal purple, warm cream). Hex values are for post-production overlays only.
 
 ---
 
@@ -243,6 +250,17 @@ PRE-EMPTED: REAL-PROCESS (encode how the trade actually works); LIGHTING (start 
    burned captions (Fraunces), cut the best 2–3s.
 4. **Volume → cherry-pick** ~1 in 3–5; **stitch short beats** over one risky long shot.
 5. **Consistency** — reuse AMG Replica Soul/Element + the same grade across a campaign.
+
+## Prompt feedback log (living — appended on `/promptfeedback`)
+
+Newest first. Each entry is a hardened lesson that overrides anything above it.
+
+- **2026-06-12 — World is water/voyage, NOT space.** The S1 "brushed-gold core orb floating with
+  orbiting satellite forms" read as outer-space/cosmic. Nowhere in the brand is a space feel. Use
+  ocean/voyage motifs (calm seas, gold horizons, light on/under water, mist, brass nautical
+  instruments); a ship is optional. — Ayge
+- **2026-06-12 — No hex codes in prompts.** S1 rendered the literal hex strings as text in the
+  image. Always describe the palette in words; keep hex for post overlays only. — Ayge
 
 ## Saving prompts back into Higgsfield
 
