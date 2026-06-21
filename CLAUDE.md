@@ -22,7 +22,7 @@ He uses Claude Max, Cursor, and Claude Code. This is the AI of record for the en
 
 The operational backbone of Amagna AI Agency. See `README.md` for the full strategic context.
 
-In short: a productized AI marketing agency whose core offering is **Autonomous Marketing Systems** — we build the client's marketing machine and the content that fuels it. Who we serve is **broad**: any operator who wants marketing that runs itself. **Home services** and **real estate** remain the two lead niches with dedicated funnels and ad landing pages, but positioning, the homepage, and the Who We Serve page should NOT read as "we only do home services and real estate." Fulfillment is partnered through Sapt (`sapt.ai`) with a fleet of custom AI agents wrapped around it.
+In short: a productized AI marketing agency whose core offering is **Autonomous Marketing Systems** — we build the client's marketing machine and the content that fuels it. Who we serve is **broad**: any operator who wants marketing that runs itself. **Five niches** — home services, real estate, medical offices, ecommerce brands, and multi-location businesses — get dedicated funnels and ad landing pages, but positioning, the homepage, and the Who We Serve page should NOT read as "we only do [one niche]." Fulfillment is partnered through Sapt (`sapt.ai`) with a fleet of custom AI agents wrapped around it.
 
 **Note:** Politics is on the long-term roadmap but is NOT part of the current go-to-market. Do not generate political-niche assets unless explicitly asked.
 
@@ -133,10 +133,13 @@ Service pillars to feature on the site: AI-generated content, ads management (Me
 
 **The Gold Map (flagship lead funnel, lives at /audit):** a treasure-hunt qualification flow. Scroll-styled page → Step 1 intake form (lead captured to Supabase IMMEDIATELY on submit — leads get email follow-up regardless of completion) → Step 2 personalized copy-paste prompt assembled from their intake; Zeno video explains taking it to their own AI with extra context to get back a "master prompt" key → Step 3 paste the key, X marks the map → dig animation while Claude writes the plan → treasure chest opens EMPTY: "the gold gets made — here's how," full step-by-step plan (on-screen + emailed) → book a call. The plan must be genuinely good; it is the sales pitch.
 
-**Two lead niches** get dedicated funnels, ad creative, voice, and agent tuning (use the matching playbook in `docs/playbooks/` once created; never mix niche assets):
+**Five active niches** — all equal, no single "lead" niche — get dedicated funnels, ad creative, voice, and agent tuning (use the matching playbook in `docs/playbooks/` once created; never mix niche assets). See `docs/memory/niche-context.md`:
 
-1. **Home services** — HVAC, plumbing, roofing, etc. Pitch: predictable owned leads.
-2. **Real estate** — Solo agents, teams, brokers. Pitch: stay top of mind 24/7.
+1. **Home Services** — HVAC, plumbing, roofing, electrical, landscaping. Pitch: predictable owned leads.
+2. **Real Estate Agents + Owners** — Solo agents, teams, brokers, owners. Pitch: stay top of mind 24/7.
+3. **Medical Offices** — Private practices, dental, med-spa, specialty clinics. Pitch: compliant, automated patient acquisition.
+4. **Ecommerce Brands** — DTC and ecommerce on Shopify and beyond. Pitch: always-on creative + managed paid acquisition.
+5. **Multi-Location Businesses** — Franchises, groups, multi-location operators. Pitch: one central brain, every location on-brand.
 
 ---
 
@@ -160,11 +163,21 @@ Agents run on Cloudflare Workers (or n8n — TBD) with Claude as the reasoning e
 - A "human in the loop" approval step for anything sent to real people
 
 **The crew — canon roster (Andrew's characters; use these names everywhere, on the site and in code):**
-- **Zeno — Captain / The Brain** — orchestrator; runs the whole operation, every agent answers to him
-- **Exodus — Creative Specialist** — generates the videos, creates the content, blogs, etc.
-- **Solon — Outreach / Retention Specialist** — keeps clients and leads in the fold
-- **Hero — Automation Specialist** — builds the systems that run themselves
-- **Thales — Marketing Specialist** — Meta / TikTok / Google ads
+- **Zeno — Captain & Automation Specialist** — fleet orchestrator, the brain. Directs all agents, manages task routing, builds and runs automations.
+- **Exodus — Creative & Content Specialist** — generates videos, writes content, creates blogs and deliverables.
+- **Mansa — Memory & Security Specialist** — guards context integrity. Reads and writes Supabase. Keeps fleet knowledge current.
+- **Vela — Social Media & Ads Specialist** — runs Meta ads, distributes content, handles paid and organic channels.
+- **Solon — Outreach & Retention Specialist** — keeps clients and leads in the fold. Manages outreach sequences and retention.
+
+#### Higgsfield Voyage Crew — Element IDs
+| Asset | Element ID |
+| --- | --- |
+| Ship (prop) | 1cff516e-9ee5-4be6-80f3-02b908698a20 |
+| Zeno | 5230d0a3-e6a4-4141-bf8b-6b87523a8bb2 |
+| Exodus | 56538302-5da2-4817-bcb7-22810bb79960 |
+| Mansa | 5f229be9-3f0f-4f75-b3b3-ce6865dc6c01 |
+| Vela | 6a40a163-8e1b-4b66-8f26-05acd37a0ee7 |
+| Solon | 1e14872c-c486-45bb-a05c-c8e5655e2da1 |
 
 Crew portraits live at `apps/marketing/public/brand/crew/<slug>.webp`. Ship renders: `public/brand/ship-crew-full.webp` (crew aboard) and `public/brand/ship-empty-transparent.webp`. Andrew (the founder) is the human at the helm of the company — distinct from Zeno, who captains the AI fleet.
 
