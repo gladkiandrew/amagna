@@ -18,7 +18,6 @@ POST/PUT/PATCH for content). Content writes only go through the Sapt **MCP
 - **Medical Offices** (+2): `medical-practices-fill-schedule-without-headache`, `turn-patients-into-reviews-automatically`
 - **Ecommerce** (+2): `always-on-ad-creative-system-ecommerce`, `ecommerce-email-sms-flows-bring-buyers-back`
 - **Multi-Location** (+2): `multi-location-brands-on-brand-and-full`, `local-seo-at-scale-multi-location-google-profiles`
-- **Political** (+2): `local-candidates-build-name-recognition`, `campaign-rapid-response-on-autopilot`
 
 Each has: title, slug, excerpt, body (markdown), seoTitle, seoDescription,
 targetKeywords, category (exact value the site filters on), author "The Amagna

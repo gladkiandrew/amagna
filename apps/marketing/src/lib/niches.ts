@@ -15,8 +15,7 @@ export type NicheContent = {
     | 'real-estate'
     | 'medical-offices'
     | 'ecommerce-brands'
-    | 'multi-location'
-    | 'political-candidates';
+    | 'multi-location';
   /** Blog category to pull related posts from (case-insensitive contains). */
   category: string;
   eyebrow: string;
@@ -350,69 +349,6 @@ export const MULTI_LOCATION: NicheContent = {
     'Automated marketing across every location, run from one brain — central brand control with local relevance for multi-location and franchise operators, built and run by AI.',
 };
 
-export const POLITICAL_CANDIDATES: NicheContent = {
-  slug: 'political-candidates',
-  category: 'Political',
-  eyebrow: 'For political candidates & campaigns',
-  heroHeadline: 'Automated campaign marketing that keeps your name everywhere.',
-  heroSub:
-    'Local, state, and down-ballot campaigns. We build the marketing system that keeps your message in front of voters — content, ads, rapid response, and outreach — and run it for you. Non-partisan by design: we run the machine, you set the message.',
-  pains: [
-    {
-      title: 'Name recognition is everything — and slow to build',
-      body: 'Voters back the name they know. Building that recognition by hand, post by post, never keeps pace with the campaign calendar.',
-    },
-    {
-      title: 'The news cycle moves faster than your team',
-      body: 'A story breaks and the window to respond is hours, not days. Manual rapid response means you miss the moment.',
-    },
-    {
-      title: 'Volunteers cannot cover every channel',
-      body: 'Social, email, texts, and ads — all at once, every day, until the polls close. No volunteer team sustains that pace.',
-    },
-    {
-      title: 'Outreach leaks without follow-up',
-      body: 'Supporters sign up and never hear back. The list goes cold and the momentum goes with it.',
-    },
-  ],
-  systemHeading: 'The system we build for campaigns',
-  systemSub:
-    'Configured once around your district, message, and voice, then run every day by the agent fleet — with a human approving anything that goes public.',
-  systemPoints: [
-    {
-      title: 'Always-on content + rapid response',
-      body: 'A steady stream of on-message content across social, plus fast turnarounds when the moment calls for it — drafted for you, approved by your team before it posts.',
-    },
-    {
-      title: 'Managed ad campaigns',
-      body: 'Meta, TikTok, Google, and Snapchat campaigns aimed at the voters in your district, built and managed week to week.',
-    },
-    {
-      title: 'Voter-outreach funnels and follow-up',
-      body: 'Sign-up and volunteer funnels with automated email and SMS follow-up in your voice, so no supporter goes quiet.',
-    },
-    {
-      title: 'A weekly report you actually read',
-      body: 'Reach, list growth, engagement, and what is working — in plain English, written by an agent, not buried in a dashboard.',
-    },
-  ],
-  integrations: [
-    { src: '/brand/integrations/facebook.svg', alt: 'Facebook' },
-    { src: '/brand/integrations/instagram.svg', alt: 'Instagram' },
-    { src: '/brand/integrations/tiktok.svg', alt: 'TikTok' },
-    { src: '/brand/integrations/hubspot.png', alt: 'HubSpot' },
-    { src: '/brand/integrations/gmail.svg', alt: 'Gmail' },
-  ],
-  integrationsNote:
-    'Runs on top of the CRM, list, and communication tools your campaign already uses — your data stays where it is, nothing public goes out without sign-off.',
-  ctaHeading: 'Let us look at your race',
-  ctaSub:
-    'Chart your Gold Map — a free, custom plan for keeping your name in front of voters through election day. We bring it to the call.',
-  metaTitle: 'Political campaign marketing',
-  metaDescription:
-    'Automated campaign marketing that keeps your name in front of voters — content, rapid response, managed ads, and voter outreach for political candidates, built and run by AI. Non-partisan, system-focused.',
-};
-
 /** All funnel niches, keyed by slug (for sitemap, JSON-LD, etc.). */
 export const ALL_NICHES: NicheContent[] = [
   HOME_SERVICES,
@@ -420,5 +356,4 @@ export const ALL_NICHES: NicheContent[] = [
   MEDICAL_OFFICES,
   ECOMMERCE_BRANDS,
   MULTI_LOCATION,
-  POLITICAL_CANDIDATES,
 ];
