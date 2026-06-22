@@ -12,7 +12,7 @@ export type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
  * audit tool-use pattern: forces structured JSON via a tool schema, falls back
  * gracefully when no API key is set.
  */
-const SYSTEM_PROMPT = `You are an Amagna AI growth strategist writing a custom marketing plan for a small-business operator who just asked for one. Amagna builds "Autonomous Marketing Systems" — a crew of AI agents (Zeno orchestrates; Exodus makes content/video; Solon runs outreach & retention; Hero builds automations; Thales runs Meta/TikTok/Google/Snapchat ads) plus humans in the loop.
+const SYSTEM_PROMPT = `You are an Amagna AI growth strategist writing a custom marketing plan for a small-business operator who just asked for one. Amagna builds "Autonomous Marketing Systems" — a crew of AI agents (Zeno captains the fleet & builds automations; Exodus makes content & video; Vela runs Meta/TikTok/Google/Snapchat ads & demand; Solon runs outreach & retention; Mansa guards memory & security) plus humans in the loop.
 
 Audience: a busy operator (e.g. a home-services owner or real-estate agent). They do NOT care about "AI", "LLMs", or "agents" — they care about more calls, more customers, more revenue. They skim. Write so every line lands in one breath.
 
@@ -26,6 +26,11 @@ PRESENCE — build on what they've got:
 - They may list links (website, Google Business Profile, Facebook, Instagram, TikTok, LinkedIn, YouTube). Build on the channels they HAVE and name the obvious gaps — a channel they're not on, or one that's clearly underused for their type.
 - Reference it plainly: "you're already on X, so…" / "you're not on Y yet — that's where your buyers are." Tie each gap to a concrete first action.
 - You can SEE which channels they linked, not what's on them. Never claim you reviewed the content, traffic, or rankings behind a link.
+
+LOCAL — most operators here serve a specific town or area:
+- If they named a city or service area, USE it by name in the plan (Phase 1 especially). Generic plans lose; "in [their town]" wins.
+- Lead with the fastest local levers first: Google Business Profile (claim/rebuild + weekly posts), a steady review engine after every job, and a page that targets "[service] in [town]". These move the needle before paid ads do.
+- Tie the ad step to their actual area + best service, with the rough daily budget.
 
 HONESTY:
 - NO invented numbers, rankings, or guarantees. We do NOT run live ranking checks yet — never claim "we analyzed your rankings/SEO" or imply you measured their site. Note that the crew reviews live rankings together on the call.
@@ -171,7 +176,11 @@ export async function generateGoldMapPlan(
   const apiKey = env('ANTHROPIC_API_KEY');
   if (!apiKey) return fallbackPlan(intake);
 
-  const anthropic = new Anthropic({ apiKey });
+  // Hardening for Cloudflare Workers: cap a single attempt at 25s and allow one
+  // retry, so a slow/hung Anthropic call can never hang the request past the
+  // Worker limit. On timeout the catch below returns fallbackPlan — the lead was
+  // already captured at Step 1, so nothing is ever lost.
+  const anthropic = new Anthropic({ apiKey, timeout: 25_000, maxRetries: 1 });
   const { have, missing } = linksHaveAndMissing(intake.links);
   const presenceLine =
     have.length || missing.length
@@ -191,7 +200,7 @@ Produce the plan using the submit_plan tool.`;
   try {
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-7',
-      max_tokens: 2000,
+      max_tokens: 2600,
       system: SYSTEM_PROMPT,
       tools: [SUBMIT_PLAN_TOOL],
       tool_choice: { type: 'tool', name: 'submit_plan' },

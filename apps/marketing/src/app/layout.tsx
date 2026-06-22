@@ -89,6 +89,48 @@ const structuredData = {
       name: 'Amagna AI',
       publisher: { '@id': `${SITE.url}/#organization` },
     },
+    // Local entity — gives Google a structured signal that Amagna serves the
+    // Great Lakes Bay Region (Saginaw / Midland / Bay City, MI). Service-area
+    // business: no public street address, so we publish locality + geo + the
+    // cities served, not a storefront. No reviews/ratings are claimed.
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${SITE.url}/#localbusiness`,
+      name: 'Amagna AI',
+      url: SITE.url,
+      image: `${SITE.url}/opengraph-image`,
+      logo: `${SITE.url}/brand/amagna-logo-mark.svg`,
+      email: SITE.email,
+      description:
+        'AI marketing agency serving Saginaw, Midland, and Bay City — autonomous marketing systems and custom AI installs for local operators.',
+      parentOrganization: { '@id': `${SITE.url}/#organization` },
+      priceRange: '$$',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Saginaw',
+        addressRegion: 'MI',
+        addressCountry: 'US',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 43.4195,
+        longitude: -83.9508,
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Saginaw', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'City', name: 'Midland', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'City', name: 'Bay City', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'AdministrativeArea', name: 'Great Lakes Bay Region' },
+      ],
+      knowsAbout: [
+        'AI marketing agency',
+        'Local SEO',
+        'Google Business Profile management',
+        'Autonomous marketing systems',
+        'Custom AI automation',
+      ],
+      ...(SOCIAL_LINKS.length ? { sameAs: [...SOCIAL_LINKS] } : {}),
+    },
   ],
 };
 

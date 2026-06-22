@@ -13,6 +13,7 @@ const HOME_DESCRIPTION =
 
 export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Amagna AI — Marketing that runs itself',
     description: HOME_DESCRIPTION,

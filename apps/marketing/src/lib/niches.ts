@@ -92,9 +92,9 @@ export const HOME_SERVICES: NicheContent = {
   ctaHeading: 'Let us look at your market',
   ctaSub:
     'Chart your Gold Map — a free, custom plan for the marketing system we would build for you. No pitch deck, no jargon.',
-  metaTitle: 'Home services marketing',
+  metaTitle: 'Home Services Marketing in Saginaw & the Tri-Cities',
   metaDescription:
-    'Predictable, automated marketing for HVAC, plumbing, roofing, and home services operators — built and run by AI. Book a call with Amagna AI.',
+    'Predictable, automated marketing for HVAC, plumbing, roofing, and home-services operators across Saginaw, Midland, and Bay City, MI — built and run by AI. Book a call with Amagna AI.',
 };
 
 export const REAL_ESTATE: NicheContent = {
@@ -155,9 +155,9 @@ export const REAL_ESTATE: NicheContent = {
   ctaHeading: 'Let us look at your market',
   ctaSub:
     'Chart your Gold Map — a free, custom plan for keeping your sphere warm and your listings coming. We bring it to the call.',
-  metaTitle: 'Real estate marketing',
+  metaTitle: 'Real Estate Marketing in Saginaw & the Tri-Cities',
   metaDescription:
-    'Stay top of mind between listings — daily content and sphere nurture for real estate agents, teams, and owners, built and run by AI.',
+    'Stay top of mind between listings — daily content and sphere nurture for real estate agents, teams, and owners across Saginaw, Midland & Bay City, MI, built and run by AI.',
 };
 
 export const MEDICAL_OFFICES: NicheContent = {
@@ -218,9 +218,9 @@ export const MEDICAL_OFFICES: NicheContent = {
   ctaHeading: 'Let us look at your practice',
   ctaSub:
     'Chart your Gold Map — a free, custom plan for filling your schedule with the right patients. We bring it to the call.',
-  metaTitle: 'Medical office marketing',
+  metaTitle: 'Medical Office Marketing in Saginaw & the Tri-Cities',
   metaDescription:
-    'Automated patient acquisition — targeted campaigns, reviews, reminders, and recall for medical, dental, and specialty practices, built and run by AI.',
+    'Automated patient acquisition for medical, dental, and specialty practices across Saginaw, Midland & Bay City, MI — targeted campaigns, reviews, reminders, and recall, built and run by AI.',
 };
 
 export const ECOMMERCE_BRANDS: NicheContent = {

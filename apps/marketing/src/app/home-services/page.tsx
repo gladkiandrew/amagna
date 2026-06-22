@@ -8,6 +8,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: HOME_SERVICES.metaTitle,
   description: HOME_SERVICES.metaDescription,
+  alternates: { canonical: '/home-services' },
   openGraph: {
     title: HOME_SERVICES.metaTitle,
     description: HOME_SERVICES.metaDescription,
