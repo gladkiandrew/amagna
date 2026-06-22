@@ -32,7 +32,16 @@ export type NicheContent = {
   ctaSub: string;
   metaTitle: string;
   metaDescription: string;
+  /** Local service area for this niche's Service JSON-LD. Omitted = national
+   *  ('US'). Set for local-intent niches so the page signals the Tri-Cities. */
+  areaServed?: string[];
+  /** Niche-specific FAQs — rendered as a visible section + FAQPage JSON-LD
+   *  (AEO). Local-intent questions; no pricing (pricing lives in one place). */
+  faqs?: { q: string; a: string }[];
 };
+
+/** Tri-Cities service area, reused by the local-intent niches' Service schema. */
+const TRI_CITIES_AREA = ['Saginaw, MI', 'Midland, MI', 'Bay City, MI', 'Great Lakes Bay Region'];
 
 export const HOME_SERVICES: NicheContent = {
   slug: 'home-services',
@@ -95,6 +104,21 @@ export const HOME_SERVICES: NicheContent = {
   metaTitle: 'Home Services Marketing in Saginaw & the Tri-Cities',
   metaDescription:
     'Predictable, automated marketing for HVAC, plumbing, roofing, and home-services operators across Saginaw, Midland, and Bay City, MI — built and run by AI. Book a call with Amagna AI.',
+  areaServed: TRI_CITIES_AREA,
+  faqs: [
+    {
+      q: 'Do you work with home-services businesses in Saginaw, Midland, and Bay City?',
+      a: 'Yes — the Great Lakes Bay Region is home turf. We build and run marketing systems for HVAC, plumbing, roofing, electrical, and landscaping operators across Saginaw, Midland, Bay City, and the surrounding Tri-Cities.',
+    },
+    {
+      q: 'How do you get a home-services business more local calls?',
+      a: 'We rebuild your Google Business Profile and local pages so you show up for "[service] near me," run targeted local ads, and automate review requests after every job — the levers that move local demand first.',
+    },
+    {
+      q: 'Does the work dry up in the slow season?',
+      a: 'That is exactly what the system is built to smooth out — a steady, owned pipeline so your revenue does not ride the season.',
+    },
+  ],
 };
 
 export const REAL_ESTATE: NicheContent = {
@@ -158,6 +182,21 @@ export const REAL_ESTATE: NicheContent = {
   metaTitle: 'Real Estate Marketing in Saginaw & the Tri-Cities',
   metaDescription:
     'Stay top of mind between listings — daily content and sphere nurture for real estate agents, teams, and owners across Saginaw, Midland & Bay City, MI, built and run by AI.',
+  areaServed: TRI_CITIES_AREA,
+  faqs: [
+    {
+      q: 'Do you help real estate agents in the Tri-Cities?',
+      a: 'Yes — solo agents, teams, and brokers across Saginaw, Midland, Bay City, and nearby markets. We keep your sphere warm and your name in front of local sellers.',
+    },
+    {
+      q: 'Can you help me get listings, not just buyer leads?',
+      a: 'That is the focus — brand, sphere nurture, and seller-focused funnels aimed at your target neighborhoods, because listings come from staying top of mind and trusted.',
+    },
+    {
+      q: 'Will the content actually sound like me?',
+      a: 'Yes — everything is produced in your voice and brand, so you look like the obvious local professional without sounding like everyone else.',
+    },
+  ],
 };
 
 export const MEDICAL_OFFICES: NicheContent = {
@@ -221,6 +260,21 @@ export const MEDICAL_OFFICES: NicheContent = {
   metaTitle: 'Medical Office Marketing in Saginaw & the Tri-Cities',
   metaDescription:
     'Automated patient acquisition for medical, dental, and specialty practices across Saginaw, Midland & Bay City, MI — targeted campaigns, reviews, reminders, and recall, built and run by AI.',
+  areaServed: TRI_CITIES_AREA,
+  faqs: [
+    {
+      q: 'Do you work with practices in Saginaw, Midland, and Bay City?',
+      a: 'Yes — private practices, dental, med-spa, and specialty clinics across the Great Lakes Bay Region. Anything patient-facing always goes out with your sign-off.',
+    },
+    {
+      q: 'How do you bring in new patients without being pushy?',
+      a: 'Targeted local campaigns for your highest-value services, plus well-timed review and recall workflows — so the right local patients find you and existing ones come back.',
+    },
+    {
+      q: 'Is this compliant for a medical practice?',
+      a: 'Nothing patient-facing goes out without your approval, and patient records stay out of scope — the system runs your marketing, not your medical data.',
+    },
+  ],
 };
 
 export const ECOMMERCE_BRANDS: NicheContent = {
@@ -344,9 +398,24 @@ export const MULTI_LOCATION: NicheContent = {
   ctaHeading: 'Let us look at your locations',
   ctaSub:
     'Chart your Gold Map — a free, custom plan for consistent marketing across every location. We bring it to the call.',
-  metaTitle: 'Multi-location marketing',
+  metaTitle: 'Multi-Location Marketing in the Great Lakes Bay Region',
   metaDescription:
-    'Automated marketing across every location, run from one brain — central brand control with local relevance for multi-location and franchise operators, built and run by AI.',
+    'Automated marketing across every location, run from one brain — central brand control with local relevance for multi-location and franchise operators in Saginaw, Midland, Bay City, and beyond. Built and run by AI.',
+  areaServed: TRI_CITIES_AREA,
+  faqs: [
+    {
+      q: 'Do you handle multi-location businesses in the Tri-Cities and beyond?',
+      a: 'Yes — local groups and franchises across Saginaw, Midland, and Bay City, and multi-location operators beyond the region. One central brain keeps every location on-brand and locally relevant.',
+    },
+    {
+      q: 'Can you manage Google Business Profiles for all our locations?',
+      a: 'Yes — profiles, local listings, and reviews managed across every location, so each one stays accurate, active, and findable in its own market.',
+    },
+    {
+      q: 'How do you keep every location consistent?',
+      a: 'A shared memory holds your brand, offers, and what is working, then adapts it to each location — so wins at one roll out to all of them.',
+    },
+  ],
 };
 
 /** All funnel niches, keyed by slug (for sitemap, JSON-LD, etc.). */

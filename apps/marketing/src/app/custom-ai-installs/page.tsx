@@ -5,7 +5,7 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { OG_IMAGE } from '@/lib/site';
 
 const DESCRIPTION =
-  'Beyond marketing: Amagna builds and installs custom, full-stack AI for your business in person — mapped on-site, built bespoke across marketing, outreach, retention, content, and operations, with a security + memory layer so your data and IP stay yours.';
+  'Beyond marketing: Amagna builds and installs custom, full-stack AI for your business in person across Saginaw, Midland, Bay City, and the Great Lakes Bay Region — mapped on-site, built bespoke across marketing, outreach, retention, content, and operations, with a security + memory layer so your data and IP stay yours.';
 
 export const metadata: Metadata = {
   title: 'Custom AI Installs · Full-Stack Automation',

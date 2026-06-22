@@ -46,13 +46,17 @@ const FAQS: Faq[] = [
 
 export function FaqSection({
   heading = 'Questions, answered straight',
+  faqs,
 }: {
   heading?: string;
+  /** Override the default site FAQs (e.g. per-niche local FAQs). */
+  faqs?: Faq[];
 }): JSX.Element {
+  const items = faqs ?? FAQS;
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: FAQS.map((f) => ({
+    mainEntity: items.map((f) => ({
       '@type': 'Question',
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
@@ -78,7 +82,7 @@ export function FaqSection({
         </h2>
 
         <div className="mt-10 divide-y divide-brand-gold/20 border-t border-brand-gold/20">
-          {FAQS.map((faq) => (
+          {items.map((faq) => (
             <details key={faq.q} className="group py-5">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-lg font-semibold text-brand-charcoal [&::-webkit-details-marker]:hidden">
                 {faq.q}

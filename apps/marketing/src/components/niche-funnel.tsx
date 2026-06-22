@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { CtaBand } from '@/components/sections/cta-band';
+import { FaqSection } from '@/components/sections/faq-section';
 import { BOOK_A_CALL_HREF, AUDIT_HREF, SITE } from '@/lib/site';
 import type { NicheContent } from '@/lib/niches';
 import { getPublishedPosts } from '@/lib/sapt-blog';
@@ -34,7 +35,7 @@ export async function NicheFunnel({ content }: NicheFunnelProps): Promise<JSX.El
     description: content.metaDescription,
     serviceType: 'Marketing services',
     provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-    areaServed: 'US',
+    areaServed: content.areaServed ?? 'US',
     url: `${SITE.url}/${content.slug}`,
   };
 
@@ -254,6 +255,11 @@ export async function NicheFunnel({ content }: NicheFunnelProps): Promise<JSX.El
             </div>
           </div>
         </section>
+      )}
+
+      {/* Niche-local FAQ — visible Q&A + FAQPage JSON-LD (local SEO + AEO). */}
+      {content.faqs && content.faqs.length > 0 && (
+        <FaqSection heading="Questions from operators in your area" faqs={content.faqs} />
       )}
 
       <CtaBand heading={content.ctaHeading} subheading={content.ctaSub} />
