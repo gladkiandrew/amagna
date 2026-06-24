@@ -43,6 +43,8 @@ type Tier = {
   features: string[];
   /** Plain-language note about what the tier deliberately does not include. */
   excludes?: string;
+  /** Commitment note shown small in the card body (Growth / Authority). */
+  commitment?: string;
   highlighted?: boolean;
 };
 
@@ -77,6 +79,7 @@ const TIERS: Tier[] = [
       'Automated review generation after every job',
       'Weekly plain-English report',
     ],
+    commitment: '6-month commitment at this rate — price reduces after your commitment period.',
     highlighted: true,
   },
   {
@@ -91,13 +94,14 @@ const TIERS: Tier[] = [
       'Founder-led strategy + priority support',
       'Metered token usage, billed monthly — visible in your admin profile',
     ],
+    commitment: '6-month commitment at this rate — price reduces after your commitment period.',
   },
 ];
 
 const FAQ = [
   {
-    q: 'Are there long-term contracts?',
-    a: 'Month one is the build. After your system is deployed, you commit to a 6-month minimum on your plan.',
+    q: 'Is there a contract?',
+    a: 'Growth and Authority plans require a 6-month commitment at the listed rate. After your commitment period, your rate reduces. No hidden fees — ad spend is always separate and paid directly to the platforms.',
   },
   {
     q: 'Is ad spend included in the retainer?',
@@ -180,6 +184,12 @@ export default function PricingPage() {
 
               {tier.excludes ? (
                 <p className="mt-4 text-xs leading-relaxed text-ink-muted">{tier.excludes}</p>
+              ) : null}
+
+              {tier.commitment ? (
+                <p className="mt-3 text-xs font-medium leading-relaxed text-royal-purple/80">
+                  {tier.commitment}
+                </p>
               ) : null}
 
               <div className="mt-7">

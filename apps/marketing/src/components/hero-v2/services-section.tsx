@@ -46,6 +46,18 @@ const PILLARS: readonly Pillar[] = [
     body: 'Get recommended by AI assistants like ChatGPT when people ask them who to hire.',
   },
   {
+    name: 'Email + SMS Campaign Management',
+    body: 'Automated email and text that follow up, nurture, and win back customers — sent at the right moment, without you lifting a finger.',
+  },
+  {
+    name: 'Creation of Marketing Funnels',
+    body: 'Landing pages and funnels built to turn clicks into booked calls — not just traffic, actual customers.',
+  },
+  {
+    name: 'Advanced Data Reporting',
+    body: 'Your site analytics and Meta campaign performance in one place, in plain English — so you always know what’s working.',
+  },
+  {
     name: 'Custom AI Installs',
     eyebrow: 'Full-stack automation · installed in person',
     body: 'Beyond marketing — bespoke AI built and installed across your whole business, on-site and tailored to how you work.',

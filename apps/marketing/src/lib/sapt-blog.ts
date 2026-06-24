@@ -58,6 +58,9 @@ function coerceItem(item: SaptItem): BlogPost | null {
   const publishStatus = asString(c.publishStatus);
   if (!slug || !title || !body) return null;
   if (publishStatus && publishStatus !== 'published') return null;
+  // Politics is retired from GTM — never render political posts, regardless of
+  // their CMS publish state (belt-and-suspenders; /political-candidates also 308s).
+  if ((asString(c.category) ?? '').toLowerCase() === 'political') return null;
 
   return {
     slug,

@@ -51,8 +51,10 @@ export function HeroV2(): JSX.Element {
           className="hero-rise font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
           style={{ '--i': 0 } as CSSProperties}
         >
-          <span className="block text-[clamp(1.6rem,6.4vw,5.4rem)]">Autonomous</span>
-          <span className="block text-[clamp(1.9rem,8.8vw,7.4rem)]">Marketing&nbsp;Systems</span>
+          <span className="mx-auto block max-w-[18ch] text-balance text-[clamp(1.5rem,4.6vw,3.5rem)]">
+            From Autonomous Marketing to Full-Stack AI — Engineering Your Business to have a Second
+            Brain
+          </span>
         </h1>
 
         <div className="mx-auto max-w-[50rem]">
