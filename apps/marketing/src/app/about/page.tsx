@@ -219,18 +219,21 @@ export default function AboutPage(): JSX.Element {
 
           <div className="mt-10 max-w-[62ch] space-y-4 text-lg leading-[1.7] text-brand-slate">
             <p>
-              I&apos;m Andrew Gladki. I built Amagna out of Saginaw, Michigan — because I kept
-              watching good businesses drown in marketing busywork that software should just handle.
+              I&apos;m Andrew Gladki — a Ukrainian-American operator based in Michigan, and a fresh
+              Michigan State graduate in World Politics and Entrepreneurship.
             </p>
             <p>
-              Our first client was{' '}
-              <strong className="font-semibold text-brand-charcoal">Breaking the Fast</strong> — a
-              real brand, real budget, real numbers, and we still run their growth today. Every play
-              earned its place on live client work before we offered it to anyone else.
+              Before Amagna, I built{' '}
+              <strong className="font-semibold text-brand-charcoal">HydroClean LLC</strong>, my first
+              company — a local service business I started from nothing. Over four years I scaled it to
+              220 residential and 12 commercial clients, then exited in year four. I didn&apos;t learn
+              growth from a classroom; I lived it — the slow seasons, the follow-ups that slipped, the
+              marketing that ate the nights I didn&apos;t have.
             </p>
             <p>
-              The deal is simple: we show our work, report in plain English, and earn the next month
-              every month. If we&apos;re not getting you results, you shouldn&apos;t be paying us.
+              That&apos;s why Amagna exists. I got tired of watching good operators drown in busywork
+              that software should just handle, so I started building the systems I wish I&apos;d had.
+              I&apos;ve been in your shoes — now I build the machine that takes the weight off.
             </p>
           </div>
         </div>
