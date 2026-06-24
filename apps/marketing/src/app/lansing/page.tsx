@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { ServicePage } from '@/components/service-page';
-import { SAGINAW } from '@/lib/service-pages';
+import { LANSING } from '@/lib/service-pages';
 import { OG_IMAGE } from '@/lib/site';
 
-const C = SAGINAW;
+const C = LANSING;
 
 export const revalidate = 3600;
 
@@ -20,6 +20,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SaginawPage(): JSX.Element {
+export default function LansingPage(): JSX.Element {
   return <ServicePage content={C} />;
 }

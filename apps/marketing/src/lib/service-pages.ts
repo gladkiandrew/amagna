@@ -27,6 +27,8 @@ export type ServicePageContent = {
   related: ServiceLink[];
   /** schema.org Service serviceType. */
   serviceType: string;
+  /** Optional per-page Service areaServed override (e.g. a single city). */
+  areaServed?: string[];
 };
 
 export const ROOFING_MARKETING: ServicePageContent = {
@@ -248,9 +250,10 @@ export const MICHIGAN: ServicePageContent = {
   localSignal:
     'Local matters: we map your service area, optimize your Google Business Profile, and build content that names your market — so nearby customers and AI assistants both find you.',
   related: [
-    { href: '/home-services', label: 'Home services marketing' },
-    { href: '/real-estate', label: 'Real estate marketing' },
-    { href: '/pricing', label: 'Pricing' },
+    { href: '/saginaw', label: 'Saginaw' },
+    { href: '/midland', label: 'Midland' },
+    { href: '/bay-city', label: 'Bay City' },
+    { href: '/lansing', label: 'Lansing' },
   ],
   serviceType: 'AI marketing agency',
 };
@@ -811,12 +814,241 @@ export const DERMATOLOGY_MARKETING: ServicePageContent = {
   serviceType: 'Dermatology marketing',
 };
 
+// ── Local city pages ────────────────────────────────────────────────────────
+// Footer-linked only (kept out of the main nav). Each is written distinct from
+// the others — unique intro, local framing, and FAQs — so they earn their own
+// ranking and are not thin "doorway" duplicates.
+
+export const SAGINAW: ServicePageContent = {
+  slug: 'saginaw',
+  metaTitle: 'Marketing Agency in Saginaw, MI | Amagna AI',
+  metaDescription:
+    'Amagna AI is a Saginaw marketing agency — managed ads, AI video, local SEO, and automated follow-up for home services, medical, and real estate. Get your free Gold Map.',
+  eyebrow: 'Saginaw, Michigan',
+  h1: 'Marketing Agency in Saginaw, Michigan',
+  intro:
+    'Amagna is based right here in Saginaw. We know this market — the home-services crews, the medical and dental practices, the agents working the townships. We build the marketing system that brings local customers in, and we run it for you.',
+  whatWeDo: [
+    {
+      title: 'Built for Saginaw operators',
+      body: 'Home services, medical practices, and real estate across Saginaw, Saginaw Township, and the surrounding county.',
+    },
+    {
+      title: 'Win the local map',
+      body: "Google Business Profile, local SEO, and reviews so you rank for “near me” searches across Saginaw.",
+    },
+    {
+      title: 'Run for you',
+      body: 'Managed ads, AI video, and automated follow-up — built once and improved every week.',
+    },
+  ],
+  whatYouGet: [
+    'Managed local ad campaigns (Meta, Google, TikTok, Snapchat)',
+    'Google Business Profile + local SEO + AI-search visibility (AEO)',
+    'AI video ads, reels & shorts',
+    'Automated review generation + lead follow-up',
+    'A weekly plain-English report',
+  ],
+  faqs: [
+    {
+      q: 'Do you work with Saginaw businesses?',
+      a: 'Yes — Amagna is based in Saginaw. We work with home-services, medical, and real-estate businesses across Saginaw, Saginaw Township, and the surrounding county.',
+    },
+    {
+      q: 'What does a Saginaw marketing agency cost?',
+      a: 'Plans start with a one-time $1,000 Foundation build, then $50/mo for infrastructure. The full done-for-you system (Growth) is $1,250/mo plus ad spend.',
+    },
+    {
+      q: 'Can you meet in person in Saginaw?',
+      a: 'Yes — being local is the point. For custom AI installs we map your operation on-site, and we are glad to meet face to face.',
+    },
+  ],
+  localSignal:
+    "We're not a far-off agency that bought a “Saginaw” page. Amagna is headquartered in Saginaw, we know the market, and our first client work was proven right here in mid-Michigan.",
+  related: [
+    { href: '/michigan', label: 'Mid-Michigan' },
+    { href: '/home-services', label: 'Home services' },
+    { href: '/medical-offices', label: 'Medical practices' },
+  ],
+  areaServed: ['Saginaw, MI', 'Saginaw Township, MI', 'Saginaw County, MI'],
+  serviceType: 'Marketing agency in Saginaw',
+};
+
+export const MIDLAND: ServicePageContent = {
+  slug: 'midland',
+  metaTitle: 'Marketing Agency in Midland, MI | Amagna AI',
+  metaDescription:
+    'A Midland, MI marketing agency for home services, medical, and professional practices — managed ads, AI video, local SEO, and follow-up. Get your free Gold Map.',
+  eyebrow: 'Midland, Michigan',
+  h1: 'Marketing Agency in Midland, Michigan',
+  intro:
+    'Midland is a town that expects things done right — a professional, well-kept market built on a strong local economy. We bring that same standard to your marketing: a clean, automated system that brings in the right customers and runs without you babysitting it.',
+  whatWeDo: [
+    {
+      title: 'Built for Midland practices',
+      body: 'Home services, dental and medical practices, and professional firms across Midland and Midland County.',
+    },
+    {
+      title: 'Match a premium market',
+      body: 'Brand, content, and ads tuned to a market that values quality — so you attract the customers you actually want.',
+    },
+    {
+      title: 'Run for you',
+      body: 'Managed ads, AI video, local SEO, and automated follow-up.',
+    },
+  ],
+  whatYouGet: [
+    'Managed local ad campaigns (Meta, Google, TikTok, Snapchat)',
+    'Google Business Profile + local SEO + AI-search visibility (AEO)',
+    'AI video ads, reels & shorts',
+    'Automated review generation + lead follow-up',
+    'A weekly plain-English report',
+  ],
+  faqs: [
+    {
+      q: 'Do you work with Midland, MI businesses?',
+      a: 'Yes — we work with home-services, medical and dental practices, and professional firms across Midland and Midland County.',
+    },
+    {
+      q: 'How much does marketing cost in Midland?',
+      a: 'Foundation is a one-time $1,000 build plus $50/mo for infrastructure; Growth, the full done-for-you system, is $1,250/mo plus ad spend.',
+    },
+    {
+      q: 'What kinds of Midland businesses do you focus on?',
+      a: 'Home services, dental and medical, and real estate — though the system adapts to most local operators.',
+    },
+  ],
+  localSignal:
+    "Midland's economy runs on doing things to a high standard, and we build marketing systems that hold up to it. We're 20 minutes up the road in Saginaw — not across the country.",
+  related: [
+    { href: '/michigan', label: 'Mid-Michigan' },
+    { href: '/medical-offices', label: 'Medical practices' },
+    { href: '/home-services', label: 'Home services' },
+  ],
+  areaServed: ['Midland, MI', 'Midland County, MI'],
+  serviceType: 'Marketing agency in Midland',
+};
+
+export const BAY_CITY: ServicePageContent = {
+  slug: 'bay-city',
+  metaTitle: 'Marketing Agency in Bay City, MI | Amagna AI',
+  metaDescription:
+    'A Bay City, MI marketing agency for home services, local shops, and practices — managed ads, AI video, local SEO, and follow-up. Get your free Gold Map.',
+  eyebrow: 'Bay City, Michigan',
+  h1: 'Marketing Agency in Bay City, Michigan',
+  intro:
+    'Bay City runs on local — riverfront small businesses, trades, and practices that live on word of mouth and walk-ins. We turn that into something you can count on: a marketing system that keeps new customers coming in, not just during festival season.',
+  whatWeDo: [
+    {
+      title: 'Built for Bay City operators',
+      body: 'Home services, local shops, and practices across Bay City, Essexville, and Bay County.',
+    },
+    {
+      title: 'Beat the seasonal swings',
+      body: "Always-on local ads and content so your pipeline doesn't ride the summer-to-winter cycle.",
+    },
+    {
+      title: 'Run for you',
+      body: 'Managed ads, AI video, local SEO, reviews, and automated follow-up.',
+    },
+  ],
+  whatYouGet: [
+    'Managed local ad campaigns (Meta, Google, TikTok, Snapchat)',
+    'Google Business Profile + local SEO + AI-search visibility (AEO)',
+    'AI video ads, reels & shorts',
+    'Automated review generation + lead follow-up',
+    'A weekly plain-English report',
+  ],
+  faqs: [
+    {
+      q: 'Do you work with Bay City businesses?',
+      a: 'Yes — home services, local shops, and practices across Bay City, Essexville, and Bay County.',
+    },
+    {
+      q: 'How much does a Bay City marketing agency cost?',
+      a: 'Foundation is a one-time $1,000 build plus $50/mo; Growth, the full system, is $1,250/mo plus ad spend.',
+    },
+    {
+      q: 'Can you help a seasonal Bay City business?',
+      a: "That's a specialty — always-on local ads and automated follow-up keep new customers coming in outside the busy season, not just during it.",
+    },
+  ],
+  localSignal:
+    "Bay City is a word-of-mouth town. We don't replace that — we add a steady, owned pipeline on top of it, run by us, so a slow month doesn't sneak up on you. We're just up the river in Saginaw.",
+  related: [
+    { href: '/michigan', label: 'Mid-Michigan' },
+    { href: '/home-services', label: 'Home services' },
+    { href: '/real-estate', label: 'Real estate' },
+  ],
+  areaServed: ['Bay City, MI', 'Essexville, MI', 'Bay County, MI'],
+  serviceType: 'Marketing agency in Bay City',
+};
+
+export const LANSING: ServicePageContent = {
+  slug: 'lansing',
+  metaTitle: 'Marketing Agency in Lansing, MI | Amagna AI',
+  metaDescription:
+    'A Lansing, MI marketing agency for home services, medical, and real estate — managed ads, AI video, local SEO, and automated follow-up. Get your free Gold Map.',
+  eyebrow: 'Lansing, Michigan',
+  h1: 'Marketing Agency in Lansing & East Lansing, Michigan',
+  intro:
+    'Greater Lansing is a bigger, busier market — the state capital, a major university, and a lot of businesses competing for the same attention. Standing out takes a real system, not a boosted post. We build and run the marketing machine that gets you found and gets you booked across Lansing and East Lansing.',
+  whatWeDo: [
+    {
+      title: 'Built for a competitive market',
+      body: 'Home services, medical, and real estate across Lansing, East Lansing, and the greater capital area.',
+    },
+    {
+      title: 'Stand out where it is crowded',
+      body: 'Sharp local SEO, managed ads, and AI video that cut through a market with more competition than the Tri-Cities.',
+    },
+    {
+      title: 'Run for you',
+      body: 'Managed ads, AI video, local SEO, reviews, and automated follow-up.',
+    },
+  ],
+  whatYouGet: [
+    'Managed local ad campaigns (Meta, Google, TikTok, Snapchat)',
+    'Google Business Profile + local SEO + AI-search visibility (AEO)',
+    'AI video ads, reels & shorts',
+    'Automated review generation + lead follow-up',
+    'A weekly plain-English report',
+  ],
+  faqs: [
+    {
+      q: 'Do you work with Lansing and East Lansing businesses?',
+      a: 'Yes — home-services, medical, and real-estate businesses across Lansing, East Lansing, and the greater capital area.',
+    },
+    {
+      q: 'How much does a Lansing marketing agency cost?',
+      a: 'Foundation is a one-time $1,000 build plus $50/mo; Growth, the full system, is $1,250/mo plus ad spend.',
+    },
+    {
+      q: 'Lansing is competitive — can a smaller business still win?',
+      a: 'Yes. Most of the competition still boosts posts and neglects follow-up. A real system with strong local SEO and instant lead follow-up beats a bigger budget run badly.',
+    },
+  ],
+  localSignal:
+    "Lansing is a tougher, more crowded market than the Tri-Cities — which is exactly why a real system wins here. We're based an hour north in Saginaw and work with Greater Lansing operators who want marketing that actually competes.",
+  related: [
+    { href: '/michigan', label: 'Mid-Michigan' },
+    { href: '/real-estate', label: 'Real estate' },
+    { href: '/medical-offices', label: 'Medical practices' },
+  ],
+  areaServed: ['Lansing, MI', 'East Lansing, MI', 'Greater Lansing'],
+  serviceType: 'Marketing agency in Lansing',
+};
+
 /** All service pages, keyed by slug (for sitemap / iteration). */
 export const ALL_SERVICE_PAGES: ServicePageContent[] = [
   ROOFING_MARKETING,
   HVAC_MARKETING,
   AI_VIDEO_ADS,
   MICHIGAN,
+  SAGINAW,
+  MIDLAND,
+  BAY_CITY,
+  LANSING,
   PLUMBING_MARKETING,
   ELECTRICIAN_MARKETING,
   FACEBOOK_ADS_CONTRACTORS,

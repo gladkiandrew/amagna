@@ -22,7 +22,13 @@ export function ServicePage({ content }: { content: ServicePageContent }): JSX.E
     serviceType: content.serviceType,
     description: content.metaDescription,
     provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
-    areaServed: ['Saginaw, MI', 'Midland, MI', 'Bay City, MI', 'Great Lakes Bay Region', 'United States'],
+    areaServed: content.areaServed ?? [
+      'Saginaw, MI',
+      'Midland, MI',
+      'Bay City, MI',
+      'Great Lakes Bay Region',
+      'United States',
+    ],
     url,
   };
   const breadcrumbSchema = {
