@@ -29,7 +29,8 @@ export const metadata: Metadata = {
  * YouTube link (any format) OR a self-hosted MP4 path (e.g. '/brand/founder.mp4').
  * Leave it as '' to show the styled placeholder slot. No layout code to touch.
  */
-const FOUNDER_VIDEO = '';
+const FOUNDER_VIDEO = '/brand/founder.mp4';
+const FOUNDER_POSTER = '/brand/founder-poster.jpg';
 
 const LINEAGE = [
   { term: 'Magna Carta', gloss: 'the 1215 charter that bound power to a set of rules' },
@@ -55,7 +56,7 @@ function Eyebrow({ children, onDark = false }: { children: React.ReactNode; onDa
 
 /** Founder video slot — renders a YouTube embed, a self-hosted MP4, or a
  *  styled placeholder with a gold play icon when FOUNDER_VIDEO is empty. */
-function FounderVideo({ src }: { src: string }): JSX.Element {
+function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.Element {
   const frame =
     'relative aspect-video w-full overflow-hidden rounded-2xl border border-brand-warmgold/30 bg-brand-deep shadow-[0_1px_50px_-12px_rgba(93,46,140,0.5)]';
 
@@ -92,8 +93,8 @@ function FounderVideo({ src }: { src: string }): JSX.Element {
 
   return (
     <div className={frame}>
-      <video controls preload="metadata" className="absolute inset-0 h-full w-full object-cover">
-        <source src={src} />
+      <video controls preload="metadata" poster={poster} className="absolute inset-0 h-full w-full object-cover">
+        <source src={src} type="video/mp4" />
       </video>
     </div>
   );
@@ -213,7 +214,7 @@ export default function AboutPage(): JSX.Element {
           </h2>
 
           <div className="mt-10">
-            <FounderVideo src={FOUNDER_VIDEO} />
+            <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
           </div>
 
           <div className="mt-10 max-w-[62ch] space-y-4 text-lg leading-[1.7] text-brand-slate">
