@@ -30,3 +30,21 @@ html {
     transform: none;
   }
 }
+
+/* Panel swap on the Five Ways toggle — a quick fade + slide from the side. */
+@keyframes growPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Faint gold dot-grid — adds depth/texture to the dark sections. */
+.grow-dotgrid {
+  background-image: radial-gradient(rgba(201, 169, 97, 0.09) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+}

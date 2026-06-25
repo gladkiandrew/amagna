@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ArrowRight, Play } from 'lucide-react';
 import { CALCOM_DIRECT_URL } from '@/lib/site';
 import { Reveal } from './reveal';
+import { WaysToggle } from './ways-toggle';
 import './grow.css';
 
 /**
@@ -50,16 +51,29 @@ const PROBLEMS = [
 
 const BUILDS = [
   {
-    name: 'Autonomous Marketing',
-    body: 'Ads, content, follow-up. Built and run for you. You approve, we execute.',
+    tab: 'Marketing',
+    title: 'Runs your marketing',
+    body: 'Ads, content, and follow-up — handled. It posts, runs your campaigns, and chases every lead, so you’re not doing it at 9pm. You steer; it does the work.',
   },
   {
-    name: 'AI Installs & Integrations',
-    body: 'AI dropped into your operations: front desk, booking, follow-up, custom builds. No tech skills needed.',
+    tab: 'Operations',
+    title: 'Automates the busywork',
+    body: 'Missed calls texted back. Appointments booked. Reviews asked for. The repetitive stuff that eats your day, handled 24/7 — wired into the tools you already use.',
   },
   {
-    name: 'AI Consulting',
-    body: 'Not sure what you need? We map where AI actually helps, then build it.',
+    tab: 'AEO + SEO',
+    title: 'Gets you found',
+    body: 'Show up when locals search — and get recommended by AI assistants like ChatGPT when someone asks who to hire. We make you the answer.',
+  },
+  {
+    tab: 'Installed',
+    title: 'Installed in person',
+    body: 'For the bigger builds, we come to you. We map your operation on-site and install custom AI across the whole thing — tailored to exactly how you run.',
+  },
+  {
+    tab: 'Custom',
+    title: 'Built around your business',
+    body: 'Not sure where AI even fits? That’s the call. We find the one thing costing you the most time, and build the system that takes it off your plate.',
   },
 ] as const;
 
@@ -70,7 +84,7 @@ const STEPS = [
     body: 'A few questions; our AI builds your plan before we talk. That locks your spot.',
   },
   { title: 'We map it on the call', body: 'Walk your plan, decide what to build.' },
-  { title: 'We build and run it', body: 'Goes live. We keep it sharp.' },
+  { title: 'We build and run it', body: 'Live in about a week. We keep it sharp as you grow.' },
 ] as const;
 
 /** The single CTA — always Book a Call → Cal.com. */
@@ -203,11 +217,12 @@ export default function GrowPage(): JSX.Element {
       {/* ── HERO ── */}
       <section className="relative isolate overflow-hidden bg-brand-deep">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-44 left-1/2 h-[640px] w-[940px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.20),transparent_68%)] blur-2xl" />
+          <div className="absolute inset-0 grow-dotgrid opacity-60 [mask-image:radial-gradient(ellipse_at_50%_28%,#000,transparent_72%)]" />
+          <div className="absolute -top-44 left-1/2 h-[640px] w-[940px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.22),transparent_68%)] blur-2xl" />
           <div className="absolute -bottom-56 left-[6%] h-[440px] w-[560px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.45),transparent_70%)] blur-2xl" />
         </div>
         <div className="relative mx-auto flex w-full max-w-[880px] flex-col items-center px-6 py-28 text-center sm:py-36">
-          <h1 className="text-balance font-display text-[clamp(2.6rem,7vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-brand-cream motion-safe:animate-[growRiseIn_0.7s_ease-out_both]">
+          <h1 className="text-balance font-display text-[clamp(2.6rem,7vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-brand-cream [text-shadow:0_2px_40px_rgba(0,0,0,0.25)] motion-safe:animate-[growRiseIn_0.7s_ease-out_both]">
             The AI company you can <span className="text-brand-warmgold">actually</span> hire.
           </h1>
           <p className="mt-7 max-w-[60ch] text-lg leading-[1.6] text-brand-cream/80 motion-safe:animate-[growRiseIn_0.7s_ease-out_0.12s_both] sm:text-xl">
@@ -227,23 +242,31 @@ export default function GrowPage(): JSX.Element {
         </div>
       </section>
 
-      {/* ── SOUND FAMILIAR? ── */}
+      {/* ── SOUND FAMILIAR? (editorial quote-flow, not boxes) ── */}
       <section className="border-t border-brand-gold/20 bg-brand-cream">
-        <div className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-24">
+        <div className="mx-auto w-full max-w-[820px] px-6 py-20 sm:py-24">
           <Reveal>
             <Eyebrow>Sound familiar?</Eyebrow>
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-8 sm:mt-10">
             {PROBLEMS.map((item, i) => (
               <Reveal key={item.pain} delay={i * 90}>
-                <div className="group h-full rounded-2xl border border-brand-gold/30 bg-white p-7 shadow-[0_1px_30px_-12px_rgba(93,46,140,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_-20px_rgba(93,46,140,0.4)]">
-                  <p className="font-display text-lg font-semibold leading-snug text-brand-charcoal">
-                    “{item.pain}”
+                <div
+                  className={`grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-3 py-8 sm:gap-x-7 ${
+                    i > 0 ? 'border-t border-brand-gold/20' : ''
+                  }`}
+                >
+                  <span
+                    aria-hidden
+                    className="select-none font-display text-5xl leading-[0.7] text-brand-gold/45 sm:text-6xl"
+                  >
+                    &ldquo;
+                  </span>
+                  <p className="self-center font-display text-[clamp(1.3rem,2.8vw,1.85rem)] font-semibold leading-[1.28] tracking-[-0.01em] text-brand-charcoal">
+                    {item.pain}
                   </p>
-                  <p className="mt-4 flex gap-2.5 leading-[1.6] text-brand-slate">
-                    <span aria-hidden className="font-semibold text-brand-gold">
-                      →
-                    </span>
+                  <p className="col-start-2 flex items-start gap-2.5 text-base leading-[1.6] text-brand-slate sm:text-lg">
+                    <span aria-hidden className="mt-1 h-px w-5 shrink-0 bg-brand-gold sm:mt-[0.7rem]" />
                     <span>{item.fix}</span>
                   </p>
                 </div>
@@ -259,31 +282,10 @@ export default function GrowPage(): JSX.Element {
           <Reveal>
             <Eyebrow>What we build</Eyebrow>
             <h2 className="mt-5 max-w-[24ch] text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">
-              Three ways AI starts working for you.
+              Five Ways Our AI Works for You
             </h2>
           </Reveal>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {BUILDS.map((item, i) => (
-              <Reveal key={item.name} delay={i * 90}>
-                <div className="group relative h-full overflow-hidden rounded-2xl border border-brand-gold/30 bg-brand-cream p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_44px_-20px_rgba(93,46,140,0.4)]">
-                  <span
-                    aria-hidden
-                    className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-gradient-to-r from-brand-gold to-brand-warmgold transition-transform duration-500 group-hover:scale-x-100"
-                  />
-                  <span
-                    aria-hidden
-                    className="font-display text-2xl font-semibold leading-none text-brand-gold"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="mt-4 font-display text-xl font-semibold leading-snug text-brand-charcoal">
-                    {item.name}
-                  </h3>
-                  <p className="mt-3 leading-[1.6] text-brand-slate">{item.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <WaysToggle ways={BUILDS} />
           <Reveal delay={120}>
             <div className="mt-12 flex flex-col items-start gap-5 rounded-2xl border border-brand-gold/30 bg-brand-cream p-7 sm:flex-row sm:items-center sm:justify-between">
               <p className="font-display text-lg font-semibold text-brand-charcoal">
@@ -295,33 +297,57 @@ export default function GrowPage(): JSX.Element {
         </div>
       </section>
 
+      {/* ── FOUNDER VIDEO (frame 4) — dark moment ── */}
+      <section className="relative isolate overflow-hidden border-t border-brand-gold/20 bg-brand-deep">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 grow-dotgrid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_42%,#000,transparent_72%)]" />
+          <div className="absolute left-1/2 top-1/3 h-[440px] w-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl" />
+        </div>
+        <div className="relative mx-auto w-full max-w-[900px] px-6 py-20 text-center sm:py-24">
+          <Reveal>
+            <Eyebrow onDark center>
+              A message from our founder
+            </Eyebrow>
+            <div className="mt-10">
+              <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
+            </div>
+            <p className="mt-5 text-sm font-medium text-brand-cream/70">
+              Andrew Gladki, Founder of Amagna AI.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── HOW WE ACTUALLY WORK ── */}
       <section id="how-it-works" className="scroll-mt-20 border-t border-brand-gold/20 bg-brand-cream">
         <div className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-24">
           <Reveal>
-            <Eyebrow>How we actually work</Eyebrow>
+            <Eyebrow>How it works</Eyebrow>
             <h2 className="mt-5 max-w-[20ch] text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">
-              Four steps. No mystery.
+              Four Steps. No Mystery.
             </h2>
+            <p className="mt-5 max-w-[52ch] text-lg leading-[1.6] text-brand-slate">
+              One week to a live system. We move fast — no six-month timelines.
+            </p>
           </Reveal>
 
           <div className="relative mt-14">
             {/* desktop connector line behind the step numbers */}
             <div
               aria-hidden
-              className="absolute inset-x-0 top-7 hidden h-px bg-gradient-to-r from-brand-gold/0 via-brand-gold/40 to-brand-gold/0 lg:block"
+              className="absolute inset-x-8 top-8 hidden h-px bg-gradient-to-r from-brand-gold/0 via-brand-gold/50 to-brand-gold/0 lg:block"
             />
-            <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map((step, i) => (
                 <Reveal key={step.title} delay={i * 90}>
                   <li className="relative">
-                    <span className="flex h-14 w-14 items-center justify-center rounded-full border border-brand-gold/40 bg-brand-deep font-display text-lg font-semibold text-brand-warmgold shadow-[0_8px_24px_-12px_rgba(26,14,54,0.8)]">
+                    <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-brand-gold/40 bg-brand-deep font-display text-2xl font-semibold text-brand-warmgold shadow-[0_14px_34px_-14px_rgba(26,14,54,0.85)] ring-1 ring-inset ring-white/5">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <h3 className="mt-5 font-display text-xl font-semibold leading-snug text-brand-charcoal">
+                    <h3 className="mt-6 font-display text-xl font-semibold leading-snug text-brand-charcoal">
                       {step.title}
                     </h3>
-                    <p className="mt-2 leading-[1.6] text-brand-slate">{step.body}</p>
+                    <p className="mt-2.5 leading-[1.6] text-brand-slate">{step.body}</p>
                   </li>
                 </Reveal>
               ))}
@@ -336,56 +362,35 @@ export default function GrowPage(): JSX.Element {
         </div>
       </section>
 
-      {/* ── WHO THIS IS FOR ── */}
+      {/* ── CLOSE: who this is for → final CTA (one connected frame) ── */}
       <section className="relative isolate overflow-hidden border-t border-brand-gold/20 bg-brand-deep">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-40 right-[10%] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.14),transparent_70%)] blur-2xl"
-        />
-        <div className="relative mx-auto w-full max-w-[860px] px-6 py-24 text-center sm:py-28">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 grow-dotgrid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_50%,#000,transparent_75%)]" />
+          <div className="absolute -top-40 right-[10%] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.14),transparent_70%)] blur-2xl" />
+          <div className="absolute -bottom-32 left-1/2 h-[460px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl" />
+        </div>
+        <div className="relative mx-auto w-full max-w-[820px] px-6 py-24 text-center sm:py-32">
           <Reveal>
             <Eyebrow onDark center>
               Who this is for
             </Eyebrow>
-            <p className="mx-auto mt-8 max-w-[40ch] text-balance font-display text-[clamp(1.6rem,3.4vw,2.4rem)] font-semibold leading-[1.3] tracking-[-0.01em] text-brand-cream">
+            <p className="mx-auto mt-8 max-w-[40ch] text-balance font-display text-[clamp(1.5rem,3.2vw,2.2rem)] font-semibold leading-[1.3] tracking-[-0.01em] text-brand-cream">
               For Michigan owners who measure growth in customers, not logins. Local services,
               practices, multi-location teams — people who’d rather hand off the work than learn
               another dashboard.
             </p>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ── FOUNDER VIDEO ── */}
-      <section className="border-t border-brand-gold/20 bg-white">
-        <div className="mx-auto w-full max-w-[920px] px-6 py-20 sm:py-24">
-          <Reveal>
-            <Eyebrow>A message from our founder</Eyebrow>
-            <div className="mt-8">
-              <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
-            </div>
-            <p className="mt-5 text-sm font-medium text-brand-slate">
-              Andrew Gladki, Founder of Amagna AI.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ── */}
-      <section className="relative isolate overflow-hidden border-t border-brand-gold/20 bg-brand-deep">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-32 left-1/2 h-[460px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.18),transparent_70%)] blur-2xl" />
-        </div>
-        <div className="relative mx-auto w-full max-w-[760px] px-6 py-24 text-center sm:py-32">
-          <Reveal>
-            <h2 className="text-balance font-display text-[clamp(2rem,5vw,3.4rem)] font-semibold leading-[1.06] tracking-[-0.02em] text-brand-cream">
-              Let’s figure out what your business actually needs.
-            </h2>
-            <p className="mx-auto mt-6 max-w-[44ch] text-lg leading-[1.6] text-brand-cream/80">
-              No jargon. No pressure. One honest conversation.
-            </p>
-            <div className="mt-10 flex justify-center">
-              <CtaButton block />
+          <Reveal delay={120}>
+            <div className="mx-auto mt-14 max-w-[46ch] border-t border-brand-warmgold/25 pt-12">
+              <h2 className="text-balance font-display text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-cream">
+                Let’s figure out what your business actually needs.
+              </h2>
+              <p className="mt-5 text-lg leading-[1.6] text-brand-cream/80">
+                No jargon. No pressure. One honest conversation.
+              </p>
+              <div className="mt-9 flex justify-center">
+                <CtaButton block />
+              </div>
             </div>
           </Reveal>
         </div>
