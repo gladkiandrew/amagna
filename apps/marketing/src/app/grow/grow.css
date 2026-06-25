@@ -1,0 +1,32 @@
+/*
+ * Styles for the /grow paid landing page ONLY.
+ *
+ * Next.js code-splits route CSS, so these rules ship only on /grow (imported by
+ * grow/page.tsx). That lets us use global selectors here safely:
+ *
+ *  - Suppress the global site chrome. The root layout renders SiteHeader /
+ *    SiteFooter as body's DIRECT children; the funnel's own header/footer live
+ *    inside <main>, so this hides only the globals — no site-nav, no leak.
+ *  - Smooth anchor scrolling for the in-page nav (What we build / How it works).
+ *  - Hero entrance keyframe.
+ */
+
+body > header,
+body > footer {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes growRiseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
