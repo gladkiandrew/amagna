@@ -147,6 +147,9 @@ export default function GrowPage(): JSX.Element {
         </div>
       </section>
 
+      {/* sentinel — the sticky CTA slides up once this scrolls past the top */}
+      <div id="grow-hero-end" aria-hidden className="h-px w-full" />
+
       {/* ── INTRO ── */}
       <section className="relative border-t border-white/10">
         <div className="mx-auto w-full max-w-[760px] px-6 py-16 text-center sm:py-20">
@@ -182,17 +185,21 @@ export default function GrowPage(): JSX.Element {
           <div className="flex justify-center">
             <Eyebrow center>What we build</Eyebrow>
           </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {BUILDS.map((b) => (
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {BUILDS.map((b, i) => (
               <div
                 key={b.title}
-                className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-gold/40 hover:bg-white/[0.05]"
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-gold/40 hover:bg-white/[0.05] hover:shadow-[0_22px_50px_-24px_rgba(0,0,0,0.7)]"
               >
+                {/* animated gold gradient top-edge */}
                 <span
                   aria-hidden
-                  className="block h-px w-8 bg-gradient-to-r from-brand-gold to-brand-warmgold"
+                  className="absolute inset-x-0 top-0 h-[2px] bg-[linear-gradient(90deg,#C9A961,#D4B873,#C9A961)] bg-[length:200%_100%] opacity-70 transition-opacity duration-300 group-hover:opacity-100 motion-safe:animate-[growShimmer_3s_linear_infinite]"
                 />
-                <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-brand-cream">
+                <span aria-hidden className="font-display text-2xl font-semibold text-brand-gold/80">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className="mt-3 font-display text-lg font-semibold leading-snug text-brand-cream">
                   {b.title}
                 </h3>
                 <p className="mt-2 text-sm leading-[1.6] text-brand-cream/65">{b.body}</p>

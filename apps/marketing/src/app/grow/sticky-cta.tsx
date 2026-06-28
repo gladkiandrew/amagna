@@ -13,10 +13,22 @@ export function StickyCta(): JSX.Element {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    // Show as soon as the hero/VSL is scrolled past (the sentinel sits at the end
+    // of the hero). Falls back to a viewport-fraction check if the sentinel is
+    // missing for any reason.
+    const sentinel = document.getElementById('grow-hero-end');
+    if (sentinel) {
+      const io = new IntersectionObserver(
+        ([e]) => setShow(!e.isIntersecting && e.boundingClientRect.top < 0),
+        { threshold: 0 },
+      );
+      io.observe(sentinel);
+      return () => io.disconnect();
+    }
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setShow(window.scrollY > window.innerHeight * 0.7));
+      raf = requestAnimationFrame(() => setShow(window.scrollY > window.innerHeight * 0.6));
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
