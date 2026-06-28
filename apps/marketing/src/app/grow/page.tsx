@@ -2,153 +2,72 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Play } from 'lucide-react';
-import { CALCOM_DIRECT_URL } from '@/lib/site';
-import { Reveal } from './reveal';
-import { WaysToggle } from './ways-toggle';
+import { AgentMap } from './agent-map';
+import { StickyCta } from './sticky-cta';
 import './grow.css';
 
 /**
- * /grow — paid Meta-ad landing page (COLD traffic → Book a Call).
+ * /grow — paid Meta-ad VSL funnel (COLD Michigan traffic → Book a Call).
  *
- * Standalone funnel: the global SiteHeader/SiteFooter are suppressed for this
- * route (see components/chrome-gate.tsx) and replaced by minimal in-page chrome.
- * Every CTA points at Cal.com (CALCOM_DIRECT_URL). Nothing links to other site
- * pages except the logo (→ "/") and the legal footer links. noindex; not in
- * sitemap.ts.
+ * One objective, one CTA: the sticky bottom bar (sticky-cta.tsx). The hero CTA
+ * only scrolls to the artifact. Global SiteHeader/SiteFooter are suppressed via
+ * grow.css; this route ships its own minimal chrome. noindex; not in sitemap.ts.
  */
 
-// ── Founder video: drop the file/URL here when ready. Empty string ('') renders
-//    the styled placeholder (centered gold play icon). Defaults to the existing
-//    founder asset (same one used on /about); set to '' to show the placeholder.
-const FOUNDER_VIDEO = '/brand/founder.mp4';
-const FOUNDER_POSTER = '/brand/founder-poster.jpg';
+// ── VSL video: drop the file/URL here when ready (MP4 path or YouTube URL).
+//    Empty string ('') renders the styled placeholder (gold play icon + label).
+const VSL_VIDEO = '';
+const VSL_POSTER = '';
 
 const DESCRIPTION =
-  'A Michigan team of AI specialists who build and run the systems behind your marketing and automations. Book a call.';
+  'A Michigan team of AI specialists who build and run the systems behind your marketing and operations. Watch the 2-minute breakdown, then book a call.';
 
 export const metadata: Metadata = {
-  // Absolute title bypasses the root layout's "%s · Amagna AI" template.
   title: { absolute: 'The AI Company You Can Actually Hire | Amagna AI' },
   description: DESCRIPTION,
   alternates: { canonical: '/grow' },
   robots: { index: false, follow: true },
 };
 
-const PROBLEMS = [
-  {
-    pain: 'I know AI matters — I just don’t know where to start.',
-    fix: 'Everyone’s selling AI. We tell you the two moves that matter for your business.',
-  },
-  {
-    pain: 'My marketing dies every time I get busy.',
-    fix: 'The system doesn’t get busy. It runs whether you do or not.',
-  },
-  {
-    pain: 'My tools don’t talk to each other.',
-    fix: 'Leads slip through the cracks between apps. We close them.',
-  },
-] as const;
-
 const BUILDS = [
+  { title: 'Runs your marketing', body: 'Ads, content, follow-up — built and run for you.' },
+  { title: 'Automates your operations', body: 'Bookings, reviews, follow-up — handled 24/7.' },
+  { title: 'Gets you found', body: 'Rank on Google and get recommended by AI (SEO + AEO).' },
   {
-    tab: 'Marketing',
-    title: 'Runs your marketing',
-    body: 'Ads, content, and follow-up — handled. It posts, runs your campaigns, and chases every lead, so you’re not doing it at 9pm. You steer; it does the work.',
-  },
-  {
-    tab: 'Operations',
-    title: 'Automates the busywork',
-    body: 'Missed calls texted back. Appointments booked. Reviews asked for. The repetitive stuff that eats your day, handled 24/7 — wired into the tools you already use.',
-  },
-  {
-    tab: 'AEO + SEO',
-    title: 'Gets you found',
-    body: 'Show up when locals search — and get recommended by AI assistants like ChatGPT when someone asks who to hire. We make you the answer.',
-  },
-  {
-    tab: 'Installed',
     title: 'Installed in person',
-    body: 'For the bigger builds, we come to you. We map your operation on-site and install custom AI across the whole thing — tailored to exactly how you run.',
+    body: 'Bigger builds, mapped on-site and installed across your business.',
   },
-  {
-    tab: 'Custom',
-    title: 'Built around your business',
-    body: 'Not sure where AI even fits? That’s the call. We find the one thing costing you the most time, and build the system that takes it off your plate.',
-  },
+  { title: 'Built around you', body: 'Not sure where AI fits? We find it and build it.' },
 ] as const;
 
-const STEPS = [
-  { title: 'Book a call', body: 'Grab a time. 30 seconds.' },
-  {
-    title: 'Confirm with your Gold Map',
-    body: 'A few questions; our AI builds your plan before we talk. That locks your spot.',
-  },
-  { title: 'We map it on the call', body: 'Walk your plan, decide what to build.' },
-  { title: 'We build and run it', body: 'Live in about a week. We keep it sharp as you grow.' },
-] as const;
-
-/** The single CTA — always Book a Call → Cal.com. */
-function CtaButton({
-  label = 'Book a Call',
-  block = false,
-  size = 'md',
-  className = '',
-}: {
-  label?: string;
-  block?: boolean;
-  size?: 'md' | 'sm';
-  className?: string;
-}): JSX.Element {
-  const pad = size === 'sm' ? 'px-5 py-2.5' : 'px-7 py-3.5';
-  return (
-    <a
-      href={CALCOM_DIRECT_URL}
-      className={`group inline-flex items-center justify-center gap-2 rounded-full bg-brand-gold text-sm font-semibold text-brand-deep transition-all hover:bg-brand-warmgold hover:shadow-[0_10px_34px_-10px_rgba(201,169,97,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep ${pad} ${
-        block ? 'w-full sm:w-auto' : ''
-      } ${className}`}
-    >
-      {label}
-      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
-    </a>
-  );
-}
-
-function Eyebrow({
-  children,
-  onDark = false,
-  center = false,
-}: {
-  children: React.ReactNode;
-  onDark?: boolean;
-  center?: boolean;
-}): JSX.Element {
+function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }): JSX.Element {
   return (
     <p
-      className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] ${
+      className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-warmgold ${
         center ? 'justify-center' : ''
-      } ${onDark ? 'text-brand-warmgold' : 'text-brand-gold'}`}
+      }`}
     >
-      <span aria-hidden className={`h-px w-7 ${onDark ? 'bg-brand-warmgold/60' : 'bg-brand-gold/60'}`} />
+      <span aria-hidden className="h-px w-7 bg-brand-warmgold/60" />
       {children}
     </p>
   );
 }
 
-/** Founder video slot — YouTube embed, self-hosted MP4, or a gold-play placeholder
- *  when the src is empty. Matches the /about treatment (navy frame, warm border). */
-function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.Element {
+/** VSL slot — YouTube embed, self-hosted MP4, or a gold-play placeholder. */
+function VslVideo({ src, poster }: { src: string; poster?: string }): JSX.Element {
   const frame =
-    'relative aspect-video w-full overflow-hidden rounded-2xl border border-brand-warmgold/30 bg-brand-deep shadow-[0_1px_50px_-12px_rgba(93,46,140,0.5)]';
+    'relative aspect-video w-full overflow-hidden rounded-2xl border border-brand-warmgold/30 bg-brand-deep shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8)]';
 
   if (!src) {
     return (
       <div className={frame}>
+        <div className="absolute inset-0 grow-dotgrid opacity-50" aria-hidden />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-          <span className="flex h-16 w-16 items-center justify-center rounded-full border border-brand-warmgold/60 bg-brand-warmgold/10">
-            <Play className="ml-0.5 h-7 w-7 fill-brand-warmgold text-brand-warmgold" aria-hidden />
+          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-brand-warmgold/60 bg-brand-warmgold/10">
+            <Play className="ml-1 h-8 w-8 fill-brand-warmgold text-brand-warmgold" aria-hidden />
           </span>
           <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-warmgold/80">
-            Founder video — coming soon
+            VSL coming
           </p>
         </div>
       </div>
@@ -162,7 +81,7 @@ function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.El
       <div className={frame}>
         <iframe
           src={embed}
-          title="Amagna founder video"
+          title="Amagna AI"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="absolute inset-0 h-full w-full"
@@ -182,10 +101,10 @@ function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.El
 
 export default function GrowPage(): JSX.Element {
   return (
-    <>
-      {/* ── HEADER (minimal) ── */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-brand-deep/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-6 py-4">
+    <div className="bg-brand-deep text-brand-cream">
+      {/* ── HEADER (logo only) ── */}
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-brand-deep/85 backdrop-blur">
+        <div className="mx-auto flex w-full max-w-[1100px] items-center justify-center px-6 py-4 sm:justify-start">
           <Link href="/" aria-label="Amagna AI — home" className="flex shrink-0 items-center">
             <Image
               src="/brand/amagna-logo-gold.png"
@@ -196,235 +115,119 @@ export default function GrowPage(): JSX.Element {
               className="h-7 w-auto md:h-8"
             />
           </Link>
-          <nav className="hidden items-center gap-8 sm:flex" aria-label="Section navigation">
-            <a
-              href="#what-we-build"
-              className="text-sm font-medium text-brand-cream/70 transition-colors hover:text-brand-warmgold"
-            >
-              What we build
-            </a>
-            <a
-              href="#how-it-works"
-              className="text-sm font-medium text-brand-cream/70 transition-colors hover:text-brand-warmgold"
-            >
-              How it works
-            </a>
-          </nav>
-          <CtaButton size="sm" />
         </div>
       </header>
 
-      {/* ── HERO ── */}
-      <section className="relative isolate overflow-hidden bg-brand-deep">
+      {/* ── HERO — the VSL ── */}
+      <section className="relative isolate overflow-hidden">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 grow-dotgrid opacity-60 [mask-image:radial-gradient(ellipse_at_50%_28%,#000,transparent_72%)]" />
-          <div className="absolute -top-44 left-1/2 h-[640px] w-[940px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.22),transparent_68%)] blur-2xl" />
-          <div className="absolute -bottom-56 left-[6%] h-[440px] w-[560px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.45),transparent_70%)] blur-2xl" />
+          <div className="absolute inset-0 grow-dotgrid opacity-60 [mask-image:radial-gradient(ellipse_at_50%_30%,#000,transparent_72%)]" />
+          <div className="absolute -top-40 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.18),transparent_68%)] blur-2xl" />
+          <div className="absolute -bottom-48 left-[8%] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.5),transparent_70%)] blur-2xl" />
         </div>
-        <div className="relative mx-auto flex w-full max-w-[880px] flex-col items-center px-6 py-28 text-center sm:py-36">
-          <h1 className="text-balance font-display text-[clamp(2.6rem,7vw,4.6rem)] font-semibold leading-[1.02] tracking-[-0.02em] text-brand-cream [text-shadow:0_2px_40px_rgba(0,0,0,0.25)] motion-safe:animate-[growRiseIn_0.7s_ease-out_both]">
+        <div className="relative mx-auto w-full max-w-[860px] px-6 pb-16 pt-14 text-center sm:pb-20 sm:pt-20">
+          <div className="flex justify-center motion-safe:animate-[growRiseIn_0.7s_ease-out_both]">
+            <Eyebrow center>For Michigan business owners</Eyebrow>
+          </div>
+          <h1 className="mt-5 text-balance font-display text-[clamp(2.4rem,6.4vw,4.2rem)] font-semibold leading-[1.03] tracking-[-0.02em] text-brand-cream [text-shadow:0_2px_40px_rgba(0,0,0,0.3)] motion-safe:animate-[growRiseIn_0.7s_ease-out_0.1s_both]">
             The AI company you can <span className="text-brand-warmgold">actually</span> hire.
           </h1>
-          <p className="mt-7 max-w-[60ch] text-lg leading-[1.6] text-brand-cream/80 motion-safe:animate-[growRiseIn_0.7s_ease-out_0.12s_both] sm:text-xl">
-            A Michigan team of AI specialists who build the systems that run your marketing and
-            automations — and run them for you.
-          </p>
-          <div className="mt-10 flex w-full flex-col items-center gap-3 motion-safe:animate-[growRiseIn_0.7s_ease-out_0.24s_both] sm:w-auto sm:flex-row">
-            <CtaButton block />
+          <div className="mt-10 motion-safe:animate-[growRiseIn_0.7s_ease-out_0.2s_both]">
+            <VslVideo src={VSL_VIDEO} poster={VSL_POSTER} />
+          </div>
+          <div className="mt-8 flex justify-center motion-safe:animate-[growRiseIn_0.7s_ease-out_0.3s_both]">
             <a
-              href="#how-it-works"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-brand-cream transition-colors hover:border-white/50 hover:bg-white/5 sm:w-auto"
+              href="#system"
+              className="group inline-flex items-center justify-center gap-2 rounded-full border border-brand-warmgold/40 px-7 py-3.5 text-sm font-semibold text-brand-cream transition-colors hover:border-brand-warmgold hover:bg-white/5"
             >
-              See how it works
-              <span aria-hidden>↓</span>
+              Check Out Our AI Tools
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
             </a>
           </div>
         </div>
       </section>
 
-      {/* ── SOUND FAMILIAR? (editorial quote-flow, not boxes) ── */}
-      <section className="border-t border-brand-gold/20 bg-brand-cream">
-        <div className="mx-auto w-full max-w-[820px] px-6 py-20 sm:py-24">
-          <Reveal>
-            <Eyebrow>Sound familiar?</Eyebrow>
-          </Reveal>
-          <div className="mt-8 sm:mt-10">
-            {PROBLEMS.map((item, i) => (
-              <Reveal key={item.pain} delay={i * 90}>
-                <div
-                  className={`grid grid-cols-[auto_1fr] items-start gap-x-4 gap-y-3 py-8 sm:gap-x-7 ${
-                    i > 0 ? 'border-t border-brand-gold/20' : ''
-                  }`}
-                >
-                  <span
-                    aria-hidden
-                    className="select-none font-display text-5xl leading-[0.7] text-brand-gold/45 sm:text-6xl"
-                  >
-                    &ldquo;
-                  </span>
-                  <p className="self-center font-display text-[clamp(1.3rem,2.8vw,1.85rem)] font-semibold leading-[1.28] tracking-[-0.01em] text-brand-charcoal">
-                    {item.pain}
-                  </p>
-                  <p className="col-start-2 flex items-start gap-2.5 text-base leading-[1.6] text-brand-slate sm:text-lg">
-                    <span aria-hidden className="mt-1 h-px w-5 shrink-0 bg-brand-gold sm:mt-[0.7rem]" />
-                    <span>{item.fix}</span>
-                  </p>
-                </div>
-              </Reveal>
+      {/* ── INTRO ── */}
+      <section className="relative border-t border-white/10">
+        <div className="mx-auto w-full max-w-[760px] px-6 py-16 text-center sm:py-20">
+          <div className="flex justify-center">
+            <Eyebrow center>The system</Eyebrow>
+          </div>
+          <h2 className="mt-5 text-balance font-display text-[clamp(1.9rem,4.2vw,2.9rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-brand-cream">
+            One AI core. A team of agents. Running your business.
+          </h2>
+          <p className="mx-auto mt-5 max-w-[56ch] text-lg leading-[1.6] text-brand-cream/70">
+            Built around your marketing, your operations, and how you actually work — installed and
+            run for you.
+          </p>
+        </div>
+      </section>
+
+      {/* ── THE ARTIFACT ── */}
+      <section
+        id="system"
+        className="relative isolate scroll-mt-24 overflow-hidden border-t border-white/10"
+      >
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(93,46,140,0.4),transparent_65%)] blur-2xl" />
+        </div>
+        <div className="relative mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-24">
+          <AgentMap />
+        </div>
+      </section>
+
+      {/* ── WHAT WE BUILD ── */}
+      <section className="relative border-t border-white/10">
+        <div className="mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-20">
+          <div className="flex justify-center">
+            <Eyebrow center>What we build</Eyebrow>
+          </div>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {BUILDS.map((b) => (
+              <div
+                key={b.title}
+                className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-gold/40 hover:bg-white/[0.05]"
+              >
+                <span
+                  aria-hidden
+                  className="block h-px w-8 bg-gradient-to-r from-brand-gold to-brand-warmgold"
+                />
+                <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-brand-cream">
+                  {b.title}
+                </h3>
+                <p className="mt-2 text-sm leading-[1.6] text-brand-cream/65">{b.body}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── WHAT WE BUILD ── */}
-      <section id="what-we-build" className="scroll-mt-20 border-t border-brand-gold/20 bg-white">
-        <div className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-24">
-          <Reveal>
-            <Eyebrow>What we build</Eyebrow>
-            <h2 className="mt-5 max-w-[24ch] text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">
-              Five Ways Our AI Works for You
-            </h2>
-          </Reveal>
-          <WaysToggle ways={BUILDS} />
-          <Reveal delay={120}>
-            <div className="mt-12 flex flex-col items-start gap-5 rounded-2xl border border-brand-gold/30 bg-brand-cream p-7 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-display text-lg font-semibold text-brand-charcoal">
-                Not sure which fits? Book a call — we’ll figure it out.
-              </p>
-              <CtaButton block className="shrink-0" />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FOUNDER VIDEO (frame 4) — dark moment ── */}
-      <section className="relative isolate overflow-hidden border-t border-brand-gold/20 bg-brand-deep">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 grow-dotgrid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_42%,#000,transparent_72%)]" />
-          <div className="absolute left-1/2 top-1/3 h-[440px] w-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl" />
-        </div>
-        <div className="relative mx-auto w-full max-w-[900px] px-6 py-20 text-center sm:py-24">
-          <Reveal>
-            <Eyebrow onDark center>
-              A message from our founder
-            </Eyebrow>
-            <div className="mt-10">
-              <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
-            </div>
-            <p className="mt-5 text-sm font-medium text-brand-cream/70">
-              Andrew Gladki, Founder of Amagna AI.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── HOW WE ACTUALLY WORK ── */}
-      <section id="how-it-works" className="scroll-mt-20 border-t border-brand-gold/20 bg-brand-cream">
-        <div className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-24">
-          <Reveal>
-            <Eyebrow>How it works</Eyebrow>
-            <h2 className="mt-5 max-w-[20ch] text-balance font-display text-[clamp(2rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">
-              Four Steps. No Mystery.
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-lg leading-[1.6] text-brand-slate">
-              One week to a live system. We move fast — no six-month timelines.
-            </p>
-          </Reveal>
-
-          <div className="relative mt-14">
-            {/* desktop connector line behind the step numbers */}
-            <div
-              aria-hidden
-              className="absolute inset-x-8 top-8 hidden h-px bg-gradient-to-r from-brand-gold/0 via-brand-gold/50 to-brand-gold/0 lg:block"
-            />
-            <ol className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-              {STEPS.map((step, i) => (
-                <Reveal key={step.title} delay={i * 90}>
-                  <li className="relative">
-                    <span className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-brand-gold/40 bg-brand-deep font-display text-2xl font-semibold text-brand-warmgold shadow-[0_14px_34px_-14px_rgba(26,14,54,0.85)] ring-1 ring-inset ring-white/5">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className="mt-6 font-display text-xl font-semibold leading-snug text-brand-charcoal">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2.5 leading-[1.6] text-brand-slate">{step.body}</p>
-                  </li>
-                </Reveal>
-              ))}
-            </ol>
-          </div>
-
-          <Reveal delay={120}>
-            <p className="mt-12 max-w-[60ch] text-balance leading-[1.7] text-brand-slate">
-              From one automation to a fully autonomous operation — we scope it to your business.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── CLOSE: who this is for → final CTA (one connected frame) ── */}
-      <section className="relative isolate overflow-hidden border-t border-brand-gold/20 bg-brand-deep">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 grow-dotgrid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_50%,#000,transparent_75%)]" />
-          <div className="absolute -top-40 right-[10%] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.14),transparent_70%)] blur-2xl" />
-          <div className="absolute -bottom-32 left-1/2 h-[460px] w-[760px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl" />
-        </div>
-        <div className="relative mx-auto w-full max-w-[820px] px-6 py-24 text-center sm:py-32">
-          <Reveal>
-            <Eyebrow onDark center>
-              Who this is for
-            </Eyebrow>
-            <p className="mx-auto mt-8 max-w-[40ch] text-balance font-display text-[clamp(1.5rem,3.2vw,2.2rem)] font-semibold leading-[1.3] tracking-[-0.01em] text-brand-cream">
-              For Michigan owners who measure growth in customers, not logins. Local services,
-              practices, multi-location teams — people who’d rather hand off the work than learn
-              another dashboard.
-            </p>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="mx-auto mt-14 max-w-[46ch] border-t border-brand-warmgold/25 pt-12">
-              <h2 className="text-balance font-display text-[clamp(1.9rem,4.4vw,3rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-cream">
-                Let’s figure out what your business actually needs.
-              </h2>
-              <p className="mt-5 text-lg leading-[1.6] text-brand-cream/80">
-                No jargon. No pressure. One honest conversation.
-              </p>
-              <div className="mt-9 flex justify-center">
-                <CtaButton block />
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ── FOOTER (minimal) ── */}
-      <footer className="border-t border-white/10 bg-brand-deep">
-        <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-7 px-6 py-12 text-center sm:flex-row sm:justify-between sm:text-left">
-          <div className="flex flex-col items-center gap-3 sm:items-start">
-            <Image
-              src="/brand/amagna-logo-gold.png"
-              alt="Amagna AI"
-              width={2276}
-              height={492}
-              className="h-7 w-auto"
-            />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-cream/60">
-              Proudly Michigan.
-            </p>
-          </div>
-          <div className="flex flex-col items-center gap-4 sm:items-end">
-            <CtaButton size="sm" />
-            <div className="flex items-center gap-4 text-xs text-brand-cream/50">
-              <Link href="/privacy" className="transition-colors hover:text-brand-warmgold">
-                Privacy
-              </Link>
-              <span aria-hidden>·</span>
-              <Link href="/terms" className="transition-colors hover:text-brand-warmgold">
-                Terms
-              </Link>
-            </div>
+      {/* ── FOOTER (minimal, legal only — no CTA) ── */}
+      <footer className="border-t border-white/10 pb-28 pt-12 sm:pb-32">
+        <div className="mx-auto flex w-full max-w-[1100px] flex-col items-center gap-5 px-6 text-center">
+          <Image
+            src="/brand/amagna-logo-gold.png"
+            alt="Amagna AI"
+            width={2276}
+            height={492}
+            className="h-7 w-auto"
+          />
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-cream/55">
+            Proudly Michigan.
+          </p>
+          <div className="flex items-center gap-4 text-xs text-brand-cream/45">
+            <Link href="/privacy" className="transition-colors hover:text-brand-warmgold">
+              Privacy
+            </Link>
+            <span aria-hidden>·</span>
+            <Link href="/terms" className="transition-colors hover:text-brand-warmgold">
+              Terms
+            </Link>
           </div>
         </div>
       </footer>
-    </>
+
+      <StickyCta />
+    </div>
   );
 }
