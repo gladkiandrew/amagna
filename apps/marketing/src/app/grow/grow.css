@@ -78,3 +78,50 @@ html {
     background-position: -200% 0;
   }
 }
+
+/*
+ * Second Brain artifact — gold pulses travelling each connector (agent -> core)
+ * and a soft breathing core glow. Motion-safe only: with reduced motion the
+ * pulses stay hidden and the static traces + core remain.
+ */
+.sb-pulse {
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(212, 183, 115, 0.85));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sbFlow {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
+  .sb-pulse {
+    animation: sbFlow 2.6s ease-in-out infinite;
+  }
+
+  @keyframes sbCoreGlow {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+
+  .sb-core-glow {
+    animation: sbCoreGlow 3.4s ease-in-out infinite;
+  }
+}
