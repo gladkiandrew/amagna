@@ -1,6 +1,21 @@
 import type { CSSProperties } from 'react';
-import { HeroOcean } from './hero-ocean';
+import { HeroOceanLazy } from './hero-ocean-lazy';
 import { VoyageCtas } from '@/components/home/voyage-cta';
+
+// Static, server-rendered first paint that matches the ocean's dusk grade
+// (deep navy water + warm gold/orange afterglow at the raised horizon, per the
+// engine palette in hero-ocean-gl-engine.ts). Pure CSS = paints instantly with
+// the HTML, so the hero is on-brand from the first frame; the real WebGL ocean
+// fades in over it a beat later. It's also the permanent backdrop for
+// reduced-motion / no-JS / no-WebGL users. A CSS background is not "contentful",
+// so it is never the LCP element.
+const HERO_BACKDROP: CSSProperties = {
+  backgroundColor: '#05080F',
+  backgroundImage: [
+    'radial-gradient(135% 62% at 50% 63%, rgba(252,189,87,0.20) 0%, rgba(245,117,46,0.10) 32%, rgba(5,8,15,0) 60%)',
+    'linear-gradient(180deg, #070b16 0%, #0b1122 34%, #191627 50%, #34232f 57%, #6d3f28 61%, #21151f 66%, #060a15 100%)',
+  ].join(', '),
+};
 
 /**
  * Hero v2 (Frame 1) — a photoreal, full-bleed ocean behind centered copy.
@@ -21,8 +36,14 @@ export function HeroV2(): JSX.Element {
       aria-labelledby="hero-v2-title"
       className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-[#05080F] text-brand-cream"
     >
-      {/* Photoreal ocean — decorative, full-bleed, behind everything (z-0). */}
-      <HeroOcean className="absolute inset-0 -z-0 h-full w-full" />
+      {/* Static gradient first paint (server-rendered, instant, on-brand). Sits
+          furthest back; the ocean fades in over it and reduced-motion/no-JS
+          users keep it as the backdrop. */}
+      <div aria-hidden className="absolute inset-0 -z-10" style={HERO_BACKDROP} />
+
+      {/* Photoreal ocean — decorative, full-bleed, deferred + faded in so it is
+          off the LCP critical path (see hero-ocean-lazy.tsx). */}
+      <HeroOceanLazy className="absolute inset-0 -z-0 h-full w-full" />
 
       {/* Legibility scrim — a soft, focused halo behind the centered copy. The
           sunset sun + glitter road run down the centre, so this keeps the cream
@@ -48,7 +69,7 @@ export function HeroV2(): JSX.Element {
       >
         <h1
           id="hero-v2-title"
-          className="hero-rise font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
+          className="hero-rise-solid font-display font-semibold leading-[1.0] tracking-[-0.024em] [text-shadow:0_2px_30px_rgba(4,7,13,0.88),0_0_64px_rgba(4,7,13,0.6)]"
           style={{ '--i': 0 } as CSSProperties}
         >
           <span className="block text-[clamp(1.6rem,6.4vw,5.4rem)]">Autonomous</span>

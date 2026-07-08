@@ -280,12 +280,17 @@ export function VoyageReveal(): JSX.Element {
           className="absolute left-0 top-[8vh] z-[3] w-[38%]"
           style={{ transform: 'translate3d(120%,0,0) translateX(-50%)', opacity: 0 }}
         >
+          {/* Frame 2 is below the hero fold — these ship renders (≈523KB
+              together) must NOT be priority/eager. Eager-loading them starved
+              the hero's Fraunces font on the network and pushed the H1's LCP
+              paint out to ~7s. loading="lazy" lets them fetch as the crew frame
+              approaches the viewport, so the hero font (and LCP) win the race. */}
           <Image
             src="/brand/ship-crew-full.webp"
             alt=""
             width={2000}
             height={1125}
-            priority
+            loading="lazy"
             className={`h-auto w-full drop-shadow-[0_30px_50px_rgba(0,0,0,0.55)] transition-opacity duration-500 ${empty ? 'opacity-0' : 'opacity-100'}`}
           />
           <Image
@@ -293,6 +298,7 @@ export function VoyageReveal(): JSX.Element {
             alt=""
             width={2000}
             height={1125}
+            loading="lazy"
             className={`absolute inset-0 h-auto w-full drop-shadow-[0_30px_50px_rgba(0,0,0,0.55)] transition-opacity duration-500 ${empty ? 'opacity-100' : 'opacity-0'}`}
           />
         </div>
@@ -343,6 +349,7 @@ export function VoyageReveal(): JSX.Element {
                     src={`/brand/crew/${member.slug}.webp`}
                     alt={`${member.name}, ${member.title}`}
                     fill
+                    loading="lazy"
                     sizes="(min-width:1024px) 18vw, (min-width:640px) 30vw, 45vw"
                     className="object-cover object-[center_22%] transition-transform duration-500 ease-voyage group-hover:scale-[1.04]"
                   />

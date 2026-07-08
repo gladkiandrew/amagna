@@ -16,6 +16,9 @@ const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+  // Mono is only used for small labels below the fold — don't preload it (it
+  // was competing on the network with the hero's display font and delaying LCP).
+  preload: false,
 });
 
 // Fraunces — display serif for headlines/wordmark on the voyage homepage.
@@ -25,7 +28,11 @@ const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
   display: 'swap',
-  style: ['normal', 'italic'],
+  // Normal only. Italic isn't used above the fold (just blog blockquotes, which
+  // fall back to a synthesized slant) — dropping it removes a second Fraunces
+  // file that was competing on the network with the hero H1's font and delaying
+  // LCP. The H1 (normal + opsz) renders identically.
+  style: ['normal'],
   // Optical-size axis: at hero display sizes Fraunces tightens + sharpens
   // (proper opsz rendering instead of the text-optical default).
   axes: ['opsz'],

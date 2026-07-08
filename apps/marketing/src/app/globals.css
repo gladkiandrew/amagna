@@ -238,6 +238,26 @@
   will-change: opacity, transform;
 }
 
+/* Transform-only entrance for the LCP element (the hero H1). Rises identically
+   to .hero-rise but never starts at opacity:0 — an element that begins hidden
+   and fades in is disqualified as a Largest-Contentful-Paint candidate (Lantern
+   lab model), which pushed LCP onto a mis-timed fallback element. Painting the
+   headline at full opacity from frame 0 (still sliding up) makes it the LCP and
+   it registers at first paint. Same rise, same timing; just no fade on the H1. */
+@keyframes heroRiseSolid {
+  from {
+    transform: translateY(26px);
+  }
+  to {
+    transform: none;
+  }
+}
+.hero-rise-solid {
+  animation: heroRiseSolid 0.95s var(--ease-voyage) forwards;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.16s);
+  will-change: transform;
+}
+
 /* Thin gold hairline rule beneath the hero headline (editorial, left-anchored). */
 .gold-rule {
   height: 1px;
@@ -291,9 +311,11 @@
     will-change: auto;
   }
   /* Hero entrance: skip the stagger, land on the final frame. */
-  .hero-rise {
+  .hero-rise,
+  .hero-rise-solid {
     opacity: 1;
     animation: none;
+    transform: none;
     will-change: auto;
   }
 }
