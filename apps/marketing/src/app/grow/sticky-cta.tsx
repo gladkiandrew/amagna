@@ -6,32 +6,29 @@ import { CALCOM_DIRECT_URL } from '@/lib/site';
 
 /**
  * The page's ONE Book-a-Call. A full-width bar pinned to the bottom that slides
- * up once the visitor scrolls past the hero/VSL (so it never covers the video).
- * Safe-area inset on mobile; gold shimmer to draw the eye.
+ * up the first time the visitor scrolls down and then STAYS for the rest of the
+ * page (latched — it never hides again). Safe-area inset on mobile; gold shimmer.
  */
 export function StickyCta(): JSX.Element {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Show as soon as the hero/VSL is scrolled past (the sentinel sits at the end
-    // of the hero). Falls back to a viewport-fraction check if the sentinel is
-    // missing for any reason.
-    const sentinel = document.getElementById('grow-hero-end');
-    if (sentinel) {
-      const io = new IntersectionObserver(
-        ([e]) => setShow(!e.isIntersecting && e.boundingClientRect.top < 0),
-        { threshold: 0 },
-      );
-      io.observe(sentinel);
-      return () => io.disconnect();
+    const THRESHOLD = 40; // px of scroll before the bar latches in
+    if (window.scrollY > THRESHOLD) {
+      setShow(true);
+      return;
     }
     let raf = 0;
     const onScroll = () => {
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => setShow(window.scrollY > window.innerHeight * 0.6));
+      raf = requestAnimationFrame(() => {
+        if (window.scrollY > THRESHOLD) {
+          setShow(true); // latch on — once shown, it stays for the rest of the page
+          window.removeEventListener('scroll', onScroll);
+        }
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
     return () => {
       window.removeEventListener('scroll', onScroll);
       cancelAnimationFrame(raf);

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDown, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { Reveal } from './reveal';
 import { SecondBrain } from './second-brain';
 import { StickyCta } from './sticky-cta';
@@ -34,11 +34,26 @@ export const metadata: Metadata = {
 
 // Five ways, one punchy line each — the core pitch of the page.
 const WAYS: readonly { lead: string; rest: string }[] = [
-  { lead: 'Runs your marketing', rest: 'ads, content, and follow-up, built and run for you.' },
-  { lead: 'Automates your operations', rest: 'booking, reviews, and follow-up, handled 24/7.' },
-  { lead: 'Gets you found', rest: 'ranked on Google and recommended inside AI answers.' },
-  { lead: 'Installed in person', rest: 'bigger builds, mapped on-site and wired into your tools.' },
-  { lead: 'Built around you', rest: 'we find where AI pays off, and build it.' },
+  {
+    lead: 'Runs your marketing.',
+    rest: 'Ads, content, and social — created, posted, and managed for you.',
+  },
+  {
+    lead: 'Automates your operations.',
+    rest: 'Bookings, reviews, and follow-up, handled 24/7 without you touching it.',
+  },
+  {
+    lead: 'Gets you found.',
+    rest: 'Ranked on Google and recommended inside AI answers (SEO + AEO).',
+  },
+  {
+    lead: 'Installs in person.',
+    rest: 'Bigger builds mapped on-site — custom AI wired into your business.',
+  },
+  {
+    lead: 'Builds around you.',
+    rest: 'We find where AI pays off in your business, then build exactly that.',
+  },
 ];
 
 function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }): JSX.Element {
@@ -131,7 +146,7 @@ function FunnelVideo({
 
 export default function GrowPage(): JSX.Element {
   return (
-    <div className="bg-brand-deep text-brand-cream">
+    <div className="overflow-x-clip bg-brand-deep text-brand-cream">
       {/* ── 0. HEADER (logo only) ── */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-brand-deep/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-[1100px] items-center justify-center px-6 py-4 sm:justify-start">
@@ -148,8 +163,8 @@ export default function GrowPage(): JSX.Element {
         </div>
       </header>
 
-      {/* ── 1. HERO — full-bleed brand teaser (no text; the video IS the hero) ── */}
-      <section className="relative h-[100dvh] min-h-[540px] w-full overflow-hidden bg-brand-deep">
+      {/* ── 1. HERO — brand teaser, edge-to-edge, natural 16:9 (no text, no border, no crop) ── */}
+      <section className="relative w-full overflow-hidden bg-brand-deep">
         <video
           autoPlay
           muted
@@ -157,37 +172,20 @@ export default function GrowPage(): JSX.Element {
           playsInline
           preload="metadata"
           poster={TEASER_POSTER}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="block aspect-video w-full object-cover"
         >
           <source src={TEASER_VIDEO} type="video/mp4" />
         </video>
-        {/* soft base vignette so the scroll cue reads and the hero melts into the page */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-deep to-transparent"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-7 flex justify-center text-brand-warmgold/70"
-        >
-          <ChevronDown className="h-6 w-6 motion-safe:animate-bounce" />
-        </div>
       </section>
 
       {/* sentinel — sticky CTA slides up once this scrolls past the top */}
       <div id="grow-hero-end" aria-hidden className="h-px w-full" />
 
-      {/* ── 2. VSL — how we build it (filmed) ── */}
-      <section className="relative border-t border-white/10">
-        <div className="mx-auto w-full max-w-[920px] px-6 py-16 text-center sm:py-20">
+      {/* ── 2. VSL — the sales video, right as the funnel opens (no headline, flush to the teaser) ── */}
+      <section className="relative">
+        <div className="mx-auto w-full max-w-[920px] px-4 pb-14 text-center sm:px-6 sm:pb-20">
           <Reveal>
-            <h2 className="font-display text-[clamp(1.5rem,3.4vw,2.25rem)] font-semibold leading-[1.12] tracking-[-0.02em] text-brand-cream">
-              Watch How We Build Our AI System in{' '}
-              <span className="text-brand-warmgold">90 Seconds</span>
-            </h2>
-            <div className="mt-8">
-              <FunnelVideo src={VSL_VIDEO} poster={VSL_POSTER} mode="vsl" label="VSL coming" />
-            </div>
+            <FunnelVideo src={VSL_VIDEO} poster={VSL_POSTER} mode="vsl" label="VSL coming" />
             <p className="mx-auto mt-4 max-w-[56ch] text-sm italic leading-[1.6] text-brand-cream/55">
               90 seconds on the AI system we install to run your marketing and operations.
             </p>
@@ -209,16 +207,16 @@ export default function GrowPage(): JSX.Element {
           <ul className="mx-auto mt-12 max-w-[720px] divide-y divide-white/10">
             {WAYS.map((way, i) => (
               <Reveal key={way.lead} delay={i * 70}>
-                <li className="group flex items-baseline gap-4 py-5 sm:gap-6">
+                <li className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-4 py-5 sm:gap-6">
                   <span
                     aria-hidden
                     className="font-display text-sm font-semibold tabular-nums text-brand-warmgold/60 sm:text-base"
                   >
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p className="text-[clamp(1.1rem,2.6vw,1.5rem)] leading-snug tracking-[-0.01em]">
-                    <span className="font-display font-semibold text-brand-cream">{way.lead}</span>
-                    <span className="text-brand-cream/55"> — {way.rest}</span>
+                  <p className="min-w-0 text-pretty text-[clamp(1.1rem,2.6vw,1.5rem)] leading-snug tracking-[-0.01em]">
+                    <span className="font-display font-semibold text-brand-cream">{way.lead}</span>{' '}
+                    <span className="text-brand-cream/55">{way.rest}</span>
                   </p>
                 </li>
               </Reveal>
@@ -230,7 +228,7 @@ export default function GrowPage(): JSX.Element {
       {/* ── 4. SECOND BRAIN — the agent system artifact ── */}
       <section id="second-brain" className="relative isolate overflow-hidden border-t border-white/10">
         <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-[520px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.32),transparent_68%)] blur-2xl" />
+          <div className="absolute left-1/2 top-1/2 h-[520px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.32),transparent_68%)] blur-2xl sm:w-[760px]" />
         </div>
         <div className="relative mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-24">
           <Reveal>
@@ -256,7 +254,7 @@ export default function GrowPage(): JSX.Element {
       <section className="relative isolate overflow-hidden border-t border-white/10">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 grow-dotgrid opacity-50 [mask-image:radial-gradient(ellipse_at_50%_50%,#000,transparent_72%)]" />
-          <div className="absolute left-1/2 top-1/2 h-[420px] w-[680px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl" />
+          <div className="absolute left-1/2 top-1/2 h-[420px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(201,169,97,0.16),transparent_70%)] blur-2xl sm:w-[680px]" />
         </div>
         <div className="relative mx-auto w-full max-w-[680px] px-6 py-24 text-center sm:py-28">
           <Reveal>
