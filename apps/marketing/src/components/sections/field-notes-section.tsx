@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { getPublishedPosts } from '@/lib/sapt-blog';
-import { formatPostDate } from '@/lib/blog-types';
 
 /**
  * Field Notes — a compact "recent blog posts" section for the bottom of the
@@ -55,14 +54,7 @@ export async function FieldNotesSection({
               >
                 <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-gold">
                   <span>{post.category}</span>
-                  {post.publishedAt && (
-                    <>
-                      <span aria-hidden className="text-brand-lightgray">·</span>
-                      <time dateTime={post.publishedAt} className="text-brand-slate">
-                        {formatPostDate(post.publishedAt)}
-                      </time>
-                    </>
-                  )}
+                  {/* Visible publish date intentionally omitted (2026-07-08). */}
                 </div>
                 <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-brand-charcoal transition-colors group-hover:text-brand-purple">
                   {post.title}

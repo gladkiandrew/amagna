@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { getPostBySlug, getPublishedPosts } from '@/lib/sapt-blog';
-import { formatPostDate } from '@/lib/blog-types';
 import { renderMarkdown } from '@/lib/markdown';
 import { SITE, OG_IMAGE_ABSOLUTE, absoluteUrl } from '@/lib/site';
 import { ArticleHero } from '@/components/blog/article-hero';
@@ -40,7 +39,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description,
       type: 'article',
       url: canonical,
-      publishedTime: post.publishedAt || undefined,
+      // Dateless strategy: no article:published_time so shares don't broadcast age.
       authors: [post.author],
       images: ogImages,
       ...(post.heroVideo ? { videos: [{ url: absoluteUrl(post.heroVideo)! }] } : {}),
@@ -63,7 +62,10 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.seoDescription ?? post.excerpt,
-    ...(post.publishedAt ? { datePublished: post.publishedAt, dateModified: post.publishedAt } : {}),
+    // Dateless strategy (Andrew's call, 2026-07-08): omit datePublished so posts
+    // don't broadcast age. dateModified stays REAL (never backdated/fabricated) —
+    // it's the true last-known change date from the CMS.
+    ...(post.publishedAt ? { dateModified: post.publishedAt } : {}),
     author: { '@type': 'Person', name: post.author },
     publisher: {
       '@type': 'Organization',
@@ -120,14 +122,8 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
 
         <div className="mt-8 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-gold">
           <span>{post.category}</span>
-          {post.publishedAt && (
-            <>
-              <span aria-hidden className="text-brand-lightgray">·</span>
-              <time dateTime={post.publishedAt} className="text-brand-slate">
-                {formatPostDate(post.publishedAt)}
-              </time>
-            </>
-          )}
+          {/* Visible publish date intentionally omitted (Andrew's call, 2026-07-08).
+              Real dates stay in metadata/sitemap; nothing is shown on-page. */}
         </div>
 
         <h1 className="mt-4 text-balance font-display text-[clamp(2rem,4.8vw,3.2rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-brand-charcoal">

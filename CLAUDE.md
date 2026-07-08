@@ -218,6 +218,7 @@ When working on Sapt integration code, see `packages/sapt-client/` (to be create
 - Amagna's `projectId` = `799ad3ab-fd21-4017-a45a-05b8e6f3cf75`.
 - 401 = missing/invalid key. Per Ben (Sapt co-founder), Sapt API keys display as "no scope / no permissions / expires never" by default — that is NORMAL and the key still works; scopes are not the blocker. If a CMS read 401s, suspect (a) the key not set on the Worker, (b) an env-var-name mismatch, or (c) a wrong endpoint path — NOT missing scope.
 - Blog content type slug: `blog-post`. Only items with `publishStatus: 'published'` render publicly.
+- **Dateless blogs (Andrew's call, 2026-07-08):** blog posts carry REAL dates in metadata (Sapt `publishedAt`, sitemap `lastmod`, schema `dateModified`) but show **NO visible date** anywhere in rendered UI — no byline date on posts, index cards, niche related-posts, or the homepage Field Notes strip. Hard rule: **never backdate or fabricate a date** in schema, sitemap, or OG. The `Article` JSON-LD omits `datePublished` (keeps real `dateModified`); OG omits `article:published_time`. New posts publish with real dates in metadata; visible dates stay OFF until Andrew says otherwise. `formatPostDate()` (`lib/blog-types.ts`) is retained but intentionally unused — the switch to flip dates back on.
 - Secrets: `SAPT_API_KEY` is a real secret (Worker secret + `.env.local`). `SAPT_PROJECT_ID` and the base URL are non-secret. NEVER paste the key into chat/transcripts — reference by env var name only.
 
 ---

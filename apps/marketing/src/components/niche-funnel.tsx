@@ -6,7 +6,6 @@ import { FaqSection } from '@/components/sections/faq-section';
 import { BOOK_A_CALL_HREF, AUDIT_HREF, SITE } from '@/lib/site';
 import type { NicheContent } from '@/lib/niches';
 import { getPublishedPosts } from '@/lib/sapt-blog';
-import { formatPostDate } from '@/lib/blog-types';
 
 type NicheFunnelProps = {
   content: NicheContent;
@@ -251,7 +250,7 @@ export async function NicheFunnel({ content }: NicheFunnelProps): Promise<JSX.El
                 >
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-antique-gold">
                     {post.category}
-                    {post.publishedAt ? ` · ${formatPostDate(post.publishedAt)}` : ''}
+                    {/* Visible publish date intentionally omitted (2026-07-08). */}
                   </p>
                   <h3 className="mt-2 text-lg font-semibold leading-snug text-ink">{post.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{post.excerpt}</p>
