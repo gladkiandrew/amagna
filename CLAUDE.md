@@ -194,6 +194,9 @@ Crew portraits live at `apps/marketing/public/brand/crew/<slug>.webp`. Ship rend
 **Crew as dispatchable agents (added 2026-06-21):** the 5 crew are real Claude Code subagents at `.claude/agents/amagna/<id>.md` — no `model` field (they inherit this session), all `spawn_on_demand`. Human-readable roster (read by no tool): `.ruflo/agents.yaml`.
 Each agent logs to its own file under `docs/memory/` (`fleet-status.md`, `active-tasks.md`, `content-pipeline.md`, `memory-health.md`, `outreach-log.md`, `client-roster.md`); **Zeno** convenes the `/zeno` council and writes the operator brief. Niche positioning lives in `docs/memory/niche-context.md`.
 
+**Canonical crew roster + no-new-agents rule (Andrew's call, 2026-07-08):** the vault's `Amagna/Agents/` identity notes (in `~/dev/amagna-vault`) are the **single canonical source of truth for the crew**. Every runtime — Claude Code subagents in `.claude/agents/amagna/`, `.ruflo/agents.yaml`, and CoWork scheduled tasks — must match a chartered agent in the vault roster. **No new agent is created or committed without Andrew's explicit approval of its charter.** Do not invent, rename, or repurpose crew members autonomously.
+- **Lumen (Motion & Animation Specialist)** exists as a repo subagent (`.claude/agents/amagna/lumen.md`) but is **PENDING Andrew's charter review** — it has no vault charter yet. Lumen stays, but treat it as provisional until Andrew writes/approves its `Amagna/Agents/Lumen.md` identity note.
+
 ---
 
 ## Sapt integration
