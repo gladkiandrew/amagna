@@ -1,11 +1,28 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Building2, MapPinned, Users, ArrowRight } from 'lucide-react';
+import { OG_IMAGE } from '@/lib/site';
+
+const DESCRIPTION =
+  'For multi-location operators, home services companies with multiple Google Business Profiles, and brokerages with several agents. Custom scope, custom pricing, founder-reviewed.';
 
 export const metadata: Metadata = {
   title: 'Custom solutions',
-  description:
-    'For multi-location operators, home services companies with multiple Google Business Profiles, and brokerages with several agents. Custom scope, custom pricing, founder-reviewed.',
+  description: DESCRIPTION,
+  alternates: { canonical: '/custom' },
+  openGraph: {
+    title: 'Custom solutions — Amagna AI',
+    description: DESCRIPTION,
+    type: 'website',
+    url: '/custom',
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Custom solutions — Amagna AI',
+    description: DESCRIPTION,
+    images: [OG_IMAGE.url],
+  },
 };
 
 const EXAMPLES = [

@@ -39,6 +39,18 @@ export async function NicheFunnel({ content }: NicheFunnelProps): Promise<JSX.El
     url: `${SITE.url}/${content.slug}`,
   };
 
+  // Breadcrumb: Home › Who We Serve › <niche>. Places the niche hub in the site
+  // hierarchy for search + AEO.
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+      { '@type': 'ListItem', position: 2, name: 'Who We Serve', item: `${SITE.url}/who-we-serve` },
+      { '@type': 'ListItem', position: 3, name: content.eyebrow, item: `${SITE.url}/${content.slug}` },
+    ],
+  };
+
   // Related posts, filtered by this niche's category (case-insensitive
   // contains). getPublishedPosts never throws and falls back; we just take the
   // two newest matches and hide the section if there are none yet.
@@ -50,7 +62,7 @@ export async function NicheFunnel({ content }: NicheFunnelProps): Promise<JSX.El
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([serviceSchema, breadcrumbSchema]) }}
       />
       {/* Hero */}
       <section className="mx-auto w-full max-w-[1100px] px-6 py-20 sm:py-28">

@@ -8,7 +8,7 @@ import { FieldNotesSection } from '@/components/sections/field-notes-section';
 import { OG_IMAGE } from '@/lib/site';
 
 const HOME_DESCRIPTION =
-  'Amagna AI builds autonomous marketing systems — the machine that runs your marketing and the content that fuels it — for any operator who wants growth that runs itself, with deep playbooks for home services and real estate. Get your free Gold Map.';
+  'Amagna AI is an AI marketing agency for operators who want growth that runs itself: we build your marketing system — website, funnels, managed ads, AI video, local SEO — and a crew of AI agents that runs it. Based in Saginaw, Michigan; plans from $50/mo to $2,000/mo. Get your free Gold Map.';
 
 export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     type: 'website',
     url: '/',
     images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Amagna AI — Marketing that runs itself',
+    description: HOME_DESCRIPTION,
+    images: [OG_IMAGE.url],
   },
 };
 

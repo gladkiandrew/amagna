@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getPostBySlug, getPublishedPosts } from '@/lib/sapt-blog';
 import { formatPostDate } from '@/lib/blog-types';
 import { renderMarkdown } from '@/lib/markdown';
-import { SITE, OG_IMAGE } from '@/lib/site';
+import { SITE, OG_IMAGE_ABSOLUTE, absoluteUrl } from '@/lib/site';
 import { ArticleHero } from '@/components/blog/article-hero';
 
 type Params = { params: { slug: string } };
@@ -24,26 +24,28 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!post) return { title: 'Post not found' };
   const title = post.seoTitle ?? post.title;
   const description = post.seoDescription ?? post.excerpt;
+  // Absolute URLs for social scrapers (LinkedIn requires them; it won't resolve
+  // relative og:image/og:url via metadataBase the way a browser does).
+  const canonical = `${SITE.url}/blog/${post.slug}`;
+  const heroImg = absoluteUrl(post.heroPoster) ?? absoluteUrl(post.heroImage);
+  const ogImages = heroImg ? [{ url: heroImg }] : [OG_IMAGE_ABSOLUTE];
+  const ogImageUrl = heroImg ?? OG_IMAGE_ABSOLUTE.url;
   return {
     title,
     description,
     keywords: post.targetKeywords.length ? post.targetKeywords : undefined,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical },
     openGraph: {
       title: `${title} · Amagna AI`,
       description,
       type: 'article',
-      url: `/blog/${post.slug}`,
+      url: canonical,
       publishedTime: post.publishedAt || undefined,
       authors: [post.author],
-      images: post.heroPoster
-        ? [{ url: post.heroPoster }]
-        : post.heroImage
-          ? [{ url: post.heroImage }]
-          : [OG_IMAGE],
-      ...(post.heroVideo ? { videos: [{ url: post.heroVideo }] } : {}),
+      images: ogImages,
+      ...(post.heroVideo ? { videos: [{ url: absoluteUrl(post.heroVideo)! }] } : {}),
     },
-    twitter: { card: 'summary_large_image', title, description },
+    twitter: { card: 'summary_large_image', title, description, images: [ogImageUrl] },
   };
 }
 
@@ -52,6 +54,9 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
   if (!post) notFound();
 
   const html = renderMarkdown(post.body);
+
+  // Absolute image for schema (same normalization as the OG tags).
+  const schemaImg = absoluteUrl(post.heroPoster) ?? absoluteUrl(post.heroImage);
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -66,19 +71,15 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
       logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/amagna-logo-mark.svg` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE.url}/blog/${post.slug}` },
-    ...(post.heroPoster || post.heroImage
-      ? { image: post.heroPoster ?? post.heroImage }
-      : {}),
+    ...(schemaImg ? { image: schemaImg } : {}),
     ...(post.heroVideo
       ? {
           video: {
             '@type': 'VideoObject',
             name: post.title,
             description: post.seoDescription ?? post.excerpt,
-            contentUrl: post.heroVideo,
-            ...(post.heroPoster ?? post.heroImage
-              ? { thumbnailUrl: post.heroPoster ?? post.heroImage }
-              : {}),
+            contentUrl: absoluteUrl(post.heroVideo),
+            ...(schemaImg ? { thumbnailUrl: schemaImg } : {}),
             ...(post.publishedAt ? { uploadDate: post.publishedAt } : {}),
           },
         }
@@ -86,11 +87,27 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
     ...(post.targetKeywords.length ? { keywords: post.targetKeywords.join(', ') } : {}),
   };
 
+  // Breadcrumb trail: Home › Field Notes › <post>. Helps search + AEO place the
+  // article in the site hierarchy.
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE.url },
+      { '@type': 'ListItem', position: 2, name: 'Field Notes', item: `${SITE.url}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `${SITE.url}/blog/${post.slug}` },
+    ],
+  };
+
   return (
     <article className="bg-brand-cream">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="mx-auto w-full max-w-[760px] px-6 py-16 sm:py-24">
         <Link

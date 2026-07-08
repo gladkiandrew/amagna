@@ -18,6 +18,12 @@ export const metadata: Metadata = {
     url: `/${C.slug}`,
     images: [OG_IMAGE],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: C.metaTitle,
+    description: C.metaDescription,
+    images: [OG_IMAGE.url],
+  },
 };
 
 export default function MedSpaMarketingPage(): JSX.Element {

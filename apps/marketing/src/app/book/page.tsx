@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: 'Book a call',
   description:
     'Book a 20-minute discovery call with Amagna AI. We look at your market, tell you what we would do, and you decide from there. No pitch deck.',
+  alternates: { canonical: '/book' },
 };
 
 const WHAT_TO_EXPECT = [

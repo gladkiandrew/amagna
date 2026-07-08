@@ -12,7 +12,59 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
-  'Three plans: Foundation — a one-time $1,000 build (7 business days) then $50/mo for infrastructure (the base, no managed ads or content); Growth $1,250/mo + ad spend; and Authority $2,000/mo + ad spend + metered token usage.';
+  'AI marketing agency pricing: Foundation is a one-time $1,000 build (7 business days) then $50/mo; Growth is $1,250/mo; Authority is $2,000/mo — all plus ad spend paid directly to the platforms. No separate setup fee. Get your free Gold Map.';
+
+// AEO: structured pricing so answer engines can cite concrete numbers for
+// "how much does an AI marketing agency cost". Real numbers only (CLAUDE.md canon).
+const PRICING_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  name: 'Amagna AI — Autonomous Marketing System plans',
+  url: 'https://amagna.co/pricing',
+  itemListElement: [
+    {
+      '@type': 'Offer',
+      name: 'Foundation',
+      description: 'One-time build of the marketing infrastructure base (branding, website, Google Business Profile + base local SEO, dashboard), then $50/mo for infrastructure. No managed ads or content.',
+      priceCurrency: 'USD',
+      price: '1000',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '1000',
+        priceCurrency: 'USD',
+        description: 'One-time build, then $50/mo infrastructure',
+      },
+    },
+    {
+      '@type': 'Offer',
+      name: 'Growth',
+      description: 'The full done-for-you marketing machine run by the AI crew: niche funnel, managed Meta/TikTok/Google/Snapchat ads, AI video, GBP + local SEO + AEO, automated reviews, weekly report. Plus ad spend, paid to the platforms.',
+      priceCurrency: 'USD',
+      price: '1250',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '1250',
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+        billingIncrement: 1,
+      },
+    },
+    {
+      '@type': 'Offer',
+      name: 'Authority',
+      description: 'Everything in Growth plus full business automation: custom AI agents and workflows, 2 managed ad campaigns, founder-led strategy. Plus ad spend and metered token usage.',
+      priceCurrency: 'USD',
+      price: '2000',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '2000',
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+        billingIncrement: 1,
+      },
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -120,6 +172,10 @@ const FAQ = [
 export default function PricingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }}
+      />
       {/* Header */}
       <section className="mx-auto w-full max-w-[1100px] px-6 py-20 text-center sm:py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">

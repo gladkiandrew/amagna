@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { getPublishedPosts } from '@/lib/sapt-blog';
 import { formatPostDate } from '@/lib/blog-types';
-import { OG_IMAGE } from '@/lib/site';
+import { SITE, OG_IMAGE, OG_IMAGE_ABSOLUTE } from '@/lib/site';
 
 const TITLE = 'Field Notes';
 const DESCRIPTION =
@@ -12,13 +12,19 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/blog' },
+  alternates: { canonical: `${SITE.url}/blog` },
   openGraph: {
     title: `${TITLE} · Amagna AI`,
     description: DESCRIPTION,
     type: 'website',
-    url: '/blog',
+    url: `${SITE.url}/blog`,
     images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${TITLE} · Amagna AI`,
+    description: DESCRIPTION,
+    images: [OG_IMAGE_ABSOLUTE.url],
   },
 };
 

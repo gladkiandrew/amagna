@@ -46,6 +46,10 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/hero-v2', destination: '/', permanent: true },
+      // Political Candidates is retired as a serviced industry (CLAUDE.md,
+      // 2026-06-15) — replaced by Custom AI Installs. 308 keeps any old links/
+      // ad URLs pointing at the live page.
+      { source: '/political-candidates', destination: '/custom-ai-installs', permanent: true },
       // Direct-purchase checkout is retired in favour of the Gold-Map-first
       // strategy (CLAUDE.md). Temporary (307) — the Stripe integration is left
       // intact so direct purchase can be re-enabled with new price IDs. Exact
