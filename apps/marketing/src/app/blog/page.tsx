@@ -50,12 +50,13 @@ export default async function BlogIndexPage(): Promise<JSX.Element> {
                 className="group flex h-full flex-col rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-4 focus-visible:ring-offset-brand-cream"
               >
                 <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-brand-gold/25 bg-brand-deep">
-                  {post.heroImage ? (
+                  {post.heroPoster ?? post.heroImage ? (
                     // Plain img (not next/image) so Sapt asset hosts need no
-                    // next.config remotePatterns entry.
+                    // next.config remotePatterns entry. Cards stay a static still
+                    // (poster preferred) — we never autoplay a grid of videos.
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={post.heroImage}
+                      src={post.heroPoster ?? post.heroImage}
                       alt=""
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"

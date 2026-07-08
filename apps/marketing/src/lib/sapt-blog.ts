@@ -71,6 +71,8 @@ function coerceItem(item: SaptItem): BlogPost | null {
     publishedAt: toIsoDate(c.publishedAt) ?? toIsoDate(item.publishedAt) ?? '',
     category: asString(c.category) ?? 'Field Notes',
     heroImage: asString(c.heroImage),
+    heroVideo: asString(c.heroVideo),
+    heroPoster: asString(c.heroPoster),
     seoTitle: asString(c.seoTitle),
     seoDescription: asString(c.seoDescription),
     targetKeywords: asStringArray(c.targetKeywords),

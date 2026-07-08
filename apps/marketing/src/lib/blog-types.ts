@@ -20,6 +20,18 @@ export type BlogPost = {
   category: string;
   /** Optional hero image URL (absolute or site-relative). */
   heroImage?: string;
+  /**
+   * Optional hero video URL (e.g. a Hyperframes-generated clip). When present,
+   * the article renders an autoplaying, muted, looping hero video instead of the
+   * static hero image. Used on the article page only — list cards stay static.
+   */
+  heroVideo?: string;
+  /**
+   * Optional still-frame poster for `heroVideo` (shown before the clip loads and
+   * for reduced-motion users). Falls back to `heroImage`, then the AM monogram.
+   * Also used as the static poster on `/blog` list cards.
+   */
+  heroPoster?: string;
   /** Per-post SEO overrides; fall back to title/excerpt when absent. */
   seoTitle?: string;
   seoDescription?: string;

@@ -6,6 +6,7 @@ import { getPostBySlug, getPublishedPosts } from '@/lib/sapt-blog';
 import { formatPostDate } from '@/lib/blog-types';
 import { renderMarkdown } from '@/lib/markdown';
 import { SITE, OG_IMAGE } from '@/lib/site';
+import { ArticleHero } from '@/components/blog/article-hero';
 
 type Params = { params: { slug: string } };
 
@@ -35,7 +36,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       url: `/blog/${post.slug}`,
       publishedTime: post.publishedAt || undefined,
       authors: [post.author],
-      images: post.heroImage ? [{ url: post.heroImage }] : [OG_IMAGE],
+      images: post.heroPoster
+        ? [{ url: post.heroPoster }]
+        : post.heroImage
+          ? [{ url: post.heroImage }]
+          : [OG_IMAGE],
+      ...(post.heroVideo ? { videos: [{ url: post.heroVideo }] } : {}),
     },
     twitter: { card: 'summary_large_image', title, description },
   };
@@ -60,7 +66,23 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
       logo: { '@type': 'ImageObject', url: `${SITE.url}/brand/amagna-logo-mark.svg` },
     },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE.url}/blog/${post.slug}` },
-    ...(post.heroImage ? { image: post.heroImage } : {}),
+    ...(post.heroPoster || post.heroImage
+      ? { image: post.heroPoster ?? post.heroImage }
+      : {}),
+    ...(post.heroVideo
+      ? {
+          video: {
+            '@type': 'VideoObject',
+            name: post.title,
+            description: post.seoDescription ?? post.excerpt,
+            contentUrl: post.heroVideo,
+            ...(post.heroPoster ?? post.heroImage
+              ? { thumbnailUrl: post.heroPoster ?? post.heroImage }
+              : {}),
+            ...(post.publishedAt ? { uploadDate: post.publishedAt } : {}),
+          },
+        }
+      : {}),
     ...(post.targetKeywords.length ? { keywords: post.targetKeywords.join(', ') } : {}),
   };
 
@@ -96,14 +118,7 @@ export default async function BlogPostPage({ params }: Params): Promise<JSX.Elem
         </h1>
         <p className="mt-4 text-sm text-brand-slate">By {post.author}</p>
 
-        {post.heroImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={post.heroImage}
-            alt=""
-            className="mt-8 aspect-[16/9] w-full rounded-2xl border border-brand-gold/25 object-cover"
-          />
-        )}
+        <ArticleHero post={post} />
 
         <div
           className="mt-10 text-lg [&_a]:font-medium [&_a]:text-brand-purple [&_a]:underline [&_a]:underline-offset-2 [&_blockquote]:my-6 [&_blockquote]:border-l-2 [&_blockquote]:border-brand-gold [&_blockquote]:pl-5 [&_blockquote]:italic [&_blockquote]:text-brand-slate [&_code]:rounded [&_code]:bg-brand-lightgray/60 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-[1.7rem] [&_h2]:font-semibold [&_h2]:leading-tight [&_h2]:tracking-[-0.01em] [&_h2]:text-brand-charcoal [&_h3]:mt-9 [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-brand-charcoal [&_h4]:mt-7 [&_h4]:font-semibold [&_h4]:text-brand-charcoal [&_hr]:my-10 [&_hr]:border-brand-lightgray [&_li]:mt-2 [&_li]:leading-[1.7] [&_li]:text-brand-slate [&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:space-y-1 [&_ol]:pl-6 [&_p]:mt-5 [&_p]:leading-[1.75] [&_p]:text-brand-slate [&_strong]:font-semibold [&_strong]:text-brand-charcoal [&_ul]:mt-5 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6"
