@@ -9,11 +9,14 @@ import { VoyageCtas } from '@/components/home/voyage-cta';
 // fades in over it a beat later. It's also the permanent backdrop for
 // reduced-motion / no-JS / no-WebGL users. A CSS background is not "contentful",
 // so it is never the LCP element.
+// The dusk hue transition is spread across ~30% of the viewport (30%→70%) so
+// the pre-ocean first paint reads as an intentional gradient sky, not a hard
+// "horizon stripe"; the warm afterglow is wider and lifted to match.
 const HERO_BACKDROP: CSSProperties = {
   backgroundColor: '#05080F',
   backgroundImage: [
-    'radial-gradient(135% 62% at 50% 63%, rgba(252,189,87,0.20) 0%, rgba(245,117,46,0.10) 32%, rgba(5,8,15,0) 60%)',
-    'linear-gradient(180deg, #070b16 0%, #0b1122 34%, #191627 50%, #34232f 57%, #6d3f28 61%, #21151f 66%, #060a15 100%)',
+    'radial-gradient(150% 72% at 50% 58%, rgba(252,189,87,0.18) 0%, rgba(245,117,46,0.10) 36%, rgba(5,8,15,0) 66%)',
+    'linear-gradient(180deg, #070b16 0%, #0b1122 30%, #171527 44%, #2b2029 54%, #4a2f28 61%, #2a1c22 70%, #10101c 82%, #060a15 100%)',
   ].join(', '),
 };
 
