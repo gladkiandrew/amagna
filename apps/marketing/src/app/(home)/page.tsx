@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { HeroV2 } from '@/components/hero-v2/hero-v2';
+import { SecondBrainFrame } from '@/components/hero-v2/second-brain-frame';
 import { ServicesSection } from '@/components/hero-v2/services-section';
 import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { FaqSection } from '@/components/sections/faq-section';
@@ -38,6 +39,7 @@ export default function Home(): JSX.Element {
   return (
     <>
       <HeroV2 />
+      <SecondBrainFrame />
       <ServicesSection />
       <TestimonialsSection />
       <FaqSection />

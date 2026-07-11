@@ -289,7 +289,61 @@
   transform: translateY(6px) scale(0.992);
 }
 
+/* ── Second Brain frame (homepage Frame 2) ──────────────────────────────────
+   CSS-only motion, zero JS: a gold signal dot travels down each connector
+   (context flowing out of the vault), and the vault core breathes a slow gold
+   glow. Both are disabled in the prefers-reduced-motion block below. */
+@keyframes brainSignal {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 6px);
+    opacity: 0;
+  }
+}
+.brain-signal {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 6px;
+  width: 6px;
+  margin-left: -3px;
+  border-radius: 9999px;
+  background: var(--brand-warmgold);
+  box-shadow: 0 0 10px 2px rgb(212 184 115 / 0.55);
+  animation: brainSignal 2.6s ease-in-out infinite;
+}
+@keyframes vaultBreath {
+  0%,
+  100% {
+    box-shadow: 0 0 40px -8px rgb(212 184 115 / 0.28);
+  }
+  50% {
+    box-shadow: 0 0 68px -8px rgb(212 184 115 / 0.5);
+  }
+}
+.vault-breath {
+  animation: vaultBreath 5.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* Second Brain frame: park the signal dot mid-connector, steady vault glow. */
+  .brain-signal {
+    animation: none;
+    top: 50%;
+    opacity: 0.7;
+  }
+  .vault-breath {
+    animation: none;
+  }
   /* Existing hero-flow pulses. */
   .pulse-down,
   .pulse-up,
