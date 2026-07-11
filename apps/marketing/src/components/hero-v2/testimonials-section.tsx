@@ -15,15 +15,20 @@ type Testimonial = {
   name: string;
   /** Role / business, e.g. 'Owner, HVAC — Saginaw, MI' */
   role: string;
+  /** Optional link to the client's website (rendered on the name). */
+  href?: string;
 };
 
-// ▼▼▼ DROP REAL TESTIMONIALS HERE — replace the empty strings. Real quotes only. ▼▼▼
+// ▼▼▼ REAL QUOTES ONLY — approved drafts are requested in the vault inbox
+// (02-Inbox/2026-07-11 Testimonial requests). When one lands, paste it into
+// `quote` and the card flips from "coming soon" to a live testimonial.
+// Add each client's website to `href` to link their name. ▼▼▼
 const TESTIMONIALS: Testimonial[] = [
-  { quote: '', name: '', role: '' },
-  { quote: '', name: '', role: '' },
-  { quote: '', name: '', role: '' },
+  { quote: '', name: 'Breaking the Fast', role: 'Client — Local Service', href: '' },
+  { quote: '', name: 'WRG', role: 'Client', href: '' },
+  { quote: '', name: 'Sapt.AI', role: 'Partner', href: 'https://sapt.ai' },
 ];
-// ▲▲▲ e.g. { quote: 'Our calls doubled in two months.', name: 'Mike R.', role: 'Owner, HVAC — Saginaw, MI' }
+// ▲▲▲ e.g. { quote: 'Our calls doubled in two months.', name: 'Breaking the Fast', role: 'Client — Local Service', href: 'https://...' }
 
 export function TestimonialsSection(): JSX.Element {
   return (
@@ -61,18 +66,45 @@ export function TestimonialsSection(): JSX.Element {
                       “{t.quote}”
                     </blockquote>
                     <figcaption className="mt-6 border-t border-brand-gold/15 pt-4">
-                      <p className="font-semibold text-brand-charcoal">{t.name}</p>
+                      <p className="font-semibold text-brand-charcoal">
+                        {t.href ? (
+                          <a
+                            href={t.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-brand-gold/50 underline-offset-4 hover:decoration-brand-gold"
+                          >
+                            {t.name}
+                          </a>
+                        ) : (
+                          t.name
+                        )}
+                      </p>
                       <p className="text-sm text-brand-slate">{t.role}</p>
                     </figcaption>
                   </>
                 ) : (
                   <>
                     <p className="mt-4 flex-1 text-lg leading-[1.6] text-brand-slate/70">
-                      Client testimonial — coming soon.
+                      {t.name ? `${t.name}’s story — coming soon.` : 'Client testimonial — coming soon.'}
                     </p>
-                    <p className="mt-6 border-t border-brand-gold/15 pt-4 text-sm text-brand-slate/60">
-                      A real client&apos;s words will land here.
-                    </p>
+                    <div className="mt-6 border-t border-brand-gold/15 pt-4">
+                      <p className="font-semibold text-brand-charcoal/80">
+                        {t.href ? (
+                          <a
+                            href={t.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-brand-gold/50 underline-offset-4 hover:decoration-brand-gold"
+                          >
+                            {t.name}
+                          </a>
+                        ) : (
+                          t.name
+                        )}
+                      </p>
+                      <p className="text-sm text-brand-slate/70">{t.role}</p>
+                    </div>
                   </>
                 )}
               </figure>
