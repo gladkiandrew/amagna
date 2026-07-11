@@ -5,6 +5,7 @@ import { Play } from 'lucide-react';
 import { OG_IMAGE, AUDIT_HREF } from '@/lib/site';
 import { CtaBand } from '@/components/sections/cta-band';
 import { FieldNotesSection } from '@/components/sections/field-notes-section';
+import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
 import { CREW } from '@/lib/crew';
 
 const ABOUT_DESCRIPTION =
@@ -103,7 +104,10 @@ function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.El
 export default function AboutPage(): JSX.Element {
   return (
     <main className="bg-brand-cream">
-      {/* FRAME 1 — HERO (dark, premium) */}
+      {/* FRAME 1 — THE VOYAGE REVEAL (ship + crew deal-out, moved from the homepage) */}
+      <VoyageReveal />
+
+      {/* FRAME 2 — MISSION (dark, premium — keeps the page h1) */}
       <section className="relative isolate overflow-hidden bg-brand-deep">
         <div
           aria-hidden
@@ -130,7 +134,41 @@ export default function AboutPage(): JSX.Element {
         </div>
       </section>
 
-      {/* FRAME 2 — MEET THE CREW (reused, not redesigned) */}
+      {/* FRAME 3 — THE FOUNDER (video slot + copy) */}
+      <section className="border-t border-brand-gold/20 bg-white">
+        <div className="mx-auto w-full max-w-[920px] px-6 py-20 sm:py-24">
+          <Eyebrow>The founder</Eyebrow>
+          <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-[-0.015em] text-brand-charcoal sm:text-[2.6rem]">
+            Built by an operator, for operators.
+          </h2>
+
+          <div className="mt-10">
+            <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
+          </div>
+
+          <div className="mt-10 max-w-[62ch] space-y-4 text-lg leading-[1.7] text-brand-slate">
+            <p>
+              I&apos;m Andrew Gladki — a Ukrainian-American operator based in Michigan, and a fresh
+              Michigan State graduate in World Politics and Entrepreneurship.
+            </p>
+            <p>
+              Before Amagna, I built{' '}
+              <strong className="font-semibold text-brand-charcoal">HydroClean LLC</strong>, my first
+              company — a local service business I started from nothing. Over four years I scaled it to
+              220 residential and 12 commercial clients, then exited in year four. I didn&apos;t learn
+              growth from a classroom; I lived it — the slow seasons, the follow-ups that slipped, the
+              marketing that ate the nights I didn&apos;t have.
+            </p>
+            <p>
+              That&apos;s why Amagna exists. I got tired of watching good operators drown in busywork
+              that software should just handle, so I started building the systems I wish I&apos;d had.
+              I&apos;ve been in your shoes — now I build the machine that takes the weight off.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FRAME 4 — MEET THE CREW (reused, not redesigned) */}
       <section id="crew" className="scroll-mt-24 border-t border-brand-gold/20 bg-brand-cream">
         <div className="mx-auto w-full max-w-[1040px] px-6 py-20 sm:py-24">
           <div className="max-w-[760px]">
@@ -205,41 +243,7 @@ export default function AboutPage(): JSX.Element {
         </div>
       </section>
 
-      {/* FRAME 3 — THE FOUNDER (video slot + copy) */}
-      <section className="border-t border-brand-gold/20 bg-white">
-        <div className="mx-auto w-full max-w-[920px] px-6 py-20 sm:py-24">
-          <Eyebrow>The founder</Eyebrow>
-          <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-[-0.015em] text-brand-charcoal sm:text-[2.6rem]">
-            Built by an operator, for operators.
-          </h2>
-
-          <div className="mt-10">
-            <FounderVideo src={FOUNDER_VIDEO} poster={FOUNDER_POSTER} />
-          </div>
-
-          <div className="mt-10 max-w-[62ch] space-y-4 text-lg leading-[1.7] text-brand-slate">
-            <p>
-              I&apos;m Andrew Gladki — a Ukrainian-American operator based in Michigan, and a fresh
-              Michigan State graduate in World Politics and Entrepreneurship.
-            </p>
-            <p>
-              Before Amagna, I built{' '}
-              <strong className="font-semibold text-brand-charcoal">HydroClean LLC</strong>, my first
-              company — a local service business I started from nothing. Over four years I scaled it to
-              220 residential and 12 commercial clients, then exited in year four. I didn&apos;t learn
-              growth from a classroom; I lived it — the slow seasons, the follow-ups that slipped, the
-              marketing that ate the nights I didn&apos;t have.
-            </p>
-            <p>
-              That&apos;s why Amagna exists. I got tired of watching good operators drown in busywork
-              that software should just handle, so I started building the systems I wish I&apos;d had.
-              I&apos;ve been in your shoes — now I build the machine that takes the weight off.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FRAME 4 — LINEAGE + THE VOYAGE (founding-document tone) */}
+      {/* FRAME 5 — LINEAGE + THE VOYAGE (founding-document tone) */}
       <section className="bg-brand-deep">
         <div className="mx-auto w-full max-w-[860px] px-6 py-24 sm:py-28">
           <Eyebrow onDark>The name &amp; the voyage</Eyebrow>

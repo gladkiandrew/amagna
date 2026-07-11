@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { HeroV2 } from '@/components/hero-v2/hero-v2';
-import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
 import { ServicesSection } from '@/components/hero-v2/services-section';
 import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { FaqSection } from '@/components/sections/faq-section';
@@ -30,15 +29,15 @@ export const metadata: Metadata = {
 
 /**
  * The Amagna homepage (promoted from the hero-v2 build on 2026-06-05).
- * Frame 1 is the photoreal WebGL ocean hero; Frame 2 is the crew/voyage reveal;
- * then the services + integrations grid, and testimonials.
+ * Frame 1 is the photoreal WebGL ocean hero; Frame 2 is the Second Brain frame
+ * (server-rendered, zero client JS); then the services + integrations grid, and
+ * testimonials. The crew/voyage reveal moved to /about as its opening frame.
  * The original voyage homepage is preserved at /voyage-v1 as a fallback.
  */
 export default function Home(): JSX.Element {
   return (
     <>
       <HeroV2 />
-      <VoyageReveal />
       <ServicesSection />
       <TestimonialsSection />
       <FaqSection />
