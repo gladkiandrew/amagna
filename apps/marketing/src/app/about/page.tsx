@@ -5,7 +5,6 @@ import { Play } from 'lucide-react';
 import { OG_IMAGE, AUDIT_HREF } from '@/lib/site';
 import { CtaBand } from '@/components/sections/cta-band';
 import { FieldNotesSection } from '@/components/sections/field-notes-section';
-import { VoyageReveal } from '@/components/hero-v2/voyage-reveal';
 import { CREW } from '@/lib/crew';
 
 const ABOUT_DESCRIPTION =
@@ -104,10 +103,7 @@ function FounderVideo({ src, poster }: { src: string; poster?: string }): JSX.El
 export default function AboutPage(): JSX.Element {
   return (
     <main className="bg-brand-cream">
-      {/* FRAME 1 — THE VOYAGE REVEAL (ship + crew deal-out, moved from the homepage) */}
-      <VoyageReveal />
-
-      {/* FRAME 2 — MISSION (dark, premium — keeps the page h1) */}
+      {/* FRAME 1 — MISSION (dark, premium — the page h1) */}
       <section className="relative isolate overflow-hidden bg-brand-deep">
         <div
           aria-hidden
