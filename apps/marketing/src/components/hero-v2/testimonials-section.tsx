@@ -36,7 +36,7 @@ export function TestimonialsSection(): JSX.Element {
     // whitespace, not full-width rules that would slice the river.
     <section aria-labelledby="testimonials-title">
       <div className="mx-auto w-full max-w-[1100px] px-6 py-24 sm:py-28">
-        <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+        <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
           <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
           In their words
         </p>

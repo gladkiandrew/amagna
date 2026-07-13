@@ -101,7 +101,7 @@ function StepMark({
         {n}
       </span>
       <span aria-hidden className={`h-px w-10 ${line}`} />
-      <span className={`text-[11px] font-semibold uppercase tracking-[0.3em] ${tone}`}>
+      <span className={`text-[13px] font-semibold uppercase tracking-[0.3em] ${tone}`}>
         {eyebrow}
       </span>
     </p>

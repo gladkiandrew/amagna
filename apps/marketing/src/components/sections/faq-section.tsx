@@ -70,7 +70,7 @@ export function FaqSection({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <div className="mx-auto w-full max-w-[820px] px-6 py-20 sm:py-24">
-        <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+        <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
           <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
           FAQ
         </p>
