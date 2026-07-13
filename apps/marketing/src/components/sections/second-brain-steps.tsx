@@ -235,17 +235,17 @@ export function SecondBrainSteps(): JSX.Element {
               {i > 0 && (
                 <ArrowRight
                   aria-hidden
-                  className="h-4 w-4 rotate-90 text-brand-gold sm:rotate-0"
+                  className="h-5 w-5 rotate-90 text-brand-gold sm:rotate-0"
                 />
               )}
-              <span className="rounded-full border border-brand-gold/40 bg-white px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.24em] text-brand-charcoal shadow-[0_1px_20px_-8px_rgba(93,46,140,0.35)]">
+              <span className="rounded-full border border-brand-gold/40 bg-white px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-brand-charcoal shadow-[0_1px_20px_-8px_rgba(93,46,140,0.35)] sm:text-base">
                 {word}
               </span>
             </div>
           ))}
-          <ArrowRight aria-hidden className="h-4 w-4 rotate-90 text-brand-gold sm:rotate-0" />
-          <span className="flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.24em] text-brand-purple">
-            <RotateCw className="h-3.5 w-3.5" aria-hidden />
+          <ArrowRight aria-hidden className="h-5 w-5 rotate-90 text-brand-gold sm:rotate-0" />
+          <span className="flex items-center gap-2.5 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-7 py-3 text-sm font-semibold uppercase tracking-[0.24em] text-brand-purple sm:text-base">
+            <RotateCw className="h-4 w-4 sm:h-[18px] sm:w-[18px]" aria-hidden />
             Again, smarter
           </span>
         </div>

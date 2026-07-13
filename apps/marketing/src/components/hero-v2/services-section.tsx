@@ -80,7 +80,7 @@ export function ServicesSection(): JSX.Element {
           id="services-title"
           className="mt-5 max-w-[20ch] text-balance font-display text-[clamp(2rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-charcoal"
         >
-          One system. Everything your marketing needs.
+          One Brain. Everything Your Business Needs.
         </h2>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
           Not a pile of tools you have to run — a single machine the crew operates for you.
