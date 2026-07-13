@@ -152,22 +152,6 @@ function FunnelVideo({
 export default function GrowPage(): JSX.Element {
   return (
     <div className="overflow-x-clip bg-brand-deep text-brand-cream">
-      {/* ── 0. HEADER (logo only) ── */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-brand-deep/85 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-[1100px] items-center justify-center px-6 py-4 sm:justify-start">
-          <Link href="/" aria-label="Amagna AI — home" className="flex shrink-0 items-center">
-            <Image
-              src="/brand/amagna-logo-gold.png"
-              alt="Amagna AI"
-              width={2276}
-              height={492}
-              priority
-              className="h-7 w-auto md:h-8"
-            />
-          </Link>
-        </div>
-      </header>
-
       {/* ── 1. HERO — brand teaser as the OPENER: contained and quietly framed
              (natural 16:9, no text, no crop) so the gold-framed VSL below is
              already peeking into the first desktop viewport. The VSL is the
@@ -205,7 +189,32 @@ export default function GrowPage(): JSX.Element {
         </div>
       </section>
 
-      {/* ── 3. FIVE WAYS — the core pitch ── */}
+      {/* ── 3. SECOND BRAIN — the agent system artifact ── */}
+      <section id="second-brain" className="relative isolate overflow-hidden border-t border-white/10">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[520px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.32),transparent_68%)] blur-2xl sm:w-[760px]" />
+        </div>
+        <div className="relative mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-24">
+          <Reveal>
+            <div className="flex justify-center">
+              <Eyebrow center>The agent system</Eyebrow>
+            </div>
+            <h2 className="mx-auto mt-5 max-w-[22ch] text-balance text-center font-display text-[clamp(1.6rem,3.8vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-brand-cream">
+              We&rsquo;ll build your business&rsquo;s second brain.
+            </h2>
+            <p className="mx-auto mt-4 max-w-[52ch] text-center text-base leading-[1.6] text-brand-cream/65">
+              One AI core, a team of agents working around it — running your marketing and operations.
+            </p>
+          </Reveal>
+          <Reveal delay={120}>
+            <div className="mt-10">
+              <SecondBrain />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── 4. FIVE WAYS — the core pitch ── */}
       <section className="relative border-t border-white/10">
         <div className="mx-auto w-full max-w-[880px] px-6 py-16 sm:py-24">
           <Reveal>
@@ -234,31 +243,6 @@ export default function GrowPage(): JSX.Element {
               </Reveal>
             ))}
           </ul>
-        </div>
-      </section>
-
-      {/* ── 4. SECOND BRAIN — the agent system artifact ── */}
-      <section id="second-brain" className="relative isolate overflow-hidden border-t border-white/10">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-[520px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(93,46,140,0.32),transparent_68%)] blur-2xl sm:w-[760px]" />
-        </div>
-        <div className="relative mx-auto w-full max-w-[1100px] px-6 py-16 sm:py-24">
-          <Reveal>
-            <div className="flex justify-center">
-              <Eyebrow center>The agent system</Eyebrow>
-            </div>
-            <h2 className="mx-auto mt-5 max-w-[22ch] text-balance text-center font-display text-[clamp(1.6rem,3.8vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-brand-cream">
-              We&rsquo;ll build your business&rsquo;s second brain.
-            </h2>
-            <p className="mx-auto mt-4 max-w-[52ch] text-center text-base leading-[1.6] text-brand-cream/65">
-              One AI core, a team of agents working around it — running your marketing and operations.
-            </p>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="mt-10">
-              <SecondBrain />
-            </div>
-          </Reveal>
         </div>
       </section>
 
