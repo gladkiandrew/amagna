@@ -290,50 +290,50 @@
 }
 
 /* ── River canvas (universal post-hero background) ──────────────────────────
-   The site's light canvas carries a quiet "river" of brand purple and gold —
-   thin luminous streaks drifting slowly DOWN the page (the light-canvas
-   cousin of the hero's ocean), over static soft pools that give the current
-   a bed. Pure CSS: transform + opacity only, compositor-friendly, zero JS.
-   Streaks fade to 0 at both keyframe ends so the loop never pops. Each
-   streak's position/timing comes from inline CSS vars set by RiverCanvas.
-   Static (parked mid-drift, faint) under prefers-reduced-motion below. */
+   The current: luminous purple/gold streaks drifting slowly DOWN the page
+   (see river-canvas.tsx for the cast). Pure CSS, transform + opacity only,
+   compositor-friendly, zero JS. Streaks fade to 0 at both keyframe ends so
+   the loop never pops; position/timing come from inline CSS vars. Parked
+   faint and still under prefers-reduced-motion below. */
 @keyframes riverFlow {
   0% {
-    transform: translateY(-40vh);
+    transform: translateY(-28vh);
     opacity: 0;
   }
-  14% {
-    opacity: var(--river-peak, 0.5);
+  10% {
+    opacity: var(--river-peak, 0.8);
   }
-  84% {
-    opacity: var(--river-peak, 0.5);
+  88% {
+    opacity: var(--river-peak, 0.8);
   }
   100% {
-    transform: translateY(115vh);
+    transform: translateY(88vh);
     opacity: 0;
   }
 }
 .river-streak {
   position: absolute;
-  width: 3px;
-  height: var(--river-h, 42vh);
+  width: 4px;
+  height: var(--river-h, 46vh);
   border-radius: 9999px;
   opacity: 0;
   animation: riverFlow var(--river-dur, 32s) linear infinite;
   animation-delay: var(--river-delay, 0s);
 }
 .river-streak--purple {
-  background: linear-gradient(180deg, transparent, rgb(93 46 140 / 0.62) 45%, transparent);
+  background: linear-gradient(180deg, transparent, rgb(93 46 140 / 0.8) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(93 46 140 / 0.18);
 }
 .river-streak--gold {
-  background: linear-gradient(180deg, transparent, rgb(201 169 97 / 0.68) 45%, transparent);
+  background: linear-gradient(180deg, transparent, rgb(201 169 97 / 0.9) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(201 169 97 / 0.22);
 }
 
 @media (prefers-reduced-motion: reduce) {
   /* River canvas: streaks park mid-drift, faint and still. */
   .river-streak {
     animation: none;
-    opacity: 0.22;
+    opacity: 0.3;
     transform: translateY(20vh);
   }
   /* Existing hero-flow pulses. */

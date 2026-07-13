@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Cinzel } from 'next/font/google';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, Check, RotateCw } from 'lucide-react';
 import { AUDIT_HREF } from '@/lib/site';
 
 /**
@@ -40,11 +40,21 @@ const OUTPUTS = [
   },
 ] as const;
 
-const VAULT_LEDGER = [
-  { k: 'Voice & brand', v: 'How you sound, everywhere' },
-  { k: 'Customers & history', v: 'Every job, every conversation' },
-  { k: 'Offers & pricing', v: 'What you sell, and to whom' },
-  { k: 'Numbers & results', v: 'What’s working, in plain English' },
+// The loop the agents run on the vault — building the brain is a process,
+// and every pass through it makes the next one smarter.
+const BRAIN_LOOP = [
+  {
+    k: 'Build',
+    v: 'Agents wire what your business knows into the vault — voice, customers, numbers.',
+  },
+  {
+    k: 'Execute',
+    v: 'Every task starts by referencing the vault: full context, your name, your approval.',
+  },
+  {
+    k: 'Learn',
+    v: 'Every outcome writes back. The vault gets deeper, the agents get sharper.',
+  },
 ] as const;
 
 const INSTALL_POINTS = [
@@ -102,7 +112,7 @@ export function SecondBrainSteps(): JSX.Element {
   return (
     <div className="mx-auto w-full max-w-[1200px] px-6">
       {/* ── 01 · WHAT WE INSTALL ─────────────────────────────────────────── */}
-      <section aria-labelledby="step-install-title" className="py-20 sm:py-28">
+      <section aria-labelledby="step-install-title" className="pb-20 pt-12 sm:pb-28 sm:pt-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_420px] lg:gap-20">
           <div>
             <StepMark n="01" eyebrow="What we install" />
@@ -132,20 +142,40 @@ export function SecondBrainSteps(): JSX.Element {
             </ul>
           </div>
 
-          {/* The vault manifest — what the brain holds. */}
+          {/* Inside the vault — the loop the agents run to build the brain. */}
           <div className="rounded-3xl border border-brand-gold/30 bg-white p-8 shadow-[0_1px_40px_-14px_rgba(93,46,140,0.3)]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-gold">
               Inside the vault
             </p>
-            <dl className="mt-6 divide-y divide-brand-gold/15">
-              {VAULT_LEDGER.map((row) => (
-                <div key={row.k} className="py-4 first:pt-0 last:pb-0">
-                  <dt className="font-display text-lg font-semibold text-brand-charcoal">{row.k}</dt>
-                  <dd className="mt-1 text-sm leading-relaxed text-brand-slate">{row.v}</dd>
-                </div>
+            <p className="mt-2 text-sm text-brand-slate">
+              Building a Second Brain is a process. This is the loop your agents run on it.
+            </p>
+            <ol className="mt-7">
+              {BRAIN_LOOP.map((step, i) => (
+                <li key={step.k} className="relative pb-6 pl-8 last:pb-0">
+                  {/* gold thread connecting the loop's stops */}
+                  {i < BRAIN_LOOP.length - 1 && (
+                    <span
+                      aria-hidden
+                      className="absolute left-[5px] top-4 h-full w-px bg-brand-gold/30"
+                    />
+                  )}
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-[7px] h-[11px] w-[11px] rotate-45 border border-brand-gold bg-brand-cream shadow-[0_0_8px_rgba(201,169,97,0.45)]"
+                  />
+                  <p className="font-display text-lg font-semibold leading-tight text-brand-charcoal">
+                    {step.k}
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-brand-slate">{step.v}</p>
+                </li>
               ))}
-            </dl>
-            <p className="mt-6 rounded-xl border border-brand-gold/30 bg-brand-gold/10 px-4 py-3 text-sm font-medium text-brand-charcoal">
+            </ol>
+            <p className="mt-7 flex items-start gap-2.5 rounded-xl border border-brand-gold/30 bg-brand-gold/10 px-4 py-3 text-sm font-medium text-brand-charcoal">
+              <RotateCw className="mt-0.5 h-4 w-4 shrink-0 text-brand-gold" aria-hidden />
+              <span>Then it builds again — every pass makes the next one smarter.</span>
+            </p>
+            <p className="mt-3 text-xs text-brand-slate/80">
               Sealed to your business. Yours, and no one else&apos;s.
             </p>
           </div>
@@ -193,10 +223,32 @@ export function SecondBrainSteps(): JSX.Element {
         >
           Continuous Feedback.
         </h2>
-        <p className="mx-auto mt-7 max-w-[52ch] text-lg leading-[1.65] text-brand-slate sm:text-xl">
-          Every finished task writes back to the vault. The ads learn from the calls. The content
-          learns from the customers. Nothing your business learns is ever lost again.
+        <p className="mx-auto mt-7 max-w-[54ch] text-lg leading-[1.65] text-brand-slate sm:text-xl">
+          Your agents run a loop — build, execute, learn, then build again. Every finished task
+          writes back to the vault, so they start every next task smarter than the last.
         </p>
+
+        {/* The cycle itself — the engine of the compounding. */}
+        <div className="mx-auto mt-12 flex flex-col items-center gap-2.5 sm:flex-row sm:justify-center sm:gap-4">
+          {(['Build', 'Execute', 'Learn'] as const).map((word, i) => (
+            <div key={word} className="flex flex-col items-center gap-2.5 sm:flex-row sm:gap-4">
+              {i > 0 && (
+                <ArrowRight
+                  aria-hidden
+                  className="h-4 w-4 rotate-90 text-brand-gold sm:rotate-0"
+                />
+              )}
+              <span className="rounded-full border border-brand-gold/40 bg-white px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.24em] text-brand-charcoal shadow-[0_1px_20px_-8px_rgba(93,46,140,0.35)]">
+                {word}
+              </span>
+            </div>
+          ))}
+          <ArrowRight aria-hidden className="h-4 w-4 rotate-90 text-brand-gold sm:rotate-0" />
+          <span className="flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.24em] text-brand-purple">
+            <RotateCw className="h-3.5 w-3.5" aria-hidden />
+            Again, smarter
+          </span>
+        </div>
 
         {/* The compounding line — three stops on a gold current. */}
         <div className="relative mx-auto mt-16 max-w-[880px]">
