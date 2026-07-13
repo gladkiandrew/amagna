@@ -20,13 +20,14 @@ type Testimonial = {
 };
 
 // ▼▼▼ REAL QUOTES ONLY — client-approved, verbatim (Andrew, 2026-07-13). ▼▼▼
+// Display order (left → right): Ben → Clarence → Jack.
 const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      'Amagna ran our ads and automated our entire meal-prep ordering process. Orders that used to need me now handle themselves, and the growth followed.',
-    name: 'Jack Smith',
-    role: 'Owner, Breaking the Fast',
-    url: 'https://www.breakingthefast.com/',
+      'Amagna is one of the fastest, most progressive building companies we work with. They run their whole operation on real analytics, and as a partner they push us to be better. Watching what they ship week to week is genuinely impressive.',
+    name: 'Ben Meyer',
+    role: 'Co-founder, Sapt.AI',
+    url: 'https://sapt.ai/',
   },
   {
     quote:
@@ -37,10 +38,10 @@ const TESTIMONIALS: Testimonial[] = [
   },
   {
     quote:
-      'Amagna is one of the fastest, most progressive building companies we work with. They run their whole operation on real analytics, and as a partner they push us to be better. Watching what they ship week to week is genuinely impressive.',
-    name: 'Ben Meyer',
-    role: 'Co-founder, Sapt.AI',
-    url: 'https://sapt.ai/',
+      'Amagna ran our ads and automated our entire meal-prep ordering process. Orders that used to need me now handle themselves, and the growth followed.',
+    name: 'Jack Smith',
+    role: 'Owner, Breaking the Fast',
+    url: 'https://www.breakingthefast.com/',
   },
 ];
 // ▲▲▲ words locked — changes only with the client's re-approval ▲▲▲
