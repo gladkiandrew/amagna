@@ -144,16 +144,17 @@ export function RiverCanvas({
         ))}
       </div>
 
-      {/* The horizon — one downward fade off the ocean's bottom edge: the
-          hero's dark continues and dissolves through deep purple into the
-          cream as it falls. Nothing else. */}
+      {/* The horizon — one downward fade off the ocean's bottom edge. Starts
+          at #071221, the hero's ACTUAL bottom-row water color (sampled from
+          the rendered ocean, not black), lifts through a desaturated
+          blue-gray, and dissolves into the cream. */}
       {seam && (
         <div
           aria-hidden
           className="pointer-events-none h-[12vh]"
           style={{
             background:
-              'linear-gradient(180deg, #05080F 0%, rgba(26,14,54,0.55) 38%, rgba(93,46,140,0.12) 70%, rgba(250,248,243,0) 100%)',
+              'linear-gradient(180deg, #071221 0%, rgba(23,32,52,0.72) 32%, rgba(96,102,116,0.22) 62%, rgba(250,248,243,0) 100%)',
           }}
         />
       )}
