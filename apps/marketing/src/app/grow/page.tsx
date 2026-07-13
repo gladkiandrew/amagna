@@ -126,7 +126,7 @@ function FunnelVideo({
           loop
           playsInline
           preload="metadata"
-          poster={poster}
+          poster={poster || undefined}
           className="absolute inset-0 h-full w-full object-cover"
         >
           <source src={src} type="video/mp4" />
@@ -137,7 +137,12 @@ function FunnelVideo({
 
   return (
     <div className={frame}>
-      <video controls preload="metadata" poster={poster} className="absolute inset-0 h-full w-full object-cover">
+      <video
+        controls
+        preload="metadata"
+        poster={poster || undefined}
+        className="absolute inset-0 h-full w-full object-cover"
+      >
         <source src={src} type="video/mp4" />
       </video>
     </div>
@@ -163,27 +168,34 @@ export default function GrowPage(): JSX.Element {
         </div>
       </header>
 
-      {/* ── 1. HERO — brand teaser, edge-to-edge, natural 16:9 (no text, no border, no crop) ── */}
+      {/* ── 1. HERO — brand teaser as the OPENER: contained and quietly framed
+             (natural 16:9, no text, no crop) so the gold-framed VSL below is
+             already peeking into the first desktop viewport. The VSL is the
+             main event; this just rolls the titles. ── */}
       <section className="relative w-full overflow-hidden bg-brand-deep">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={TEASER_POSTER}
-          className="block aspect-video w-full object-cover"
-        >
-          <source src={TEASER_VIDEO} type="video/mp4" />
-        </video>
+        <div className="mx-auto w-full max-w-[780px] px-4 pt-5 sm:px-6 sm:pt-7">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-brand-deep shadow-[0_20px_60px_-24px_rgba(0,0,0,0.7)]">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={TEASER_POSTER}
+              className="absolute inset-0 h-full w-full object-cover"
+            >
+              <source src={TEASER_VIDEO} type="video/mp4" />
+            </video>
+          </div>
+        </div>
       </section>
 
       {/* sentinel — sticky CTA slides up once this scrolls past the top */}
       <div id="grow-hero-end" aria-hidden className="h-px w-full" />
 
-      {/* ── 2. VSL — the sales video, right as the funnel opens (no headline, flush to the teaser) ── */}
+      {/* ── 2. VSL — the sales video, right as the funnel opens (no headline) ── */}
       <section className="relative">
-        <div className="mx-auto w-full max-w-[920px] px-4 pb-14 text-center sm:px-6 sm:pb-20">
+        <div className="mx-auto w-full max-w-[920px] px-4 pb-14 pt-8 text-center sm:px-6 sm:pb-20 sm:pt-10">
           <Reveal>
             <FunnelVideo src={VSL_VIDEO} poster={VSL_POSTER} mode="vsl" label="VSL coming" />
             <p className="mx-auto mt-4 max-w-[56ch] text-sm italic leading-[1.6] text-brand-cream/55">
