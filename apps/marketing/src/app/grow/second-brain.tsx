@@ -16,8 +16,9 @@ import Image from 'next/image';
  *  - hover (desktop) / tap (mobile) an agent to light its node + trace + descriptor and
  *    intensify the core glow.
  *
- * Desktop (>=640px): ringed columns. Mobile: brain + core on top, agents as a legible
- * 2-column list. Brand palette only, no blue, real text.
+ * One responsive stage at every width: the ring stays intact on mobile (taller
+ * stage, compact cards) so phones get the same lines-and-pulses artifact as
+ * desktop. Brand palette only, no blue, real text.
  */
 
 type Agent = { name: string; desc: string };
@@ -64,7 +65,7 @@ function AgentCard({
     <button
       type="button"
       aria-pressed={active}
-      className={`group block w-full rounded-xl border px-3.5 py-2.5 text-left backdrop-blur transition-all duration-300 ${
+      className={`group block w-full rounded-lg border px-2 py-2 text-left backdrop-blur transition-all duration-300 sm:rounded-xl sm:px-3.5 sm:py-2.5 ${
         align === 'right' ? 'text-right' : 'text-left'
       } ${
         active
@@ -74,22 +75,22 @@ function AgentCard({
       {...handlers}
     >
       <span
-        className={`flex items-center gap-2 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}
+        className={`flex items-center gap-1.5 sm:gap-2 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}
       >
         <span
           aria-hidden
-          className={`h-2.5 w-2.5 shrink-0 rounded-full transition-all duration-300 ${
+          className={`h-2 w-2 shrink-0 rounded-full transition-all duration-300 sm:h-2.5 sm:w-2.5 ${
             active
               ? 'bg-brand-warmgold shadow-[0_0_12px_3px_rgba(212,184,115,0.85)]'
               : 'bg-brand-warmgold/80 shadow-[0_0_8px_1px_rgba(212,184,115,0.4)]'
           }`}
         />
-        <span className="font-display text-[15px] font-semibold leading-tight text-brand-cream">
+        <span className="whitespace-nowrap font-display text-[11.5px] font-semibold leading-tight text-brand-cream sm:text-[15px]">
           {agent.name}
         </span>
       </span>
       <span
-        className={`mt-1 block text-[12.5px] leading-snug transition-colors duration-300 ${
+        className={`mt-1 block text-[10.5px] leading-snug transition-colors duration-300 sm:text-[12.5px] ${
           active ? 'text-brand-cream/85' : 'text-brand-cream/50'
         }`}
       >
@@ -116,11 +117,12 @@ export function SecondBrain(): JSX.Element {
       className="m-0"
       aria-label="Amagna second brain — an AI core (AM) with Content, Ads, Booking, Follow-Up, Reviews, and SEO + AEO agents working around it"
     >
-      {/* ── Desktop / tablet: ringed columns ── */}
-      <div className="relative mx-auto hidden aspect-[5/3] w-full max-w-[1000px] sm:block">
+      {/* ── The ringed stage — every width. Mobile gets a taller stage so the
+             six cards and their connector lines stay legible around the brain. ── */}
+      <div className="relative mx-auto aspect-[3/4] w-full max-w-[1000px] sm:aspect-[5/3]">
         {/* brain + glowing monogram core */}
         <div className="absolute inset-0 grid place-items-center">
-          <div className="relative w-[52%]">
+          <div className="relative w-[62%] sm:w-[52%]">
             <Image
               src="/brand/second-brain-core.webp"
               alt=""
@@ -172,6 +174,7 @@ export function SecondBrain(): JSX.Element {
         <svg
           aria-hidden
           viewBox="0 0 1000 600"
+          preserveAspectRatio="none"
           className="pointer-events-none absolute inset-0 h-full w-full"
           fill="none"
         >
@@ -212,81 +215,12 @@ export function SecondBrain(): JSX.Element {
         {NODES.map((n, i) => (
           <div
             key={`card-${i}`}
-            className="absolute w-[26%] max-w-[228px]"
+            className="absolute w-[29%] max-w-[228px] sm:w-[26%]"
             style={{ left: n.left, top: n.top, transform: 'translate(-50%, -50%)' }}
           >
             <AgentCard agent={AGENTS[i]} align={n.align} active={active === i} {...hoverProps(i)} />
           </div>
         ))}
-      </div>
-
-      {/* ── Mobile: brain + core on top, agents as a tappable 2-column list ── */}
-      <div className="sm:hidden">
-        <div aria-hidden className="relative mx-auto grid aspect-square w-[220px] place-items-center">
-          <Image
-            src="/brand/second-brain-core.webp"
-            alt=""
-            width={1760}
-            height={982}
-            aria-hidden
-            className="h-auto w-full [mask-image:radial-gradient(ellipse_at_center,#000_44%,transparent_72%)]"
-          />
-          <span
-            className="sb-core-glow pointer-events-none absolute block h-[34%] w-[34%] rounded-full"
-            style={{
-              background:
-                'radial-gradient(circle at 50% 50%, rgba(93,46,140,0.5) 0%, rgba(201,169,97,0.2) 44%, rgba(201,169,97,0) 72%)',
-            }}
-          />
-          <Image
-            src="/brand/amagna-monogram.svg"
-            alt=""
-            width={200}
-            height={210}
-            aria-hidden
-            className="pointer-events-none absolute h-auto w-[15%] opacity-70"
-            style={{
-              filter: 'drop-shadow(0 0 7px rgba(93,46,140,0.7)) drop-shadow(0 0 12px rgba(201,169,97,0.4))',
-            }}
-          />
-        </div>
-        <ul className="mx-auto mt-8 grid max-w-[440px] grid-cols-2 gap-3">
-          {AGENTS.map((agent, i) => (
-            <li key={agent.name}>
-              <button
-                type="button"
-                aria-pressed={active === i}
-                onClick={() => setActive((cur) => (cur === i ? null : i))}
-                className={`flex w-full items-start gap-2.5 rounded-xl border px-3 py-2.5 text-left transition-all duration-300 ${
-                  active === i
-                    ? 'border-brand-warmgold/70 bg-brand-deep/80'
-                    : 'border-white/10 bg-brand-deep/50'
-                }`}
-              >
-                <span
-                  aria-hidden
-                  className={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full transition-all duration-300 ${
-                    active === i
-                      ? 'bg-brand-warmgold shadow-[0_0_12px_3px_rgba(212,184,115,0.8)]'
-                      : 'bg-brand-warmgold/80'
-                  }`}
-                />
-                <span>
-                  <span className="block font-display text-[15px] font-semibold leading-tight text-brand-cream">
-                    {agent.name}
-                  </span>
-                  <span
-                    className={`mt-0.5 block text-[12.5px] leading-snug transition-colors duration-300 ${
-                      active === i ? 'text-brand-cream/85' : 'text-brand-cream/55'
-                    }`}
-                  >
-                    {agent.desc}
-                  </span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
     </figure>
   );
