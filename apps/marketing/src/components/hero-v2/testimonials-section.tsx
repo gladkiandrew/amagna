@@ -1,34 +1,49 @@
-import { Quote } from 'lucide-react';
+import { ArrowUpRight, Quote } from 'lucide-react';
 
 /**
  * Homepage testimonials section — voyage visual language, three quote slots.
  *
- * IMPORTANT (CLAUDE.md): never fabricate testimonials. The slots below are
- * placeholders. To publish a real one, fill in its `quote`, `name`, and `role`
- * in the TESTIMONIALS array — a filled entry renders as a real quote card; an
- * empty entry shows the "coming soon" placeholder. That's the only edit needed.
+ * IMPORTANT (CLAUDE.md): never fabricate testimonials. Every filled quote
+ * below is client-approved and VERBATIM — the words are locked; do not
+ * reword, trim, or embellish them. A slot with an empty `quote` renders the
+ * "coming soon" placeholder, so future unfilled slots still work.
  */
 type Testimonial = {
-  /** The client's exact words. Leave '' until you have a real, approved quote. */
+  /** The client's exact approved words. Leave '' until a real quote is approved. */
   quote: string;
-  /** Client name, e.g. 'Mike R.' */
+  /** Person's name, e.g. 'Jack Smith' */
   name: string;
-  /** Role / business, e.g. 'Owner, HVAC — Saginaw, MI' */
+  /** Role + business, e.g. 'Owner, Breaking the Fast' */
   role: string;
-  /** Optional link to the client's website (rendered on the name). */
-  href?: string;
+  /** The client's website — rendered as an external link on the attribution. */
+  url?: string;
 };
 
-// ▼▼▼ REAL QUOTES ONLY — approved drafts are requested in the vault inbox
-// (02-Inbox/2026-07-11 Testimonial requests). When one lands, paste it into
-// `quote` and the card flips from "coming soon" to a live testimonial.
-// Add each client's website to `href` to link their name. ▼▼▼
+// ▼▼▼ REAL QUOTES ONLY — client-approved, verbatim (Andrew, 2026-07-13). ▼▼▼
 const TESTIMONIALS: Testimonial[] = [
-  { quote: '', name: 'Breaking the Fast', role: 'Client — Local Service', href: '' },
-  { quote: '', name: 'WRG', role: 'Client', href: '' },
-  { quote: '', name: 'Sapt.AI', role: 'Partner', href: 'https://sapt.ai' },
+  {
+    quote:
+      'Amagna ran our ads and automated our entire meal-prep ordering process. Orders that used to need me now handle themselves, and the growth followed.',
+    name: 'Jack Smith',
+    role: 'Owner, Breaking the Fast',
+    url: 'https://www.breakingthefast.com/',
+  },
+  {
+    quote:
+      'We’ve worked with Amagna on several projects and some of our marketing. What stands out is how fast they move and how much they care about getting it right. We believe in what Andrew is building — Amagna is the real thing.',
+    name: 'Clarence Rivette',
+    role: 'President, WRG',
+    url: 'https://www.wrgmi.com/',
+  },
+  {
+    quote:
+      'Amagna is one of the fastest, most progressive building companies we work with. They run their whole operation on real analytics, and as a partner they push us to be better. Watching what they ship week to week is genuinely impressive.',
+    name: 'Ben Meyer',
+    role: 'Co-founder, Sapt.AI',
+    url: 'https://sapt.ai/',
+  },
 ];
-// ▲▲▲ e.g. { quote: 'Our calls doubled in two months.', name: 'Breaking the Fast', role: 'Client — Local Service', href: 'https://...' }
+// ▲▲▲ words locked — changes only with the client's re-approval ▲▲▲
 
 export function TestimonialsSection(): JSX.Element {
   return (
@@ -47,7 +62,7 @@ export function TestimonialsSection(): JSX.Element {
           Proof from the operators we sail for.
         </h2>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
-          Real results from real clients — the first stories are on the way.
+          In their own words — the clients and partners we build with.
         </p>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -68,21 +83,23 @@ export function TestimonialsSection(): JSX.Element {
                       “{t.quote}”
                     </blockquote>
                     <figcaption className="mt-6 border-t border-brand-gold/15 pt-4">
-                      <p className="font-semibold text-brand-charcoal">
-                        {t.href ? (
-                          <a
-                            href={t.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline decoration-brand-gold/50 underline-offset-4 hover:decoration-brand-gold"
-                          >
-                            {t.name}
-                          </a>
-                        ) : (
-                          t.name
-                        )}
-                      </p>
-                      <p className="text-sm text-brand-slate">{t.role}</p>
+                      <p className="font-semibold text-brand-charcoal">{t.name}</p>
+                      {t.url ? (
+                        <a
+                          href={t.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group mt-0.5 inline-flex items-center gap-1 text-sm text-brand-slate underline decoration-brand-gold/40 underline-offset-4 transition-colors hover:text-brand-charcoal hover:decoration-brand-gold"
+                        >
+                          {t.role}
+                          <ArrowUpRight
+                            className="h-3.5 w-3.5 text-brand-gold transition-transform group-hover:-translate-y-px group-hover:translate-x-px"
+                            aria-hidden
+                          />
+                        </a>
+                      ) : (
+                        <p className="mt-0.5 text-sm text-brand-slate">{t.role}</p>
+                      )}
                     </figcaption>
                   </>
                 ) : (
@@ -91,21 +108,20 @@ export function TestimonialsSection(): JSX.Element {
                       {t.name ? `${t.name}’s story — coming soon.` : 'Client testimonial — coming soon.'}
                     </p>
                     <div className="mt-6 border-t border-brand-gold/15 pt-4">
-                      <p className="font-semibold text-brand-charcoal/80">
-                        {t.href ? (
-                          <a
-                            href={t.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline decoration-brand-gold/50 underline-offset-4 hover:decoration-brand-gold"
-                          >
-                            {t.name}
-                          </a>
-                        ) : (
-                          t.name
-                        )}
-                      </p>
-                      <p className="text-sm text-brand-slate/70">{t.role}</p>
+                      <p className="font-semibold text-brand-charcoal/80">{t.name}</p>
+                      {t.url ? (
+                        <a
+                          href={t.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-0.5 inline-flex items-center gap-1 text-sm text-brand-slate/70 underline decoration-brand-gold/40 underline-offset-4 hover:decoration-brand-gold"
+                        >
+                          {t.role}
+                          <ArrowUpRight className="h-3.5 w-3.5 text-brand-gold" aria-hidden />
+                        </a>
+                      ) : (
+                        <p className="mt-0.5 text-sm text-brand-slate/70">{t.role}</p>
+                      )}
                     </div>
                   </>
                 )}
