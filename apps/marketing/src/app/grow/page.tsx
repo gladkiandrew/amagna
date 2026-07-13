@@ -135,10 +135,15 @@ function FunnelVideo({
     );
   }
 
+  // VSL: starts playing the moment the visitor lands. Browsers only allow
+  // autoplay when muted, so it opens muted with controls — one tap for sound.
   return (
     <div className={frame}>
       <video
         controls
+        autoPlay
+        muted
+        playsInline
         preload="metadata"
         poster={poster || undefined}
         className="absolute inset-0 h-full w-full object-cover"
@@ -152,35 +157,33 @@ function FunnelVideo({
 export default function GrowPage(): JSX.Element {
   return (
     <div className="overflow-x-clip bg-brand-deep text-brand-cream">
-      {/* ── 1. HERO — brand teaser as the OPENER: contained and quietly framed
-             (natural 16:9, no text, no crop) so the gold-framed VSL below is
-             already peeking into the first desktop viewport. The VSL is the
-             main event; this just rolls the titles. ── */}
+      {/* ── 1. HERO — brand teaser as a BACKGROUND strip: full-bleed edge to edge,
+             no border, height capped so the VSL below is already playing inside
+             the first viewport. The VSL is the main event; this sets the scene. ── */}
       <section className="relative w-full overflow-hidden bg-brand-deep">
-        <div className="mx-auto w-full max-w-[780px] px-4 pt-5 sm:px-6 sm:pt-7">
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-white/10 bg-brand-deep shadow-[0_20px_60px_-24px_rgba(0,0,0,0.7)]">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={TEASER_POSTER}
-              className="absolute inset-0 h-full w-full object-cover"
-            >
-              <source src={TEASER_VIDEO} type="video/mp4" />
-            </video>
-          </div>
-        </div>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={TEASER_POSTER}
+          className="block h-[34svh] min-h-[220px] w-full object-cover sm:h-[42svh]"
+        >
+          <source src={TEASER_VIDEO} type="video/mp4" />
+        </video>
       </section>
 
       {/* sentinel — sticky CTA slides up once this scrolls past the top */}
       <div id="grow-hero-end" aria-hidden className="h-px w-full" />
 
-      {/* ── 2. VSL — the sales video, right as the funnel opens (no headline) ── */}
+      {/* ── 2. VSL — the sales video, already in view as the page opens ── */}
       <section className="relative">
-        <div className="mx-auto w-full max-w-[920px] px-4 pb-14 pt-8 text-center sm:px-6 sm:pb-20 sm:pt-10">
+        <div className="mx-auto w-full max-w-[920px] px-4 pb-14 pt-5 text-center sm:px-6 sm:pb-20 sm:pt-6">
           <Reveal>
+            <div className="mb-3 text-left">
+              <Eyebrow>Message from the Founder</Eyebrow>
+            </div>
             <FunnelVideo src={VSL_VIDEO} poster={VSL_POSTER} mode="vsl" label="VSL coming" />
             <p className="mx-auto mt-4 max-w-[56ch] text-sm italic leading-[1.6] text-brand-cream/55">
               90 seconds on the AI system we install to run your marketing and operations.
