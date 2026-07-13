@@ -1,64 +1,160 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { AUDIT_HREF } from '@/lib/site';
 
 /**
- * Homepage Frame 2 — the Second Brain.
+ * Homepage Frame 2 — the Second Brain, as ONE viewport-height interactive
+ * frame: a three-chapter switcher (Core Memory → 24/7 Execution → Continuous
+ * Feedback) that auto-advances every 5s, pauses on manual interaction, and
+ * only runs while on-screen (IntersectionObserver) and the tab is visible.
  *
- * Server-rendered with ZERO client JS on the critical path (softlaunch hard
- * rule): the frame is what Amagna actually builds — one central memory vault
- * with custom agents wired into it — drawn as a static top-down flow. The only
- * motion is CSS (`.brain-signal` dots on the connectors, `.vault-breath` glow
- * on the core; both defined in globals.css and disabled under
- * prefers-reduced-motion). Dark #03060e continuation of the hero's water.
+ * Perf posture: this is the page's only client island below the hero and it
+ * ships zero canvas/images/deps — all three chapters' copy is in the server
+ * HTML (the pre-hydration render is the static stacked variant, which is also
+ * what no-JS and prefers-reduced-motion visitors keep). The client only
+ * toggles CSS classes (`sb-*` in globals.css); transitions are transform +
+ * opacity, the progress bar animates scaleX.
+ *
+ * Stays typographic on purpose — Frame 3 (integrations hub) owns the
+ * "central node + radiating connections" visual.
  */
 
-type Output = { name: string; body: string };
-
-const OUTPUTS: readonly Output[] = [
+const CHAPTERS = [
   {
-    name: 'Marketing',
-    body: 'Content, ads, and funnels generated from the vault — your voice, your offers, your market.',
+    n: '01',
+    lead: 'Core',
+    key: 'Memory',
+    body: 'Everything your business knows lives in one vault. Your voice, your customers, your numbers. Yours, and no one else’s.',
   },
   {
-    name: 'Outreach',
-    body: 'Follow-ups and booking that know every lead’s full history before a word goes out.',
+    n: '02',
+    lead: '24/7',
+    key: 'Execution',
+    body: 'Agents built for your mission run the marketing, the outreach, the operations. In your name, with your approval.',
   },
   {
-    name: 'Operations',
-    body: 'Intake, scheduling, handoffs — the busywork lane, automated around how your team actually runs.',
-  },
-  {
-    name: 'Reporting',
-    body: 'Your numbers, read by the brain and explained in plain English. You approve what matters.',
+    n: '03',
+    lead: 'Continuous',
+    key: 'Feedback',
+    body: 'Every finished task writes back to the vault. By month twelve it runs like it’s worked there for years.',
   },
 ] as const;
 
-/** Stage label — "01 · The Vault" style, shared by all three stages. */
-function StageLabel({ n, children }: { n: string; children: React.ReactNode }): JSX.Element {
-  return (
-    <p className="flex items-center justify-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-warmgold">
-      <span className="font-mono">{n}</span>
-      <span aria-hidden className="h-px w-5 bg-brand-warmgold/50" />
-      {children}
-    </p>
-  );
-}
+const CHAPTER_MS = 5000;
+/** A tap/click/arrow-key means the user is driving — hold auto-advance. */
+const MANUAL_HOLD_MS = 15_000;
 
-/** Vertical connector with a travelling gold signal dot (pure CSS). */
-function Connector(): JSX.Element {
+const GOLD = 'text-[#C7A863]';
+
+function ChapterHeading({
+  chapter,
+  className,
+}: {
+  chapter: (typeof CHAPTERS)[number];
+  className: string;
+}): JSX.Element {
   return (
-    <div aria-hidden className="relative mx-auto h-14 w-px bg-gradient-to-b from-brand-warmgold/70 via-brand-gold/25 to-brand-warmgold/70 sm:h-16">
-      <span className="brain-signal" />
-    </div>
+    <h3 className={`text-balance font-display font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream ${className}`}>
+      {chapter.lead} <span className={GOLD}>{chapter.key}</span>
+    </h3>
   );
 }
 
 export function SecondBrainFrame(): JSX.Element {
+  // False on the server and pre-hydration (static stacked variant — what SEO,
+  // no-JS, and reduced-motion visitors get); true only for motion-OK browsers.
+  const [enhanced, setEnhanced] = useState(false);
+  const [active, setActive] = useState(0);
+  const [leaving, setLeaving] = useState<number | null>(null);
+  const [inView, setInView] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const [manualHold, setManualHold] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const holdTimer = useRef<number | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setEnhanced(!mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  // The show starts when seen (threshold 0.4) and pauses off-screen / on a
+  // hidden tab.
+  useEffect(() => {
+    if (!enhanced) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      threshold: 0.4,
+    });
+    io.observe(el);
+    const onVisibility = () => setPageVisible(!document.hidden);
+    onVisibility();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, [enhanced]);
+
+  const playing = enhanced && inView && pageVisible && !manualHold;
+
+  const goTo = (i: number, manual: boolean): void => {
+    if (i !== active) {
+      setLeaving(active);
+      setActive(i);
+    }
+    if (manual) {
+      setManualHold(true);
+      if (holdTimer.current !== null) window.clearTimeout(holdTimer.current);
+      holdTimer.current = window.setTimeout(() => setManualHold(false), MANUAL_HOLD_MS);
+    }
+  };
+
+  // Auto-advance while playing.
+  useEffect(() => {
+    if (!playing) return;
+    const t = window.setTimeout(() => goTo((active + 1) % CHAPTERS.length, false), CHAPTER_MS);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playing, active]);
+
+  // Drop the outgoing chapter back to idle once its exit transition is done.
+  useEffect(() => {
+    if (leaving === null) return;
+    const t = window.setTimeout(() => setLeaving(null), 600);
+    return () => window.clearTimeout(t);
+  }, [leaving]);
+
+  useEffect(
+    () => () => {
+      if (holdTimer.current !== null) window.clearTimeout(holdTimer.current);
+    },
+    [],
+  );
+
+  const onTabKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>): void => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    const next =
+      e.key === 'ArrowRight'
+        ? (active + 1) % CHAPTERS.length
+        : (active + CHAPTERS.length - 1) % CHAPTERS.length;
+    goTo(next, true);
+    tabRefs.current[next]?.focus();
+  };
+
   return (
     <section
+      ref={sectionRef}
       aria-labelledby="second-brain-title"
-      className="relative isolate overflow-hidden bg-[#03060e] text-brand-cream"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[#03060e] text-brand-cream"
     >
       {/* Faint gold afterglow continuing down from the hero's horizon. */}
       <div
@@ -66,83 +162,109 @@ export function SecondBrainFrame(): JSX.Element {
         className="absolute inset-0 -z-10 bg-[radial-gradient(90%_46%_at_50%_0%,rgba(212,184,115,0.07),transparent_70%)]"
       />
 
-      <div className="mx-auto w-full max-w-[1100px] px-6 py-24 sm:py-32">
+      <div className="mx-auto flex w-full max-w-[1100px] flex-1 flex-col items-center justify-center px-6 py-12 text-center sm:py-16">
         <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-warmgold">
           <span aria-hidden className="h-px w-7 bg-brand-warmgold/60" />
           The Second Brain
+          <span aria-hidden className="h-px w-7 bg-brand-warmgold/60" />
         </p>
         <h2
           id="second-brain-title"
-          className="mt-5 max-w-[24ch] text-balance font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-cream"
+          className="mt-4 max-w-[26ch] text-balance font-display text-[clamp(1.5rem,3.2vw,2.4rem)] font-semibold leading-[1.1] tracking-[-0.02em]"
         >
-          One brain, installed in your business. Everything else is output.
+          Your business, running on a Second Brain.
         </h2>
-        <p className="mt-6 max-w-[62ch] text-lg leading-[1.6] text-brand-cream/80">
-          We don&apos;t hand you another tool. We build your company a second brain — one central
-          memory vault holding everything your business knows, with AI agents custom-built to your
-          mission wired straight into it. They read the vault before every move, act in your name,
-          and write back everything they learn.
-        </p>
 
-        {/* THE BUILD — vault → agents → outputs, drawn as a top-down flow. */}
-        <div className="mt-16 flex flex-col items-center">
-          {/* 01 — the memory vault (the core). */}
-          <div className="vault-breath w-full max-w-[600px] rounded-2xl border border-brand-warmgold/50 bg-white/[0.03] p-8 text-center sm:p-10">
-            <StageLabel n="01">The Memory Vault</StageLabel>
-            <h3 className="mt-4 text-balance font-display text-2xl font-semibold tracking-[-0.015em] text-brand-cream sm:text-[1.7rem]">
-              Everything your business knows, in one place.
-            </h3>
-            <p className="mx-auto mt-4 max-w-[52ch] leading-[1.65] text-brand-cream/75">
-              Your voice, your offers, your customers, your numbers, your history — organized into
-              one living memory. It&apos;s the source of truth every agent draws from, and it&apos;s
-              yours: it compounds for your business, not for a software vendor.
-            </p>
-          </div>
-
-          <Connector />
-
-          {/* 02 — custom agents wired into the vault. */}
-          <div className="w-full max-w-[600px] rounded-2xl border border-brand-gold/30 bg-white/[0.02] p-8 text-center sm:p-10">
-            <StageLabel n="02">The Agents</StageLabel>
-            <h3 className="mt-4 text-balance font-display text-2xl font-semibold tracking-[-0.015em] text-brand-cream sm:text-[1.7rem]">
-              Custom agents, wired to the vault.
-            </h3>
-            <p className="mx-auto mt-4 max-w-[52ch] leading-[1.65] text-brand-cream/75">
-              Not off-the-shelf bots. Each agent is built for your company&apos;s mission and owns
-              one lane — reading your context before every task, writing back what it learns after.
-              Built and captained by the Amagna crew, with a human approving anything that matters.
-            </p>
-          </div>
-
-          <Connector />
-
-          {/* 03 — everything downstream is output of the one brain. */}
-          <div className="w-full">
-            <StageLabel n="03">The Output</StageLabel>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {OUTPUTS.map((o) => (
+        {enhanced ? (
+          <>
+            {/* Chapter stage — all three share one grid cell; sb-* classes
+                drive the crossfade. aria-live announces the swap politely. */}
+            <div
+              id="sb-stage"
+              role="tabpanel"
+              aria-live="polite"
+              aria-labelledby={`sb-tab-${active}`}
+              className="mt-10 grid w-full sm:mt-14"
+            >
+              {CHAPTERS.map((c, i) => (
                 <div
-                  key={o.name}
-                  className="rounded-2xl border border-brand-gold/25 bg-white/[0.02] p-6"
+                  key={c.n}
+                  aria-hidden={i !== active}
+                  className={`sb-chapter [grid-area:1/1] ${
+                    i === active ? 'sb-active' : i === leaving ? 'sb-leaving' : 'sb-idle'
+                  }`}
                 >
-                  <h3 className="font-display text-lg font-semibold text-brand-cream">{o.name}</h3>
-                  <p className="mt-2.5 text-sm leading-[1.65] text-brand-cream/70">{o.body}</p>
+                  <ChapterHeading chapter={c} className="text-[clamp(2.2rem,7vw,4.5rem)]" />
+                  <p className="mx-auto mt-4 max-w-[46ch] text-base leading-[1.6] text-brand-cream/75 sm:mt-5 sm:text-lg">
+                    {c.body}
+                  </p>
                 </div>
               ))}
             </div>
+
+            {/* Chapter switcher — real buttons, roving tabindex, arrow keys. */}
+            <div
+              role="tablist"
+              aria-label="Second Brain chapters"
+              className="mt-8 flex w-full max-w-[660px] items-stretch justify-center gap-2 sm:mt-10 sm:gap-4"
+            >
+              {CHAPTERS.map((c, i) => (
+                <button
+                  key={c.n}
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
+                  type="button"
+                  role="tab"
+                  id={`sb-tab-${i}`}
+                  aria-selected={i === active}
+                  aria-controls="sb-stage"
+                  tabIndex={i === active ? 0 : -1}
+                  onClick={() => goTo(i, true)}
+                  onKeyDown={onTabKeyDown}
+                  className={`flex min-h-[44px] min-w-[44px] flex-1 flex-col justify-end rounded px-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold/70 sm:px-2 sm:text-[11px] sm:tracking-[0.22em] ${
+                    i === active ? 'text-brand-cream' : 'text-brand-cream/55 hover:text-brand-cream/85'
+                  }`}
+                >
+                  <span className="hidden sm:inline">
+                    {c.n} {c.lead} {c.key}
+                  </span>
+                  <span className="sm:hidden">
+                    {c.n} {c.key}
+                  </span>
+                  <span aria-hidden className="mt-2 block h-px w-full overflow-hidden bg-brand-cream/15">
+                    <span
+                      className={`sb-bar block h-full w-full bg-brand-warmgold ${
+                        i < active ? 'sb-bar-full' : ''
+                      } ${i === active ? 'sb-bar-run' : ''} ${
+                        i === active && !playing ? 'sb-bar-hold' : ''
+                      }`}
+                    />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </>
+        ) : (
+          /* Static stacked variant — the server HTML (SEO + no-JS) and the
+             prefers-reduced-motion experience: all three chapters, no
+             switcher, no timers. */
+          <div className="mt-10 space-y-9 sm:mt-12">
+            {CHAPTERS.map((c) => (
+              <div key={c.n}>
+                <ChapterHeading chapter={c} className="text-2xl sm:text-4xl" />
+                <p className="mx-auto mt-3 max-w-[46ch] text-base leading-[1.6] text-brand-cream/75 sm:text-lg">
+                  {c.body}
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
 
-        {/* The loop — why the retainer compounds instead of depreciating. */}
-        <p className="mx-auto mt-14 max-w-[46ch] text-balance text-center font-display text-xl font-semibold leading-snug tracking-[-0.01em] text-brand-cream sm:text-2xl">
-          Every finished task writes back to the vault — so the brain compounds.
+        <p className="mt-10 text-balance font-display text-lg font-semibold tracking-[-0.01em] text-brand-cream sm:mt-12 sm:text-2xl">
+          One brain. <span className={GOLD}>Your whole business.</span>
         </p>
-        <p className="mx-auto mt-3 max-w-[52ch] text-center leading-[1.6] text-brand-cream/70">
-          Month one it knows your business. Month twelve it runs like it&apos;s worked there for
-          years.
-        </p>
-
-        <div className="mt-10 flex justify-center">
+        <div className="mt-5">
           <Link
             href={AUDIT_HREF}
             className="inline-flex items-center gap-1.5 rounded-full bg-brand-purple px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-brand-purple/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-[#03060e]"

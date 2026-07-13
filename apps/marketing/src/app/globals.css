@@ -290,58 +290,72 @@
 }
 
 /* ── Second Brain frame (homepage Frame 2) ──────────────────────────────────
-   CSS-only motion, zero JS: a gold signal dot travels down each connector
-   (context flowing out of the vault), and the vault core breathes a slow gold
-   glow. Both are disabled in the prefers-reduced-motion block below. */
-@keyframes brainSignal {
-  0% {
-    top: 0;
-    opacity: 0;
+   Chapter switcher, class-driven (no animation library): the client island
+   toggles sb-active / sb-leaving / sb-idle on the stacked chapters and the
+   sb-bar-* progress classes on the tabs. Reduced-motion visitors get the
+   static stacked variant from React, so these only run for motion-OK
+   browsers; the reduced-motion block below is a belt-and-braces guard. */
+.sb-chapter h3,
+.sb-chapter p {
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s ease-out;
+}
+/* The body line follows the header by a beat. */
+.sb-chapter p {
+  transition-delay: 120ms;
+}
+.sb-active h3,
+.sb-active p {
+  opacity: 1;
+  transform: none;
+}
+.sb-leaving h3,
+.sb-leaving p {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+/* Idle chapters sit invisibly 12px below, ready to rise in (no transition so
+   a chapter dropping from "leaving" to "idle" snaps rather than animating). */
+.sb-idle h3,
+.sb-idle p {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: none;
+}
+.sb-idle,
+.sb-leaving {
+  pointer-events: none;
+}
+@keyframes sbProgress {
+  from {
+    transform: scaleX(0);
   }
-  12% {
-    opacity: 1;
-  }
-  82% {
-    opacity: 1;
-  }
-  100% {
-    top: calc(100% - 6px);
-    opacity: 0;
+  to {
+    transform: scaleX(1);
   }
 }
-.brain-signal {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  height: 6px;
-  width: 6px;
-  margin-left: -3px;
-  border-radius: 9999px;
-  background: var(--brand-warmgold);
-  box-shadow: 0 0 10px 2px rgb(212 184 115 / 0.55);
-  animation: brainSignal 2.6s ease-in-out infinite;
+.sb-bar {
+  transform: scaleX(0);
+  transform-origin: left;
 }
-@keyframes vaultBreath {
-  0%,
-  100% {
-    box-shadow: 0 0 40px -8px rgb(212 184 115 / 0.28);
-  }
-  50% {
-    box-shadow: 0 0 68px -8px rgb(212 184 115 / 0.5);
-  }
+.sb-bar-full {
+  transform: scaleX(1);
 }
-.vault-breath {
-  animation: vaultBreath 5.5s ease-in-out infinite;
+.sb-bar-run {
+  animation: sbProgress 5s linear forwards;
+}
+.sb-bar-hold {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Second Brain frame: park the signal dot mid-connector, steady vault glow. */
-  .brain-signal {
-    animation: none;
-    top: 50%;
-    opacity: 0.7;
+  /* Second Brain frame guard (the static variant renders anyway). */
+  .sb-chapter h3,
+  .sb-chapter p {
+    transition: none;
   }
-  .vault-breath {
+  .sb-bar-run {
     animation: none;
   }
   /* Existing hero-flow pulses. */
