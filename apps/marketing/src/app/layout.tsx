@@ -38,7 +38,7 @@ const fraunces = Fraunces({
   axes: ['opsz'],
 });
 
-const TITLE = 'Amagna AI — Autonomous Marketing Systems';
+const TITLE = 'Amagna AI — Autonomous Intelligence Systems';
 
 // Google Search Console verification token (paste via NEXT_PUBLIC_GSC_VERIFICATION).
 // When set, Next renders <meta name="google-site-verification" …>. Empty = omitted.

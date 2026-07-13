@@ -56,7 +56,7 @@ export function HeroV2(): JSX.Element {
         className="absolute inset-0 z-[1] bg-[radial-gradient(ellipse_64%_50%_at_50%_52%,rgba(4,7,13,0.7),rgba(4,7,13,0.22)_52%,transparent_78%)]"
       />
 
-      {/* Copy column — raised so "Marketing Systems" lands at the vertical centre
+      {/* Copy column — raised so "Intelligence Systems" lands at the vertical centre
           of the viewport, "Autonomous" above it, the hairline / subtitle / CTAs
           flowing below. Pure CSS translate; layout centering is unchanged. */}
       {/* Copy anchored to the TRUE viewport centre (left: 50vw) rather than the
@@ -76,7 +76,7 @@ export function HeroV2(): JSX.Element {
           style={{ '--i': 0 } as CSSProperties}
         >
           <span className="block text-[clamp(1.6rem,6.4vw,5.4rem)]">Autonomous</span>
-          <span className="block text-[clamp(1.9rem,8.8vw,7.4rem)]">Marketing&nbsp;Systems</span>
+          <span className="block text-[clamp(1.9rem,8.8vw,7.4rem)]">Intelligence&nbsp;Systems</span>
         </h1>
 
         <div className="mx-auto max-w-[50rem]">
