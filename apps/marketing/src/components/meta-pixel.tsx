@@ -4,6 +4,11 @@ import Script from 'next/script';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
+// Last pathname a PageView was fired for. Module-scoped so it survives
+// StrictMode double-effects and remounts: the initial load's PageView comes
+// from the inline init script, every later ROUTE CHANGE fires exactly one.
+let lastTrackedPath: string | null = null;
+
 type MetaPixelProps = {
   /** The Meta pixel ID, passed in from the server so we don't depend on
    *  build-time NEXT_PUBLIC_ inlining (works with Cloudflare runtime env). */
@@ -23,6 +28,15 @@ export function MetaPixel({ pixelId }: MetaPixelProps): JSX.Element | null {
 
   useEffect(() => {
     if (!pixelId) return;
+    // Initial load: the inline init script below owns the first PageView —
+    // firing it here too double-counted every ad landing.
+    if (lastTrackedPath === null) {
+      lastTrackedPath = pathname;
+      return;
+    }
+    // Same route (re-render / StrictMode re-run): nothing new to count.
+    if (lastTrackedPath === pathname) return;
+    lastTrackedPath = pathname;
     if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
       window.fbq('track', 'PageView');
     }

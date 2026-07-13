@@ -3,14 +3,29 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { CALCOM_DIRECT_URL } from '@/lib/site';
+import { trackBookIntent } from '@/lib/meta-pixel-events';
 
 /**
  * The page's ONE Book-a-Call. A full-width bar pinned to the bottom that slides
  * up the first time the visitor scrolls down and then STAYS for the rest of the
  * page (latched — it never hides again). Safe-area inset on mobile; gold shimmer.
+ *
+ * Tracking: the landing page's query string (utm_*, fbclid, …) is appended to
+ * the Cal.com URL so ad attribution survives the click into the booking, and
+ * the click fires the standard book-intent pixel event (Contact).
  */
 export function StickyCta(): JSX.Element {
   const [show, setShow] = useState(false);
+  const [bookHref, setBookHref] = useState(CALCOM_DIRECT_URL);
+
+  // Carry the landing query string through to Cal.com (client-only — the
+  // server render keeps the bare URL, then we upgrade it after mount).
+  useEffect(() => {
+    const search = window.location.search;
+    if (search.length > 1) {
+      setBookHref(`${CALCOM_DIRECT_URL}${CALCOM_DIRECT_URL.includes('?') ? '&' : '?'}${search.slice(1)}`);
+    }
+  }, []);
 
   useEffect(() => {
     const THRESHOLD = 40; // px of scroll before the bar latches in
@@ -44,7 +59,8 @@ export function StickyCta(): JSX.Element {
     >
       <div className="mx-auto flex w-full max-w-[1100px] items-center justify-center px-6 py-3.5">
         <a
-          href={CALCOM_DIRECT_URL}
+          href={bookHref}
+          onClick={() => trackBookIntent()}
           className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-gold px-7 py-3.5 text-base font-semibold text-brand-deep shadow-[0_-2px_30px_-8px_rgba(201,169,97,0.5)] transition-colors hover:bg-brand-warmgold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-warmgold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-deep sm:w-auto sm:px-10"
         >
           <span
