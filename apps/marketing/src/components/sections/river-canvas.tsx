@@ -144,24 +144,10 @@ export function RiverCanvas({
         ))}
       </div>
 
-      {/* Dawn seam — pulled up OVER the hero's last stretch of water (negative
-          margin; net in-flow height stays 13vh), so the ocean itself fades
-          through the deep-purple horizon into the cream canvas. No flat dark
-          band: the gradient starts transparent on the water and is fully
-          opaque only for a thin horizon line at its midpoint (which hides the
-          hero→canvas boundary underneath), marked by the gold hairline. */}
-      {seam && (
-        <div aria-hidden className="pointer-events-none relative -mt-[13vh] h-[26vh]">
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(180deg, rgba(5,8,15,0) 0%, rgba(13,10,28,0.5) 30%, rgba(26,14,54,0.92) 46%, #1A0E36 50%, rgba(53,32,84,0.7) 58%, rgba(93,46,140,0.15) 72%, rgba(93,46,140,0.05) 84%, rgba(250,248,243,0) 100%)',
-            }}
-          />
-          <div className="gold-seam absolute inset-x-0 top-[50%] opacity-60" />
-        </div>
-      )}
+      {/* The horizon — the transition IS the gold hairline, attached flush to
+          the ocean hero's bottom edge. Water above, cream below, one line of
+          gold light between them. Nothing else. */}
+      {seam && <div aria-hidden className="gold-seam" />}
 
       {children}
     </div>
