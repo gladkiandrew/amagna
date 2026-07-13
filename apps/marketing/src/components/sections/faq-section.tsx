@@ -64,7 +64,7 @@ export function FaqSection({
   };
 
   return (
-    <section aria-labelledby="faq-title" className="bg-brand-cream">
+    <section aria-labelledby="faq-title">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

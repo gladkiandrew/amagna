@@ -32,7 +32,9 @@ const TESTIMONIALS: Testimonial[] = [
 
 export function TestimonialsSection(): JSX.Element {
   return (
-    <section aria-labelledby="testimonials-title" className="border-t border-brand-gold/20 bg-brand-cream">
+    // Transparent surface — sits on the shared RiverCanvas; rhythm comes from
+    // whitespace, not full-width rules that would slice the river.
+    <section aria-labelledby="testimonials-title">
       <div className="mx-auto w-full max-w-[1100px] px-6 py-24 sm:py-28">
         <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
           <span aria-hidden className="h-px w-7 bg-brand-gold/60" />

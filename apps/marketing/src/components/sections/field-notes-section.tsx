@@ -21,7 +21,7 @@ export async function FieldNotesSection({
   const latest = posts.slice(0, limit);
 
   return (
-    <section aria-labelledby="field-notes-title" className="border-t border-brand-gold/20 bg-brand-cream">
+    <section aria-labelledby="field-notes-title">
       <div className="mx-auto w-full max-w-[1000px] px-6 py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { HeroV2 } from '@/components/hero-v2/hero-v2';
-import { SecondBrainFrame } from '@/components/hero-v2/second-brain-frame';
+import { RiverCanvas } from '@/components/sections/river-canvas';
+import { SecondBrainSteps } from '@/components/sections/second-brain-steps';
 import { ServicesSection } from '@/components/hero-v2/services-section';
 import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { FaqSection } from '@/components/sections/faq-section';
@@ -29,21 +30,25 @@ export const metadata: Metadata = {
 };
 
 /**
- * The Amagna homepage (promoted from the hero-v2 build on 2026-06-05).
- * Frame 1 is the photoreal WebGL ocean hero; Frame 2 is the Second Brain frame
- * (server-rendered, zero client JS); then the services + integrations grid, and
- * testimonials. The crew/voyage reveal moved to /about as its opening frame.
- * The original voyage homepage is preserved at /voyage-v1 as a fallback.
+ * The Amagna homepage. Frame 1 is the photoreal WebGL ocean hero (untouched);
+ * everything below it sits on the RiverCanvas — the universal cream canvas
+ * with the purple/gold river drifting down behind the content. The body is
+ * the four numbered Second Brain sections, then the integrations hub,
+ * testimonials, FAQ, and Field Notes re-seated on the same canvas so the
+ * page reads as one piece. The original voyage homepage is preserved at
+ * /voyage-v1 as a fallback.
  */
 export default function Home(): JSX.Element {
   return (
     <>
       <HeroV2 />
-      <SecondBrainFrame />
-      <ServicesSection />
-      <TestimonialsSection />
-      <FaqSection />
-      <FieldNotesSection />
+      <RiverCanvas seam>
+        <SecondBrainSteps />
+        <ServicesSection />
+        <TestimonialsSection />
+        <FaqSection />
+        <FieldNotesSection />
+      </RiverCanvas>
     </>
   );
 }

@@ -289,55 +289,52 @@
   transform: translateY(6px) scale(0.992);
 }
 
-/* ── Second Brain frame (homepage Frame 2, scroll-driven) ───────────────────
-   The client island toggles position classes on the stacked chapters:
-   chapters BEFORE the active one rest above (sb-above), AFTER it rest below
-   (sb-below) — so the crossfade is direction-correct whichever way the
-   visitor scrolls, with no direction tracking. The label progress bars
-   (.sb-bar) are filled imperatively with scroll progress (scaleX writes from
-   rAF — no transition, scrolling itself is the easing). Reduced-motion
-   visitors get the static stacked variant from React; the reduced-motion
-   block below is a belt-and-braces guard. */
-.sb-chapter h3,
-.sb-chapter p {
-  transition:
-    opacity 0.45s ease-out,
-    transform 0.45s ease-out;
+/* ── River canvas (universal post-hero background) ──────────────────────────
+   The site's light canvas carries a quiet "river" of brand purple and gold —
+   thin luminous streaks drifting slowly DOWN the page (the light-canvas
+   cousin of the hero's ocean), over static soft pools that give the current
+   a bed. Pure CSS: transform + opacity only, compositor-friendly, zero JS.
+   Streaks fade to 0 at both keyframe ends so the loop never pops. Each
+   streak's position/timing comes from inline CSS vars set by RiverCanvas.
+   Static (parked mid-drift, faint) under prefers-reduced-motion below. */
+@keyframes riverFlow {
+  0% {
+    transform: translateY(-40vh);
+    opacity: 0;
+  }
+  14% {
+    opacity: var(--river-peak, 0.5);
+  }
+  84% {
+    opacity: var(--river-peak, 0.5);
+  }
+  100% {
+    transform: translateY(115vh);
+    opacity: 0;
+  }
 }
-/* The body line follows the header by a beat. */
-.sb-chapter p {
-  transition-delay: 120ms;
-}
-.sb-active h3,
-.sb-active p {
-  opacity: 1;
-  transform: none;
-}
-.sb-above h3,
-.sb-above p {
+.river-streak {
+  position: absolute;
+  width: 3px;
+  height: var(--river-h, 42vh);
+  border-radius: 9999px;
   opacity: 0;
-  transform: translateY(-14px);
+  animation: riverFlow var(--river-dur, 32s) linear infinite;
+  animation-delay: var(--river-delay, 0s);
 }
-.sb-below h3,
-.sb-below p {
-  opacity: 0;
-  transform: translateY(14px);
+.river-streak--purple {
+  background: linear-gradient(180deg, transparent, rgb(93 46 140 / 0.62) 45%, transparent);
 }
-.sb-above,
-.sb-below {
-  pointer-events: none;
-}
-.sb-bar {
-  transform: scaleX(0);
-  transform-origin: left;
-  will-change: transform;
+.river-streak--gold {
+  background: linear-gradient(180deg, transparent, rgb(201 169 97 / 0.68) 45%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Second Brain frame guard (the static variant renders anyway). */
-  .sb-chapter h3,
-  .sb-chapter p {
-    transition: none;
+  /* River canvas: streaks park mid-drift, faint and still. */
+  .river-streak {
+    animation: none;
+    opacity: 0.22;
+    transform: translateY(20vh);
   }
   /* Existing hero-flow pulses. */
   .pulse-down,
