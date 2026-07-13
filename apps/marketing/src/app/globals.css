@@ -289,12 +289,15 @@
   transform: translateY(6px) scale(0.992);
 }
 
-/* ── Second Brain frame (homepage Frame 2) ──────────────────────────────────
-   Chapter switcher, class-driven (no animation library): the client island
-   toggles sb-active / sb-leaving / sb-idle on the stacked chapters and the
-   sb-bar-* progress classes on the tabs. Reduced-motion visitors get the
-   static stacked variant from React, so these only run for motion-OK
-   browsers; the reduced-motion block below is a belt-and-braces guard. */
+/* ── Second Brain frame (homepage Frame 2, scroll-driven) ───────────────────
+   The client island toggles position classes on the stacked chapters:
+   chapters BEFORE the active one rest above (sb-above), AFTER it rest below
+   (sb-below) — so the crossfade is direction-correct whichever way the
+   visitor scrolls, with no direction tracking. The label progress bars
+   (.sb-bar) are filled imperatively with scroll progress (scaleX writes from
+   rAF — no transition, scrolling itself is the easing). Reduced-motion
+   visitors get the static stacked variant from React; the reduced-motion
+   block below is a belt-and-braces guard. */
 .sb-chapter h3,
 .sb-chapter p {
   transition:
@@ -310,43 +313,24 @@
   opacity: 1;
   transform: none;
 }
-.sb-leaving h3,
-.sb-leaving p {
+.sb-above h3,
+.sb-above p {
   opacity: 0;
-  transform: translateY(-12px);
+  transform: translateY(-14px);
 }
-/* Idle chapters sit invisibly 12px below, ready to rise in (no transition so
-   a chapter dropping from "leaving" to "idle" snaps rather than animating). */
-.sb-idle h3,
-.sb-idle p {
+.sb-below h3,
+.sb-below p {
   opacity: 0;
-  transform: translateY(12px);
-  transition: none;
+  transform: translateY(14px);
 }
-.sb-idle,
-.sb-leaving {
+.sb-above,
+.sb-below {
   pointer-events: none;
-}
-@keyframes sbProgress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
 }
 .sb-bar {
   transform: scaleX(0);
   transform-origin: left;
-}
-.sb-bar-full {
-  transform: scaleX(1);
-}
-.sb-bar-run {
-  animation: sbProgress 5s linear forwards;
-}
-.sb-bar-hold {
-  animation-play-state: paused;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -354,9 +338,6 @@
   .sb-chapter h3,
   .sb-chapter p {
     transition: none;
-  }
-  .sb-bar-run {
-    animation: none;
   }
   /* Existing hero-flow pulses. */
   .pulse-down,
