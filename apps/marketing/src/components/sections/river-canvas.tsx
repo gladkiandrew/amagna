@@ -151,7 +151,7 @@ export function RiverCanvas({
       {seam && (
         <div
           aria-hidden
-          className="pointer-events-none h-[12vh]"
+          className="pointer-events-none h-[8.4vh]"
           style={{
             background:
               'linear-gradient(180deg, #071221 0%, rgba(23,32,52,0.72) 32%, rgba(96,102,116,0.22) 62%, rgba(250,248,243,0) 100%)',
