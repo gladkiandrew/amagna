@@ -219,9 +219,9 @@ export function SecondBrainSteps(): JSX.Element {
         <StepMark n="03" eyebrow="How it compounds" center />
         <h2
           id="step-compounds-title"
-          className="mx-auto mt-6 max-w-[14ch] text-balance font-display text-[clamp(2.6rem,5.8vw,4.4rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-brand-charcoal"
+          className="mx-auto mt-6 max-w-[12ch] text-balance font-display text-[clamp(2.6rem,5.8vw,4.4rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-brand-charcoal sm:max-w-none sm:whitespace-nowrap"
         >
-          Continuous Feedback.
+          Continuous Learning.
         </h2>
         <p className="mx-auto mt-7 max-w-[54ch] text-lg leading-[1.65] text-brand-slate sm:text-xl">
           Your agents run a loop — build, execute, learn, then build again. Every finished task
