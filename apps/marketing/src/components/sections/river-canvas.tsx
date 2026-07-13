@@ -144,10 +144,29 @@ export function RiverCanvas({
         ))}
       </div>
 
-      {/* The horizon — the transition IS the gold hairline, attached flush to
-          the ocean hero's bottom edge. Water above, cream below, one line of
-          gold light between them. Nothing else. */}
-      {seam && <div aria-hidden className="gold-seam" />}
+      {/* The horizon — the gold hairline IS the frame 1 / frame 2 boundary,
+          flanked by a subtle transition: a dusk that dims the hero's last
+          stretch of water down to the line (negative margin overlaps the
+          hero), and a soft lavender dawn settling into the cream below it. */}
+      {seam && (
+        <div aria-hidden className="pointer-events-none relative">
+          <div
+            className="-mt-[9vh] h-[9vh]"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(11,10,28,0) 0%, rgba(26,14,54,0.38) 78%, rgba(26,14,54,0.55) 100%)',
+            }}
+          />
+          <div className="gold-seam" />
+          <div
+            className="h-[9vh]"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(93,46,140,0.10) 0%, rgba(93,46,140,0.035) 55%, rgba(250,248,243,0) 100%)',
+            }}
+          />
+        </div>
+      )}
 
       {children}
     </div>

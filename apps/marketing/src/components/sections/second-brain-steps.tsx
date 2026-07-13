@@ -112,7 +112,7 @@ export function SecondBrainSteps(): JSX.Element {
   return (
     <div className="mx-auto w-full max-w-[1200px] px-6">
       {/* ── 01 · WHAT WE INSTALL ─────────────────────────────────────────── */}
-      <section aria-labelledby="step-install-title" className="pb-20 pt-12 sm:pb-28 sm:pt-14">
+      <section aria-labelledby="step-install-title" className="pb-20 pt-16 sm:pb-28 sm:pt-20">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_420px] lg:gap-20">
           <div>
             <StepMark n="01" eyebrow="What we install" />
