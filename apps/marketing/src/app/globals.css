@@ -238,6 +238,26 @@
   will-change: opacity, transform;
 }
 
+/* Transform-only entrance for the LCP element (the hero H1). Rises identically
+   to .hero-rise but never starts at opacity:0 — an element that begins hidden
+   and fades in is disqualified as a Largest-Contentful-Paint candidate (Lantern
+   lab model), which pushed LCP onto a mis-timed fallback element. Painting the
+   headline at full opacity from frame 0 (still sliding up) makes it the LCP and
+   it registers at first paint. Same rise, same timing; just no fade on the H1. */
+@keyframes heroRiseSolid {
+  from {
+    transform: translateY(26px);
+  }
+  to {
+    transform: none;
+  }
+}
+.hero-rise-solid {
+  animation: heroRiseSolid 0.95s var(--ease-voyage) forwards;
+  animation-delay: calc(0.15s + var(--i, 0) * 0.16s);
+  will-change: transform;
+}
+
 /* Thin gold hairline rule beneath the hero headline (editorial, left-anchored). */
 .gold-rule {
   height: 1px;
@@ -269,7 +289,185 @@
   transform: translateY(6px) scale(0.992);
 }
 
+/* ── River canvas (universal post-hero background) ──────────────────────────
+   The current: luminous purple/gold streaks drifting slowly DOWN the page
+   (see river-canvas.tsx for the cast). Pure CSS, transform + opacity only,
+   compositor-friendly, zero JS. Streaks fade to 0 at both keyframe ends so
+   the loop never pops; position/timing come from inline CSS vars. Parked
+   faint and still under prefers-reduced-motion below. */
+@keyframes riverFlow {
+  0% {
+    transform: translateY(-28vh);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--river-peak, 0.8);
+  }
+  88% {
+    opacity: var(--river-peak, 0.8);
+  }
+  100% {
+    transform: translateY(88vh);
+    opacity: 0;
+  }
+}
+.river-streak {
+  position: absolute;
+  width: 4px;
+  height: var(--river-h, 46vh);
+  border-radius: 9999px;
+  opacity: 0;
+  animation: riverFlow var(--river-dur, 32s) linear infinite;
+  animation-delay: var(--river-delay, 0s);
+}
+.river-streak--purple {
+  background: linear-gradient(180deg, transparent, rgb(93 46 140 / 0.8) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(93 46 140 / 0.18);
+}
+.river-streak--gold {
+  background: linear-gradient(180deg, transparent, rgb(201 169 97 / 0.9) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(201 169 97 / 0.22);
+}
+
+/* ── Crossing canvas (/who-we-serve) ────────────────────────────────────────
+   The river turned on its side: the same purple/gold current running
+   HORIZONTALLY across the chart — trade winds crossing latitudes. Same
+   contract as the vertical river: pure CSS, transform + opacity only,
+   position/timing via inline vars, parked under prefers-reduced-motion. */
+@keyframes riverFlowX {
+  0% {
+    transform: translateX(-28vw);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--river-peak, 0.8);
+  }
+  88% {
+    opacity: var(--river-peak, 0.8);
+  }
+  100% {
+    transform: translateX(88vw);
+    opacity: 0;
+  }
+}
+.river-streak-x {
+  position: absolute;
+  height: 4px;
+  width: var(--riverx-w, 34vw);
+  border-radius: 9999px;
+  opacity: 0;
+  animation: riverFlowX var(--river-dur, 8s) linear infinite;
+  animation-delay: var(--river-delay, 0s);
+}
+.river-streak-x--rev {
+  animation-direction: reverse;
+}
+.river-streak-x--purple {
+  background: linear-gradient(90deg, transparent, rgb(93 46 140 / 0.8) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(93 46 140 / 0.18);
+}
+.river-streak-x--gold {
+  background: linear-gradient(90deg, transparent, rgb(201 169 97 / 0.9) 45%, transparent);
+  box-shadow: 0 0 18px 1px rgb(201 169 97 / 0.22);
+}
+
+/* Lane current — one streak living INSIDE a niche lane row, drifting along
+   it; the row's group-hover lifts it. Travel is relative to the lane width
+   (starts and ends fully off-frame) so the loop never pops. */
+@keyframes laneDrift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(350%);
+  }
+}
+.lane-current {
+  position: absolute;
+  top: 50%;
+  left: -40%;
+  height: 3px;
+  width: 40%;
+  margin-top: -1.5px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, rgb(201 169 97 / 0.55) 45%, transparent);
+  box-shadow: 0 0 14px 1px rgb(201 169 97 / 0.2);
+  animation: laneDrift var(--lane-dur, 8s) linear infinite;
+  animation-delay: var(--lane-delay, 0s);
+}
+
+/* Wire pulses — gold dots travelling an offset-path (the serve-brain
+   connectors, the integration traces). Motion-safe only: reduced motion
+   hides the dots and leaves the static traces. */
+.wire-pulse {
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(212, 183, 115, 0.85));
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes wireFlow {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+  .wire-pulse {
+    animation: wireFlow var(--wire-dur, 2.8s) ease-in-out infinite;
+    animation-delay: var(--wire-delay, 0s);
+  }
+
+  /* Soft breathing glow for a brain/monogram core. */
+  @keyframes coreBreathe {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+  .core-breathe {
+    animation: coreBreathe 3.4s ease-in-out infinite;
+  }
+
+  /* Slow compass-ring rotation behind the serve-brain. */
+  @keyframes serveSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .serve-ring {
+    animation: serveSpin 28s linear infinite;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* River canvas: streaks park mid-drift, faint and still. */
+  .river-streak {
+    animation: none;
+    opacity: 0.3;
+    transform: translateY(20vh);
+  }
+  /* Crossing canvas + lane currents: same parking, horizontal. */
+  .river-streak-x {
+    animation: none;
+    opacity: 0.3;
+    transform: translateX(20vw);
+  }
+  .lane-current {
+    animation: none;
+    opacity: 0.35;
+    transform: translateX(160%);
+  }
   /* Existing hero-flow pulses. */
   .pulse-down,
   .pulse-up,
@@ -291,9 +489,11 @@
     will-change: auto;
   }
   /* Hero entrance: skip the stagger, land on the final frame. */
-  .hero-rise {
+  .hero-rise,
+  .hero-rise-solid {
     opacity: 1;
     animation: none;
+    transform: none;
     will-change: auto;
   }
 }

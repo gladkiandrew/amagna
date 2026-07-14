@@ -12,7 +12,59 @@ import { CtaBand } from '@/components/sections/cta-band';
 import { AUDIT_HREF, OG_IMAGE } from '@/lib/site';
 
 const PRICING_DESCRIPTION =
-  'Three plans: Foundation — a one-time $1,000 build (7 business days) then $50/mo for infrastructure (the base, no managed ads or content); Growth $1,250/mo + ad spend; and Authority $2,000/mo + ad spend + metered token usage.';
+  'AI marketing agency pricing: Foundation is a one-time $1,000 build (7 business days) then $50/mo; Growth is $1,250/mo; Authority is $2,000/mo — all plus ad spend paid directly to the platforms. No separate setup fee. Get your free Gold Map.';
+
+// AEO: structured pricing so answer engines can cite concrete numbers for
+// "how much does an AI marketing agency cost". Real numbers only (CLAUDE.md canon).
+const PRICING_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  name: 'Amagna AI — Autonomous Marketing System plans',
+  url: 'https://amagna.co/pricing',
+  itemListElement: [
+    {
+      '@type': 'Offer',
+      name: 'Foundation',
+      description: 'One-time build of the marketing infrastructure base (branding, website, Google Business Profile + base local SEO, dashboard), then $50/mo for infrastructure. No managed ads or content.',
+      priceCurrency: 'USD',
+      price: '1000',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '1000',
+        priceCurrency: 'USD',
+        description: 'One-time build, then $50/mo infrastructure',
+      },
+    },
+    {
+      '@type': 'Offer',
+      name: 'Growth',
+      description: 'The full done-for-you marketing machine run by the AI crew: niche funnel, managed Meta/TikTok/Google/Snapchat ads, AI video, GBP + local SEO + AEO, automated reviews, weekly report. Plus ad spend, paid to the platforms.',
+      priceCurrency: 'USD',
+      price: '1250',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '1250',
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+        billingIncrement: 1,
+      },
+    },
+    {
+      '@type': 'Offer',
+      name: 'Authority',
+      description: 'Everything in Growth plus full business automation: custom AI agents and workflows, 2 managed ad campaigns, founder-led strategy. Plus ad spend and metered token usage.',
+      priceCurrency: 'USD',
+      price: '2000',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: '2000',
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+        billingIncrement: 1,
+      },
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -43,6 +95,8 @@ type Tier = {
   features: string[];
   /** Plain-language note about what the tier deliberately does not include. */
   excludes?: string;
+  /** Commitment note shown small in the card body (Growth / Authority). */
+  commitment?: string;
   highlighted?: boolean;
 };
 
@@ -77,6 +131,7 @@ const TIERS: Tier[] = [
       'Automated review generation after every job',
       'Weekly plain-English report',
     ],
+    commitment: '6-month commitment at this rate — price reduces after your commitment period.',
     highlighted: true,
   },
   {
@@ -91,13 +146,14 @@ const TIERS: Tier[] = [
       'Founder-led strategy + priority support',
       'Metered token usage, billed monthly — visible in your admin profile',
     ],
+    commitment: '6-month commitment at this rate — price reduces after your commitment period.',
   },
 ];
 
 const FAQ = [
   {
-    q: 'Are there long-term contracts?',
-    a: 'Month one is the build. After your system is deployed, you commit to a 6-month minimum on your plan.',
+    q: 'Is there a contract?',
+    a: 'Growth and Authority plans require a 6-month commitment at the listed rate. After your commitment period, your rate reduces. No hidden fees — ad spend is always separate and paid directly to the platforms.',
   },
   {
     q: 'Is ad spend included in the retainer?',
@@ -116,6 +172,10 @@ const FAQ = [
 export default function PricingPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(PRICING_SCHEMA) }}
+      />
       {/* Header */}
       <section className="mx-auto w-full max-w-[1100px] px-6 py-20 text-center sm:py-24">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-antique-gold">
@@ -180,6 +240,12 @@ export default function PricingPage() {
 
               {tier.excludes ? (
                 <p className="mt-4 text-xs leading-relaxed text-ink-muted">{tier.excludes}</p>
+              ) : null}
+
+              {tier.commitment ? (
+                <p className="mt-3 text-xs font-medium leading-relaxed text-royal-purple/80">
+                  {tier.commitment}
+                </p>
               ) : null}
 
               <div className="mt-7">

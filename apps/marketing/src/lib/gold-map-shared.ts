@@ -31,6 +31,10 @@ export type GoldMapIntake = {
   socialChannels: string[];
   currentMarketing: string;
   goals: string;
+  /** Optional ops signal: which AI tools they think would benefit the company most. */
+  idealAiTools?: string;
+  /** Optional ops signal: which workflows they're struggling with today. */
+  strugglingWorkflows?: string;
   links: GoldMapLinks;
 };
 
@@ -84,10 +88,11 @@ export const REVENUE_RANGES = [
   '$25K–$75K / month',
   '$75K–$150K / month',
   '$150K–$400K / month',
-  '$400K+ / month',
+  '$400K–$1M / month',
+  '$1M+ / month',
 ] as const;
 
-export const EMPLOYEE_RANGES = ['Just me', '2–5', '6–15', '16–40', '40+'] as const;
+export const EMPLOYEE_RANGES = ['Just me', '2–5', '6–15', '16–40', '41–100', '100+'] as const;
 
 export const SOCIAL_CHANNELS = [
   'Instagram',
@@ -128,6 +133,8 @@ export function emptyIntake(): GoldMapIntake {
     socialChannels: [],
     currentMarketing: '',
     goals: '',
+    idealAiTools: '',
+    strugglingWorkflows: '',
     links: emptyLinks(),
   };
 }
@@ -254,6 +261,8 @@ export function intakeSignature(intake: GoldMapIntake, key?: string): string {
     socialChannels: [...intake.socialChannels].sort(),
     currentMarketing: intake.currentMarketing.trim(),
     goals: intake.goals.trim(),
+    idealAiTools: (intake.idealAiTools ?? '').trim(),
+    strugglingWorkflows: (intake.strugglingWorkflows ?? '').trim(),
     links: intake.links,
     key: (key ?? '').trim(),
   });
@@ -297,6 +306,8 @@ export function intakeSummary(i: GoldMapIntake): string {
     `Online presence: ${links.length ? links.map((l) => `${l.label}: ${l.value}`).join(' · ') : '—'}`,
     `Current marketing: ${i.currentMarketing || '—'}`,
     `Goals: ${i.goals || '—'}`,
+    `Ideal AI tools (their words): ${i.idealAiTools?.trim() || '—'}`,
+    `Struggling workflows (their words): ${i.strugglingWorkflows?.trim() || '—'}`,
     `Contact: ${i.name} · ${i.email} · ${i.phone || '—'}`,
   ].join('\n');
 }
@@ -304,8 +315,10 @@ export function intakeSummary(i: GoldMapIntake): string {
 /**
  * Assemble — CLIENT-SIDE, no AI call — the personalized "forge your key" prompt.
  * The operator pastes this into their OWN AI (which already knows their
- * business); it returns a single dense "master prompt" (the key), ending with a
- * labeled, parseable data block.
+ * business); framed as their chief of staff briefing Amagna, it asks up to 5
+ * clarifying questions first, then returns a single dense "master prompt" (the
+ * key) covering six mandatory sections, ending with a labeled, parseable data
+ * block.
  */
 export function assembleKeyPrompt(i: GoldMapIntake): string {
   const links = presentLinks(i.links);
@@ -313,15 +326,24 @@ export function assembleKeyPrompt(i: GoldMapIntake): string {
   const linksBrief = links.length
     ? links.map((l) => `  - ${l.label}: ${l.value}`).join('\n')
     : '  - (none provided)';
-  return `I'm briefing a marketing agency (Amagna AI) so they can build me a custom growth plan. I want you to write ONE dense "master prompt" that describes my business completely.
+  const idealAiTools = i.idealAiTools?.trim() || '';
+  const strugglingWorkflows = i.strugglingWorkflows?.trim() || '';
+  return `Act as my chief of staff. I'm briefing Amagna AI — they install a "Second Brain" in businesses: one central memory layer plus custom AI agents that run marketing, outreach, operations, and reporting. Your job is to prepare the master brief they'll chart my plan from. The better this brief, the better the plan — treat it like the operating document it is.
 
-Using everything you already know about my business — plus the details below and anything else I tell you — write a single, information-rich prompt that another AI could read cold and fully understand my business, my current situation, and my goals. Be specific and concrete. Add real context you know about me that isn't listed here. If you can see or recall what's on my website and social profiles below, factor in what I've already built and where I'm thin.
+FIRST: ask me up to 5 clarifying questions — only the ones whose answers would materially change the brief (real numbers, workflow details, tool names, constraints). Wait for my answers before writing.
 
-Also look into Amagna AI directly — visit amagna.co — and assess how Amagna's marketing services fit a business in my line of work specifically. Work that read into the master prompt.
+THEN write ONE dense "master prompt" that another AI could read cold and fully understand my business. Pull in everything you already know about me and my company from our past conversations. It must cover all six sections:
 
-And address these directly, working the answers into the master prompt: What automations am I currently running in my business? And, as far as you know, what automations could be built for ${i.businessName ? `${i.businessName}'s` : 'my'} business to bring in more clients, speed up processes, and increase the overall value of the company?
+1. THE BUSINESS — what we sell, who buys it, pricing, and exactly how the money comes in.
+2. THE OPERATION — the day-to-day workflow from lead to cash: every tool we use by name, who does what, and where the handoffs happen.
+3. THE BOTTLENECKS — everything manual, duct-taped, or owner-dependent. Where time leaks, where leads leak, where money leaks.
+4. THE AUTOMATION MAP — what's automated today, then a ranked list of the highest-value automations that could be built for ${i.businessName ? `${i.businessName}` : 'my business'}, best first.
+5. GOALS + CONSTRAINTS — the 12-month picture, budget reality, team capacity, and anything off-limits.
+6. THE FIT — read amagna.co and map our needs to what Amagna actually offers, for a business in my line of work specifically.
 
-End your answer with a labeled data block in EXACTLY this format (keep the brackets):
+Rules: dense over long — every line earns its place. Specifics over prose. Mark anything you inferred rather than know as "(inferred)". No fluff, no filler, no compliments.
+
+End the master prompt with a labeled data block in EXACTLY this format (keep the brackets):
 
 [AMAGNA DATA]
 Business: ${i.businessName || '<name>'}
@@ -332,10 +354,12 @@ Service area: ${i.serviceArea || '<area>'}
 Channels: ${i.socialChannels.length ? i.socialChannels.join(', ') : '<channels>'}
 Online presence: ${linksDataLine}
 Current marketing: ${i.currentMarketing || '<what you do now>'}
+Ideal AI tools: ${idealAiTools || '<the AI tools that would help most>'}
+Struggling workflows: ${strugglingWorkflows || '<the workflows that hurt today>'}
 Goals: ${i.goals || '<what you want more of>'}
 [/AMAGNA DATA]
 
-Here's what I told the agency to get you started:
+Here's what I told Amagna to get you started:
 - Business: ${i.businessName} — ${i.businessType}
 - Monthly revenue: ${i.monthlyRevenue}
 - Team size: ${i.employees}
@@ -344,7 +368,9 @@ Here's what I told the agency to get you started:
 - Where I live online:
 ${linksBrief}
 - Current marketing: ${i.currentMarketing || '—'}
+- AI tools I think would benefit us most: ${idealAiTools || '—'}
+- Workflows I'm struggling with today: ${strugglingWorkflows || '—'}
 - Goals: ${i.goals}
 
-Write the master prompt now.`;
+Ask your clarifying questions now.`;
 }

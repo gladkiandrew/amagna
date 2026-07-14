@@ -1,0 +1,49 @@
+{
+  "_comment": "Per-agent write-scope allowlist enforced by write-scope-guard.cjs (PreToolUse Write|Edit|MultiEdit). Only the named crew subagents are restricted; the main thread and any non-listed agent_type are unrestricted. A crew agent writing to a path NOT matched here is REFUSED (exit 2). Patterns: absolute paths with ~ = home; a trailing /** means 'this dir and anything under it'; otherwise it is an exact file match. Keep in sync with each agent's charter (vault Amagna/Agents/<Name>.md) and repo .claude/agents/amagna/<name>.md memory_writes.",
+  "agents": {
+    "zeno": [
+      "~/dev/amagna/docs/memory/fleet-status.md",
+      "~/dev/amagna/docs/memory/active-tasks.md",
+      "~/dev/amagna-vault/01-Daily/**",
+      "~/dev/amagna-vault/02-Inbox/**",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Zeno.md"
+    ],
+    "exodus": [
+      "~/dev/amagna/docs/memory/content-pipeline.md",
+      "~/dev/amagna-vault/Content-Engine/Pipeline/**",
+      "~/dev/amagna-vault/Content-Engine/Pillars/**",
+      "~/dev/amagna-vault/Amagna/Content/**",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Exodus.md"
+    ],
+    "mansa": [
+      "~/dev/amagna/docs/memory/memory-health.md",
+      "~/dev/amagna-vault/Amagna/_brain.md",
+      "~/dev/amagna-vault/System/**",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Mansa.md"
+    ],
+    "vela": [
+      "~/dev/amagna/docs/memory/content-pipeline.md",
+      "~/dev/amagna-vault/Amagna/Campaigns/Ad-Campaign.md",
+      "~/dev/amagna-vault/Content-Engine/Metrics/**",
+      "~/dev/amagna-vault/Content-Engine/Pillars/**",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Vela.md"
+    ],
+    "solon": [
+      "~/dev/amagna/docs/memory/outreach-log.md",
+      "~/dev/amagna/docs/memory/client-roster.md",
+      "~/dev/amagna-vault/Amagna/Campaigns/Outreach-Campaign.md",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Solon.md"
+    ],
+    "lumen": [
+      "~/dev/amagna/docs/memory/content-pipeline.md",
+      "~/dev/hf-renders/**",
+      "~/dev/amagna-vault/Amagna/Agents/Logs/**",
+      "~/dev/amagna-vault/Amagna/Agents/Lumen.md"
+    ]
+  }
+}

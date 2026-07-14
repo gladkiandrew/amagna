@@ -9,7 +9,7 @@ export const SITE = {
   url: 'https://amagna.co',
   email: 'andrew@amagna.co',
   tagline:
-    'Autonomous marketing systems — we build the machine that runs your marketing, and the content that fuels it, for operators who want growth that runs itself.',
+    'Autonomous intelligence systems — we build the second brain that runs your marketing and operations, and the content that fuels it, for operators who want growth that runs itself.',
 } as const;
 
 /** Primary navigation links — used by the header and footer. The Gold Map CTA
@@ -61,5 +61,24 @@ export const OG_IMAGE = {
   url: '/opengraph-image',
   width: 1200,
   height: 630,
-  alt: 'Amagna AI — autonomous marketing systems for operators who want growth that runs itself',
+  alt: 'Amagna AI — autonomous intelligence systems for operators who want growth that runs itself',
+} as const;
+
+/**
+ * Force a URL to absolute against the site origin. LinkedIn (and other social
+ * scrapers) require ABSOLUTE og:image / og:url — they do not resolve relative
+ * paths the way a browser does with metadataBase. Sapt CMS asset URLs may come
+ * back absolute (CDN) or relative; this normalizes either. Returns undefined
+ * for empty input so callers can fall back cleanly.
+ */
+export function absoluteUrl(u?: string | null): string | undefined {
+  if (!u) return undefined;
+  if (/^https?:\/\//i.test(u)) return u;
+  return `${SITE.url}${u.startsWith('/') ? '' : '/'}${u}`;
+}
+
+/** OG_IMAGE with an explicitly-absolute url (safe to hand to social scrapers). */
+export const OG_IMAGE_ABSOLUTE = {
+  ...OG_IMAGE,
+  url: `${SITE.url}${OG_IMAGE.url}`,
 } as const;

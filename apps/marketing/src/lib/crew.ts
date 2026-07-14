@@ -64,7 +64,7 @@ export const CREW: readonly CrewMember[] = [
   {
     slug: 'vela',
     name: 'Vela',
-    title: 'Demand & Narrative Specialist',
+    title: 'Social Media + Ads Specialist',
     blurb: 'Catches the wind — paid demand and the story that pulls customers in.',
     description:
       'Vela catches the wind — running paid demand across Meta, TikTok, and Google and shaping the narrative that pulls the right customers toward you. The marketing engine and the story behind it.',

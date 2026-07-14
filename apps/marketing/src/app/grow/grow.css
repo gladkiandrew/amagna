@@ -1,0 +1,127 @@
+/*
+ * Styles for the /grow paid landing page ONLY.
+ *
+ * Next.js code-splits route CSS, so these rules ship only on /grow (imported by
+ * grow/page.tsx). That lets us use global selectors here safely:
+ *
+ *  - Suppress the global site chrome. The root layout renders SiteHeader /
+ *    SiteFooter as body's DIRECT children; the funnel's own header/footer live
+ *    inside <main>, so this hides only the globals — no site-nav, no leak.
+ *  - Smooth anchor scrolling for the in-page nav (What we build / How it works).
+ *  - Hero entrance keyframe.
+ */
+
+body > header,
+body > footer {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes growRiseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Panel swap on the Five Ways toggle — a quick fade + slide from the side. */
+@keyframes growPanelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Faint gold dot-grid — adds depth/texture to the dark sections. */
+.grow-dotgrid {
+  background-image: radial-gradient(rgba(201, 169, 97, 0.09) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+/* Agent map — slow orbit ring rotation. */
+@keyframes growSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Agent map — core glow pulse. */
+@keyframes growPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+/* Sticky CTA — gold shimmer sweep across the button. */
+@keyframes growShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/*
+ * Second Brain artifact — gold pulses travelling each connector (agent -> core)
+ * and a soft breathing core glow. Motion-safe only: with reduced motion the
+ * pulses stay hidden and the static traces + core remain.
+ */
+.sb-pulse {
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(212, 183, 115, 0.85));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sbFlow {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
+  .sb-pulse {
+    animation: sbFlow 2.6s ease-in-out infinite;
+  }
+
+  @keyframes sbCoreGlow {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+
+  .sb-core-glow {
+    animation: sbCoreGlow 3.4s ease-in-out infinite;
+  }
+}

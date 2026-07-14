@@ -16,6 +16,9 @@ const geistMono = localFont({
   src: './fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+  // Mono is only used for small labels below the fold — don't preload it (it
+  // was competing on the network with the hero's display font and delaying LCP).
+  preload: false,
 });
 
 // Fraunces — display serif for headlines/wordmark on the voyage homepage.
@@ -25,13 +28,17 @@ const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-fraunces',
   display: 'swap',
-  style: ['normal', 'italic'],
+  // Normal only. Italic isn't used above the fold (just blog blockquotes, which
+  // fall back to a synthesized slant) — dropping it removes a second Fraunces
+  // file that was competing on the network with the hero H1's font and delaying
+  // LCP. The H1 (normal + opsz) renders identically.
+  style: ['normal'],
   // Optical-size axis: at hero display sizes Fraunces tightens + sharpens
   // (proper opsz rendering instead of the text-optical default).
   axes: ['opsz'],
 });
 
-const TITLE = 'Amagna AI — Autonomous Marketing Systems';
+const TITLE = 'Amagna AI — Autonomous Intelligence Systems';
 
 // Google Search Console verification token (paste via NEXT_PUBLIC_GSC_VERIFICATION).
 // When set, Next renders <meta name="google-site-verification" …>. Empty = omitted.
@@ -88,6 +95,48 @@ const structuredData = {
       url: SITE.url,
       name: 'Amagna AI',
       publisher: { '@id': `${SITE.url}/#organization` },
+    },
+    // Local entity — gives Google a structured signal that Amagna serves the
+    // Great Lakes Bay Region (Saginaw / Midland / Bay City, MI). Service-area
+    // business: no public street address, so we publish locality + geo + the
+    // cities served, not a storefront. No reviews/ratings are claimed.
+    {
+      '@type': 'ProfessionalService',
+      '@id': `${SITE.url}/#localbusiness`,
+      name: 'Amagna AI',
+      url: SITE.url,
+      image: `${SITE.url}/opengraph-image`,
+      logo: `${SITE.url}/brand/amagna-logo-mark.svg`,
+      email: SITE.email,
+      description:
+        'AI marketing agency serving Saginaw, Midland, and Bay City — autonomous marketing systems and custom AI installs for local operators.',
+      parentOrganization: { '@id': `${SITE.url}/#organization` },
+      priceRange: '$$',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Saginaw',
+        addressRegion: 'MI',
+        addressCountry: 'US',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 43.4195,
+        longitude: -83.9508,
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Saginaw', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'City', name: 'Midland', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'City', name: 'Bay City', address: { '@type': 'PostalAddress', addressRegion: 'MI', addressCountry: 'US' } },
+        { '@type': 'AdministrativeArea', name: 'Great Lakes Bay Region' },
+      ],
+      knowsAbout: [
+        'AI marketing agency',
+        'Local SEO',
+        'Google Business Profile management',
+        'Autonomous marketing systems',
+        'Custom AI automation',
+      ],
+      ...(SOCIAL_LINKS.length ? { sameAs: [...SOCIAL_LINKS] } : {}),
     },
   ],
 };

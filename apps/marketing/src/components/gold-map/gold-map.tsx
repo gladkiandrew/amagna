@@ -166,7 +166,7 @@ function scrollToTop() {
    real scroll art later; the layout/copy stay.                        */
 /* ------------------------------------------------------------------ */
 function ScrollHero(): JSX.Element {
-  const STEPS = ['Tell us about your business', 'Create Your Key', 'Find your Plan to Gold'];
+  const STEPS = ['Tell us about your business & operations', 'Create Your Key', 'Find your Plan to Gold'];
   return (
     <section aria-labelledby="gm-title" className="mx-auto w-full max-w-[820px] px-5 pb-10 pt-16 text-center sm:px-6 sm:pt-24">
       <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-brand-warmgold">The treasure hunt</p>
@@ -360,6 +360,19 @@ function IntakeForm({
           <textarea id={`${id}-goal`} rows={2} className={fieldClass} placeholder="e.g. more booked jobs in the slow months" value={intake.goals} onChange={(e) => set('goals', e.target.value)} />
         </Field>
       </div>
+
+      {/* Ops signals — the highest-signal lines in the whole intake; both optional. */}
+      <fieldset className="mt-6">
+        <legend className="text-sm font-medium text-brand-cream/85">Tell us about your operations</legend>
+        <div className="mt-3 grid gap-5">
+          <Field label="Which AI tools do you think would benefit your company the most? (optional)" htmlFor={`${id}-ait`}>
+            <textarea id={`${id}-ait`} rows={2} className={fieldClass} placeholder="e.g. an AI that answers calls, drafts estimates, chases invoices…" value={intake.idealAiTools ?? ''} onChange={(e) => set('idealAiTools', e.target.value)} />
+          </Field>
+          <Field label="Which workflows are you struggling with today? (optional)" htmlFor={`${id}-sw`}>
+            <textarea id={`${id}-sw`} rows={2} className={fieldClass} placeholder="e.g. follow-ups slip, scheduling eats hours, reporting is manual…" value={intake.strugglingWorkflows ?? ''} onChange={(e) => set('strugglingWorkflows', e.target.value)} />
+          </Field>
+        </div>
+      </fieldset>
 
       <button
         type="submit"

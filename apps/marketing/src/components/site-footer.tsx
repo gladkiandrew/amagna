@@ -35,6 +35,15 @@ export function SiteFooter(): JSX.Element {
     { href: FIELD_NOTES_HREF, label: 'Field Notes' },
   ];
 
+  // Local landing pages — surfaced ONLY here (kept out of the main nav to avoid
+  // clutter). Indexed via the sitemap so they rank without bloating the menu.
+  const areasServed = [
+    { href: '/saginaw', label: 'Saginaw' },
+    { href: '/midland', label: 'Midland' },
+    { href: '/bay-city', label: 'Bay City' },
+    { href: '/lansing', label: 'Lansing' },
+  ];
+
   return (
     <footer className="bg-royal-purple text-white/80">
       <div className="mx-auto w-full max-w-[1100px] px-6 py-14">
@@ -117,9 +126,28 @@ export function SiteFooter(): JSX.Element {
           </div>
         </div>
 
+        {/* Areas we serve — local landing pages, footer-only (out of the nav). */}
+        <div className="mt-10">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-white/50">
+            Areas we serve
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+            {areasServed.map((a) => (
+              <li key={a.href}>
+                <Link
+                  href={a.href}
+                  className="text-sm text-white/70 transition-colors hover:text-white"
+                >
+                  {a.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {year} Amagna AI. All rights reserved.</p>
-          <p>Marketing that runs itself — built by AI, captained by humans.</p>
+          <p>Intelligence that runs your business — built by AI, captained by humans.</p>
         </div>
       </div>
     </footer>

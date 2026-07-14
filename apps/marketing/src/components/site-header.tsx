@@ -14,10 +14,10 @@ export function SiteHeader(): JSX.Element {
       <div className="mx-auto flex w-full max-w-[1100px] items-center justify-between px-6 py-4">
         <Link href="/" aria-label="Amagna AI — home" className="flex shrink-0 items-center">
           <Image
-            src="/brand/amagna-logo-twotone.png"
+            src="/brand/amagna-logo-twotone.webp"
             alt="Amagna AI"
-            width={2276}
-            height={492}
+            width={660}
+            height={143}
             priority
             className="h-7 w-auto md:h-9"
           />

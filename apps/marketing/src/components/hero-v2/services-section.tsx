@@ -46,6 +46,18 @@ const PILLARS: readonly Pillar[] = [
     body: 'Get recommended by AI assistants like ChatGPT when people ask them who to hire.',
   },
   {
+    name: 'Email + SMS Campaign Management',
+    body: 'Automated email and text that follow up, nurture, and win back customers — sent at the right moment, without you lifting a finger.',
+  },
+  {
+    name: 'Creation of Marketing Funnels',
+    body: 'Landing pages and funnels built to turn clicks into booked calls — not just traffic, actual customers.',
+  },
+  {
+    name: 'Advanced Data Reporting',
+    body: 'Your site analytics and Meta campaign performance in one place, in plain English — so you always know what’s working.',
+  },
+  {
     name: 'Custom AI Installs',
     eyebrow: 'Full-stack automation · installed in person',
     body: 'Beyond marketing — bespoke AI built and installed across your whole business, on-site and tailored to how you work.',
@@ -56,9 +68,11 @@ const PILLARS: readonly Pillar[] = [
 
 export function ServicesSection(): JSX.Element {
   return (
-    <section aria-labelledby="services-title" className="bg-brand-cream">
+    // Transparent surface — sits on the shared RiverCanvas (or the page's own
+    // cream bg elsewhere), so the river shows through the whitespace.
+    <section aria-labelledby="services-title">
       <div className="mx-auto w-full max-w-[1100px] px-6 py-24 sm:py-28">
-        <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+        <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
           <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
           What we run
         </p>
@@ -66,7 +80,7 @@ export function ServicesSection(): JSX.Element {
           id="services-title"
           className="mt-5 max-w-[20ch] text-balance font-display text-[clamp(2rem,4.4vw,3.4rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-charcoal"
         >
-          One system. Everything your marketing needs.
+          One Brain. Everything Your Business Needs.
         </h2>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
           Not a pile of tools you have to run — a single machine the crew operates for you.

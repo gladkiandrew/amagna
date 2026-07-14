@@ -1,12 +1,11 @@
 import { ImageResponse } from 'next/og';
-import { SITE } from '@/lib/site';
 
 /**
  * Site-wide Open Graph / Twitter card image, generated at build time.
  * Next.js auto-wires this into openGraph.images and twitter.images for every
  * route that doesn't define its own. Brand colors come from docs/brand/brand-colors.md.
  */
-export const alt = 'Amagna AI — AI growth systems for home services & real estate';
+export const alt = 'Amagna AI — autonomous marketing systems and custom AI installs';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -38,7 +37,8 @@ export default function OpengraphImage() {
             maxWidth: 880,
           }}
         >
-          {SITE.tagline}
+          Intelligence that runs your business — autonomous systems and custom AI installs, built
+          and run for you.
         </div>
         <div
           style={{

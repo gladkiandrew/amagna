@@ -32,7 +32,14 @@ agents:
     name: Exodus
     role: Creative & Content Specialist
     def: .claude/agents/amagna/exodus.md
-    summary: Videos, content, blogs, deliverables. Reports content pipeline status to Zeno.
+    summary: Videos, content, blogs, deliverables. Reports content pipeline status to Zeno. Delegates animated-video / motion-graphics work to Lumen.
+    memory_writes: [docs/memory/content-pipeline.md]
+
+  - id: lumen
+    name: Lumen
+    role: Motion & Animation Specialist
+    def: .claude/agents/amagna/lumen.md
+    summary: Animated video via HyperFrames — brand teasers, sizzle reels, VSL bumpers, motion graphics. Owns the prompt→build→render→self-critique→iterate loop and ships an .mp4. Triggered by Andrew or delegated by Exodus/Zeno.
     memory_writes: [docs/memory/content-pipeline.md]
 
   - id: mansa

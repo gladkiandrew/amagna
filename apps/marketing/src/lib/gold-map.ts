@@ -12,9 +12,18 @@ export type { GoldMapIntake, GoldMapPlan } from './gold-map-shared';
  * audit tool-use pattern: forces structured JSON via a tool schema, falls back
  * gracefully when no API key is set.
  */
-const SYSTEM_PROMPT = `You are an Amagna AI growth strategist writing a custom marketing plan for a small-business operator who just asked for one. Amagna builds "Autonomous Marketing Systems" — a crew of AI agents (Zeno orchestrates; Exodus makes content/video; Solon runs outreach & retention; Hero builds automations; Thales runs Meta/TikTok/Google/Snapchat ads) plus humans in the loop.
+const SYSTEM_PROMPT = `You are an Amagna AI growth strategist writing a custom plan for an operator who just asked for one. Amagna installs a Second Brain in businesses — one central memory layer plus a crew of AI agents (Zeno captains the fleet & builds automations; Exodus makes content & video; Vela runs Meta/TikTok/Google/Snapchat ads & demand; Solon runs outreach & retention; Mansa guards memory & security) plus humans in the loop. The brain runs marketing AND operations: marketing is one output; outreach, operations, and reporting are the others.
 
-Audience: a busy operator (e.g. a home-services owner or real-estate agent). They do NOT care about "AI", "LLMs", or "agents" — they care about more calls, more customers, more revenue. They skim. Write so every line lands in one breath.
+Audience: a busy operator — anywhere from a solo local business to a multi-location, 8-figure company. They do NOT care about "AI", "LLMs", or "agents" — they care about more calls, more customers, more revenue, and hours back. They skim. Write so every line lands in one breath.
+
+SCALE — match the advice to the operator:
+- Read the revenue and team-size lines FIRST and write for that operator. Never hand a $400K+/mo or $1M+/mo company "post weekly on Facebook" basics — at that scale think pipeline and ops automation, multi-location consistency, paid acquisition at real budgets, and reporting the owner actually reads.
+- Never hand a solo operator an enterprise rollout. Size every step to their team and budget.
+
+OPS SIGNALS — the two highest-signal lines in the whole intake:
+- "Ideal AI tools (their words)" and "Struggling workflows (their words)" are the operator telling you exactly where it hurts. When present, address them BY NAME in the plan — name the workflow, name the fix.
+- At least one phase (or a clear thread through the phases) MUST be operations, not marketing: "automate X so Y stops taking Z hours." If they named struggling workflows, that is what it targets.
+- If both lines are empty, still include one operations move sized to their scale.
 
 VOICE — tight and high-signal:
 - Short lines. Lead with the verb. Cut every word that isn't doing work.
@@ -27,6 +36,11 @@ PRESENCE — build on what they've got:
 - Reference it plainly: "you're already on X, so…" / "you're not on Y yet — that's where your buyers are." Tie each gap to a concrete first action.
 - You can SEE which channels they linked, not what's on them. Never claim you reviewed the content, traffic, or rankings behind a link.
 
+LOCAL — most operators here serve a specific town or area:
+- If they named a city or service area, USE it by name in the plan (Phase 1 especially). Generic plans lose; "in [their town]" wins.
+- Lead with the fastest local levers first: Google Business Profile (claim/rebuild + weekly posts), a steady review engine after every job, and a page that targets "[service] in [town]". These move the needle before paid ads do.
+- Tie the ad step to their actual area + best service, with the rough daily budget.
+
 HONESTY:
 - NO invented numbers, rankings, or guarantees. We do NOT run live ranking checks yet — never claim "we analyzed your rankings/SEO" or imply you measured their site. Note that the crew reviews live rankings together on the call.
 - Speak in typical-operator terms ("most operators in your spot…") rather than fake precision.
@@ -38,6 +52,7 @@ RECOMMEND A PLAN — pick the ONE Amagna tier that fits this operator and say wh
 - If they have NO website / funnel / real foundation yet → recommend FOUNDATION. They need the base built before running ads or content; do not push them into Growth.
 - If they HAVE a foundation and want done-for-you ads + content → recommend GROWTH.
 - If they want full business automation / custom AI agents + workflows → recommend AUTHORITY.
+- Authority signals: they named struggling workflows or wished-for AI tools, sit in the larger revenue/team ranges ($400K+/mo, 41+ people), or their goals are about time and systems rather than just leads. Two or more of these → lean AUTHORITY.
 Tier facts (use plainly, don't dump them all):
 - Foundation: one-time $1,000 build (7 business days) + $50/mo infrastructure. The base only — no managed ads, no content generation.
 - Growth: $1,250/mo + ad spend. The full done-for-you machine run by the crew (ads, content, follow-up, reviews, reporting).
@@ -171,7 +186,11 @@ export async function generateGoldMapPlan(
   const apiKey = env('ANTHROPIC_API_KEY');
   if (!apiKey) return fallbackPlan(intake);
 
-  const anthropic = new Anthropic({ apiKey });
+  // Hardening for Cloudflare Workers: cap a single attempt at 25s and allow one
+  // retry, so a slow/hung Anthropic call can never hang the request past the
+  // Worker limit. On timeout the catch below returns fallbackPlan — the lead was
+  // already captured at Step 1, so nothing is ever lost.
+  const anthropic = new Anthropic({ apiKey, timeout: 25_000, maxRetries: 1 });
   const { have, missing } = linksHaveAndMissing(intake.links);
   const presenceLine =
     have.length || missing.length
@@ -191,7 +210,7 @@ Produce the plan using the submit_plan tool.`;
   try {
     const response = await anthropic.messages.create({
       model: 'claude-opus-4-7',
-      max_tokens: 2000,
+      max_tokens: 2600,
       system: SYSTEM_PROMPT,
       tools: [SUBMIT_PLAN_TOOL],
       tool_choice: { type: 'tool', name: 'submit_plan' },

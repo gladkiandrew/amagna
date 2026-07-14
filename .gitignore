@@ -68,3 +68,22 @@ leads/
 # AI-generated blog drafts (working files; approve in Sapt, do not commit)
 apps/marketing/drafts/
 drafts/
+
+# Local skill installs — .claude/skills/ symlinks into .agents/; skills-lock.json
+# is the committed manifest for reinstalling them on another machine
+.agents/
+.claude/skills/
+
+# Playwright MCP browser-session artifacts (regenerate on use)
+.playwright-mcp/
+
+# Editor-local workspace files
+*.code-workspace
+
+# Raw footage and brand-source media — archive outside the repo
+# (raw masters live in ~/Movies/Amagna-raw and ~/Pictures/Amagna-brand-source)
+*.mov
+hf_*.mp4
+Pics for Amagna/
+Vids for Amagna/
+AMG Replica/

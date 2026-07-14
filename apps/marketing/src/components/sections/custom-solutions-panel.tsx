@@ -11,7 +11,7 @@ export function CustomSolutionsPanel(): JSX.Element {
       <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-center">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-dark-mode-gold">
-            Custom solutions
+            Custom AI Installs
           </p>
           <h2 className="mt-3 text-balance text-2xl font-semibold tracking-tight text-white sm:text-3xl">
             Bigger than a box? We scope it to you.
@@ -25,17 +25,17 @@ export function CustomSolutionsPanel(): JSX.Element {
         </div>
         <div className="flex flex-col gap-3 md:items-end">
           <Link
-            href="/audit"
+            href="/custom-ai-installs"
             className="inline-flex items-center justify-center gap-1.5 rounded-full bg-white px-6 py-3 text-sm font-semibold text-royal-purple transition-colors hover:bg-white/90"
           >
-            Get Your Gold Map
+            See How It Works
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           <Link
-            href="/custom"
+            href="/audit"
             className="text-sm font-medium text-white/80 transition-colors hover:text-white"
           >
-            See how custom works
+            Request a Custom Quote
           </Link>
         </div>
       </div>

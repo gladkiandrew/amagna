@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { getPublishedPosts } from '@/lib/sapt-blog';
-import { formatPostDate } from '@/lib/blog-types';
 
 /**
  * Field Notes — a compact "recent blog posts" section for the bottom of the
@@ -22,11 +21,11 @@ export async function FieldNotesSection({
   const latest = posts.slice(0, limit);
 
   return (
-    <section aria-labelledby="field-notes-title" className="border-t border-brand-gold/20 bg-brand-cream">
+    <section aria-labelledby="field-notes-title">
       <div className="mx-auto w-full max-w-[1000px] px-6 py-20">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
+            <p className="flex items-center gap-3 text-[13px] font-semibold uppercase tracking-[0.32em] text-brand-gold">
               <span aria-hidden className="h-px w-7 bg-brand-gold/60" />
               Field Notes
             </p>
@@ -55,14 +54,7 @@ export async function FieldNotesSection({
               >
                 <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-gold">
                   <span>{post.category}</span>
-                  {post.publishedAt && (
-                    <>
-                      <span aria-hidden className="text-brand-lightgray">·</span>
-                      <time dateTime={post.publishedAt} className="text-brand-slate">
-                        {formatPostDate(post.publishedAt)}
-                      </time>
-                    </>
-                  )}
+                  {/* Visible publish date intentionally omitted (2026-07-08). */}
                 </div>
                 <h3 className="mt-2 font-display text-xl font-semibold leading-snug text-brand-charcoal transition-colors group-hover:text-brand-purple">
                   {post.title}

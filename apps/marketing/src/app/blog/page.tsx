@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { getPublishedPosts } from '@/lib/sapt-blog';
-import { formatPostDate } from '@/lib/blog-types';
-import { OG_IMAGE } from '@/lib/site';
+import { SITE, OG_IMAGE, OG_IMAGE_ABSOLUTE } from '@/lib/site';
 
 const TITLE = 'Field Notes';
 const DESCRIPTION =
@@ -12,13 +11,19 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/blog' },
+  alternates: { canonical: `${SITE.url}/blog` },
   openGraph: {
     title: `${TITLE} · Amagna AI`,
     description: DESCRIPTION,
     type: 'website',
-    url: '/blog',
+    url: `${SITE.url}/blog`,
     images: [OG_IMAGE],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${TITLE} · Amagna AI`,
+    description: DESCRIPTION,
+    images: [OG_IMAGE_ABSOLUTE.url],
   },
 };
 
@@ -36,7 +41,7 @@ export default async function BlogIndexPage(): Promise<JSX.Element> {
           Field Notes
         </p>
         <h1 className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-charcoal">
-          Marketing that runs itself, explained.
+          Intelligence that runs your business, explained.
         </h1>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
           {DESCRIPTION}
@@ -50,12 +55,13 @@ export default async function BlogIndexPage(): Promise<JSX.Element> {
                 className="group flex h-full flex-col rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-4 focus-visible:ring-offset-brand-cream"
               >
                 <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-brand-gold/25 bg-brand-deep">
-                  {post.heroImage ? (
+                  {post.heroPoster ?? post.heroImage ? (
                     // Plain img (not next/image) so Sapt asset hosts need no
-                    // next.config remotePatterns entry.
+                    // next.config remotePatterns entry. Cards stay a static still
+                    // (poster preferred) — we never autoplay a grid of videos.
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={post.heroImage}
+                      src={post.heroPoster ?? post.heroImage}
                       alt=""
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -73,14 +79,7 @@ export default async function BlogIndexPage(): Promise<JSX.Element> {
                 </div>
                 <div className="mt-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-gold">
                   <span>{post.category}</span>
-                  {post.publishedAt && (
-                    <>
-                      <span aria-hidden className="text-brand-lightgray">·</span>
-                      <time dateTime={post.publishedAt} className="text-brand-slate">
-                        {formatPostDate(post.publishedAt)}
-                      </time>
-                    </>
-                  )}
+                  {/* Visible publish date intentionally omitted (2026-07-08). */}
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug text-brand-charcoal transition-colors group-hover:text-brand-purple">
                   {post.title}
