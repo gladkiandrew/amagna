@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { HeroV2 } from '@/components/hero-v2/hero-v2';
 import { RiverCanvas } from '@/components/sections/river-canvas';
-import { SecondBrainSteps } from '@/components/sections/second-brain-steps';
+import { GoldMapStep, SecondBrainSteps } from '@/components/sections/second-brain-steps';
 import { ServicesSection } from '@/components/hero-v2/services-section';
 import { TestimonialsSection } from '@/components/hero-v2/testimonials-section';
 import { FaqSection } from '@/components/sections/faq-section';
@@ -45,6 +45,7 @@ export default function Home(): JSX.Element {
       <RiverCanvas seam>
         <SecondBrainSteps />
         <ServicesSection />
+        <GoldMapStep />
         <TestimonialsSection />
         <FaqSection />
         <FieldNotesSection />

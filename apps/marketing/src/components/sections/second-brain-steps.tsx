@@ -10,11 +10,13 @@ import { AUDIT_HREF } from '@/lib/site';
  *   01 What we install  — light, text left / vault-manifest card right
  *   02 What it runs     — dark deep-purple panel, the night shift (24/7)
  *   03 How it compounds — light, centered, the most air (the differentiator)
- *   04 How you start    — purple panel close with the Gold Map CTA
+ *   04 How you start    — purple panel close with the Gold Map CTA; exported
+ *                         separately (GoldMapStep) and rendered AFTER the
+ *                         "What we run" services section on the homepage
  *
- * Rhythm: canvas → dark panel → canvas → purple panel, so the page alternates
- * surfaces without ever burying the river for long. Entirely server-rendered,
- * zero client JS; all motion on the page belongs to the canvas behind it.
+ * Rhythm: canvas → dark panel → canvas → services → purple panel, so the page
+ * alternates surfaces without ever burying the river for long. Entirely
+ * server-rendered, zero client JS; all motion belongs to the canvas behind it.
  */
 
 // Cinzel (Roman-inscription face) for the step-chip numerals — the "engraved"
@@ -278,8 +280,17 @@ export function SecondBrainSteps(): JSX.Element {
         </p>
       </section>
 
-      {/* ── 04 · HOW YOU START — the Gold Map close ──────────────────────── */}
-      <section aria-labelledby="step-start-title" className="pb-24 pt-10 sm:pb-32 sm:pt-14">
+    </div>
+  );
+}
+
+/** 04 · HOW YOU START — the Gold Map close. Rendered separately on the
+ *  homepage so it lands BELOW the "What we run" services section: see
+ *  everything the system runs first, then chart the map. */
+export function GoldMapStep(): JSX.Element {
+  return (
+    <div className="mx-auto w-full max-w-[1200px] px-6">
+      <section aria-labelledby="step-start-title" className="pb-24 pt-2 sm:pb-32 sm:pt-4">
         <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#2A1650] via-brand-purple/90 to-brand-deep px-7 py-14 sm:px-12 sm:py-16 lg:px-16">
           {/* a whisper of gold light in the panel's water */}
           <div
