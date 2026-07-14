@@ -75,8 +75,10 @@ const START_STEPS = [
   { word: 'Run', line: 'The crew executes. You stay in command.' },
 ] as const;
 
-/** Numbered step mark — Cinzel numeral chip + hairline + small-caps eyebrow. */
-function StepMark({
+/** Numbered step mark — Cinzel numeral chip + hairline + small-caps eyebrow.
+ *  Exported: the niche funnel pages reuse it so the numbered rhythm is one
+ *  component site-wide, not a fork. */
+export function StepMark({
   n,
   eyebrow,
   onDark = false,
