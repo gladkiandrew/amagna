@@ -47,15 +47,15 @@ function BrainCore(): JSX.Element {
         }}
       />
       <Image
-        src="/brand/amagna-monogram.svg"
+        src="/brand/amagna-monogram-gold.svg"
         alt=""
         width={200}
         height={210}
         aria-hidden
-        className="relative h-auto w-10 opacity-80 sm:w-12"
+        className="relative h-auto w-10 opacity-90 sm:w-12"
         style={{
           filter:
-            'drop-shadow(0 0 9px rgba(93,46,140,0.8)) drop-shadow(0 0 14px rgba(201,169,97,0.45))',
+            'drop-shadow(0 0 9px rgba(212,184,115,0.7)) drop-shadow(0 0 16px rgba(201,169,97,0.4))',
         }}
       />
     </div>
