@@ -37,8 +37,8 @@ export default function OpengraphImage() {
             maxWidth: 880,
           }}
         >
-          Marketing that runs itself — autonomous systems and custom AI installs, built and run for
-          you.
+          Intelligence that runs your business — autonomous systems and custom AI installs, built
+          and run for you.
         </div>
         <div
           style={{

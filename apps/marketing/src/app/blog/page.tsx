@@ -41,7 +41,7 @@ export default async function BlogIndexPage(): Promise<JSX.Element> {
           Field Notes
         </p>
         <h1 className="mt-5 max-w-[18ch] text-balance font-display text-[clamp(2.2rem,5vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-brand-charcoal">
-          Marketing that runs itself, explained.
+          Intelligence that runs your business, explained.
         </h1>
         <p className="mt-6 max-w-[60ch] text-lg leading-[1.6] text-brand-slate">
           {DESCRIPTION}

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Amagna AI — Marketing that runs itself',
+    title: 'Amagna AI — Intelligence that runs your business',
     description: HOME_DESCRIPTION,
     type: 'website',
     url: '/',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Amagna AI — Marketing that runs itself',
+    title: 'Amagna AI — Intelligence that runs your business',
     description: HOME_DESCRIPTION,
     images: [OG_IMAGE.url],
   },

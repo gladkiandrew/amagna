@@ -147,7 +147,7 @@ export function SiteFooter(): JSX.Element {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {year} Amagna AI. All rights reserved.</p>
-          <p>Marketing that runs itself — built by AI, captained by humans.</p>
+          <p>Intelligence that runs your business — built by AI, captained by humans.</p>
         </div>
       </div>
     </footer>

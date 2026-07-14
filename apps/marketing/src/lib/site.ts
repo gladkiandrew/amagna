@@ -9,7 +9,7 @@ export const SITE = {
   url: 'https://amagna.co',
   email: 'andrew@amagna.co',
   tagline:
-    'Autonomous marketing systems — we build the machine that runs your marketing, and the content that fuels it, for operators who want growth that runs itself.',
+    'Autonomous intelligence systems — we build the second brain that runs your marketing and operations, and the content that fuels it, for operators who want growth that runs itself.',
 } as const;
 
 /** Primary navigation links — used by the header and footer. The Gold Map CTA
@@ -61,7 +61,7 @@ export const OG_IMAGE = {
   url: '/opengraph-image',
   width: 1200,
   height: 630,
-  alt: 'Amagna AI — autonomous marketing systems for operators who want growth that runs itself',
+  alt: 'Amagna AI — autonomous intelligence systems for operators who want growth that runs itself',
 } as const;
 
 /**
