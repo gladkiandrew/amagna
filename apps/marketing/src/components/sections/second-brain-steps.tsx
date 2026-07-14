@@ -219,7 +219,7 @@ export function SecondBrainSteps(): JSX.Element {
       </section>
 
       {/* ── 03 · HOW IT COMPOUNDS — the differentiator, the most air ─────── */}
-      <section aria-labelledby="step-compounds-title" className="py-24 text-center sm:py-36">
+      <section aria-labelledby="step-compounds-title" className="py-16 text-center sm:py-24">
         <StepMark n="03" eyebrow="How it compounds" center />
         <h2
           id="step-compounds-title"
